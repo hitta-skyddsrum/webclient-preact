@@ -1,0 +1,32 @@
+@font-face {
+  font-family:'ForsvarsmaktenSans-Stencil';
+  src: local("Forsvarsmakten Sans Stencil"),
+  local("ForsvarsmaktenSans-Stencil"),
+  url('/assets/fonts/ForsvarsmaktenSans-Stencil.woff2') format('woff2'),
+  url('/assets/fonts/ForsvarsmaktenSans-Stencil.woff') format('woff'),
+  url('/assets/fonts/ForsvarsmaktenSans-Stencil.ttf')  format('truetype');
+  font-weight: normal!important;
+}
+
+
+@font-face {
+  font-family:'ForsvarsmaktenSans';
+  src: local("Forsvarsmakten Sans Regular"),
+  local("ForsvarsmaktenSans-Regular"),
+  url('/assets/fonts/ForsvarsmaktenSans-Regular.woff2') format('woff2'),
+  url('/assets/fonts/ForsvarsmaktenSans-Regular.woff') format('woff'),
+  url('/assets/fonts/ForsvarsmaktenSans-Regular.ttf')  format('truetype');
+  font-weight: normal;
+
+}
+
+@font-face {
+  font-family:'ForsvarsmaktenSans';
+  src: local("Forsvarsmakten Sans Regular Bold"),
+  local("ForsvarsmaktenSans-Bold"),
+  url('/assets/fonts/ForsvarsmaktenSans-Bold.woff2') format('woff2'),
+  url('/assets/fonts/ForsvarsmaktenSans-Bold.woff') format('woff'),
+  url('/assets/fonts/ForsvarsmaktenSans-Bold.ttf')  format('truetype');
+  font-weight: bold;
+
+}

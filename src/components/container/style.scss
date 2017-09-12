@@ -1,0 +1,32 @@
+@import "../../style/mixins";
+@import "../../style/variables";
+
+.container {
+  background-color: rgba(44, 49, 66, 1);
+  color: #fff;
+  padding: 0 30px;
+
+  display: flex;
+  justify-content: center;
+  min-height: 100vh;
+  font-size: 1.1em;
+
+  .window {
+    width: 450px;
+    max-width: 100%;
+
+    &.wide {
+      width: 600px;
+    }
+
+    p {
+      margin: auto;
+      margin-bottom: 30px;
+    }
+  }
+}
+
+.center {
+  text-align: center;
+  align-items: center;
+}
