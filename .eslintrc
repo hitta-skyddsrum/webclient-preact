@@ -50,7 +50,7 @@
     "semi": 2,
     "camelcase": 0,
     "comma-style": 2,
-    "comma-dangle": [2, "never"],
+    "comma-dangle": [2, "always-multiline"],
     "indent": ["error", 2, {"SwitchCase": 1}],
     "no-mixed-spaces-and-tabs": [2, "smart-tabs"],
     "no-trailing-spaces": [2, { "skipBlankLines": true }],
