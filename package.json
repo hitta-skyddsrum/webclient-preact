@@ -10,7 +10,7 @@
     "build": "cross-env NODE_ENV=production webpack --progress",
     "prebuild": "mkdirp build && ncp src/assets build/assets",
     "test": "npm run -s lint && jest --coverage",
-    "test:watch": "npm run -s test -- --watch",
+    "test:watch": "npm run -s lint && jest --watch",
     "lint": "eslint src test"
   },
   "keywords": [
