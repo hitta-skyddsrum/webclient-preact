@@ -8,7 +8,7 @@ import path from 'path';
 const ENV = process.env.NODE_ENV || 'development';
 
 const CSS_MAPS = ENV !== 'production';
-
+/* eslint-disable */
 module.exports = {
 	context: path.resolve(__dirname, "src"),
 	entry: './index.js',
@@ -196,7 +196,7 @@ module.exports = {
 
 	devServer: {
 		port: process.env.PORT || 8080,
-		host: 'localhost',
+		host: '0.0.0.0',
 		publicPath: '/',
 		contentBase: './src',
 		historyApiFallback: true,
