@@ -26,7 +26,7 @@ describe('App', () => {
     it('should render the homepage', () => {
       render(<App />, scratch);
 
-      expect(scratch.innerHTML).to.contain('Home');
+      expect(scratch.innerHTML).to.contain('Hitta skyddsrum');
     });
 
     xit('should render /profile', async () => {
