@@ -76,6 +76,7 @@
     "offline-plugin": "^4.7.0",
     "postcss-loader": "^2.0.3",
     "preact-jsx-chai": "^2.2.1",
+    "preact-render-spy": "^1.2.1",
     "raw-loader": "^0.5.1",
     "regenerator-runtime": "^0.10.3",
     "replace-bundle-webpack-plugin": "^1.0.0",
