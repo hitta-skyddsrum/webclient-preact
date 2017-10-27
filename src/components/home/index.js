@@ -9,7 +9,9 @@ export default () => {
       <h1>Hitta skyddsrum</h1>
       <p>Vi hjälper dig att hitta ditt närmaste skyddsrum. Så att du vet vart du ska ta vägen när det verkligen
         behövs.</p>
-      <Button>Klicka här</Button>
+      <Button>
+        Börja nu
+      </Button>
     </ContentContainer>
   );
 };
