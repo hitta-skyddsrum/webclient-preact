@@ -10,13 +10,12 @@ cache:
   directories:
     - node_modules
 
-before_install:
-  - npm run lint
-
 install:
   - npm install
 
 jobs:
   include:
+    - stage: lint
+      script: npm run lint
     - stage: test
       script: npm run test
