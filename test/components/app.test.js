@@ -1,5 +1,4 @@
 import { h, render } from 'preact';
-import { route } from 'preact-router';
 import { expect } from 'chai';
 
 import App from '../../src/components/app';
@@ -27,15 +26,6 @@ describe('App', () => {
       render(<App />, scratch);
 
       expect(scratch.innerHTML).to.contain('Hitta skyddsrum');
-    });
-
-    xit('should render /profile', async () => {
-      render(<App />, scratch);
-      route('/profile');
-
-      await sleep(1);
-
-      expect(scratch.innerHTML).to.contain('Profile: me');
     });
   });
 });
