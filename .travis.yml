@@ -11,11 +11,12 @@ cache:
     - node_modules
 
 install:
-  - npm install
+  - npm install yarn -g
+  - yarn
 
 jobs:
   include:
     - stage: lint
-      script: npm run lint
+      script: yarn lint
     - stage: test
-      script: npm run test
+      script: yarn test
