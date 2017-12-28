@@ -13,6 +13,7 @@ cache:
 install:
   - npm install yarn -g
   - yarn
+  - yarn add codecov
 
 jobs:
   include:
@@ -20,3 +21,4 @@ jobs:
       script: yarn lint
     - stage: test
       script: yarn test
+    - script: codecov
