@@ -1,44 +1,20 @@
 import { h, render } from 'preact';
-import { Subject } from 'rxjs/Subject';
-import 'rxjs/add/operator/startWith';
-import 'rxjs/add/operator/scan';
-
-const action$ = new Subject();
-
-const initState = { name: 'Harry' };
-
-// Redux reducer
-const reducer = (state, action) => {
-  console.log('name changed');
-  switch (action.type) {
-    case 'NAME_CHANGED':
-      return {
-        ...state,
-        name: action.payload,
-      };
-    default:
-      return state;
-  }
-};
-
-// Reduxification
-const store$ = action$
-  .startWith(initState)
-  .scan(reducer);
-
-// Higher order function to send actions to the stream
-const actionDispatcher = (func) =>
-  (...args) => {
-    console.log('disp');
-    action$.next(func(...args));
-  };
+import { Provider } from 'preact-redux';
+import { createStore, applyMiddleware, compose } from 'redux';
+import thunk from 'redux-thunk';
+import hittaSkyddsrumApp from './reducer';
 
 let root;
+
+const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
+const store = createStore(hittaSkyddsrumApp, composeEnhancers(
+  applyMiddleware(thunk)
+));
 
 function init() {
   let App = require('./components/app').default;
 
-  root = render(<App store$={store$} actionDispatcher={actionDispatcher}/>, document.body, root);
+  root = render(<Provider store={store}><App/></Provider>, document.body, root);
 }
 
 // register ServiceWorker via OfflinePlugin, for prod only:

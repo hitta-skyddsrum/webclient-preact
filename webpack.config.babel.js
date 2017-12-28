@@ -6,6 +6,7 @@ import CopyWebpackPlugin from 'copy-webpack-plugin';
 import OfflinePlugin from 'offline-plugin';
 import path from 'path';
 const ENV = process.env.NODE_ENV || 'development';
+require('dotenv').config();
 
 const CSS_MAPS = ENV !== 'production';
 /* eslint-disable */
@@ -122,7 +123,9 @@ module.exports = {
 			disable: ENV !== 'production'
 		}),
 		new webpack.DefinePlugin({
-			'process.env.NODE_ENV': JSON.stringify(ENV)
+			'process.env.NODE_ENV': JSON.stringify(ENV),
+      'process.env.ORS_API_KEY': JSON.stringify(process.env.ORS_API_KEY),
+      'process.env.OSM_EMAIL': JSON.stringify(process.env.OSM_EMAIL),
 		}),
 		new HtmlWebpackPlugin({
 			template: './index.ejs',
@@ -199,15 +202,11 @@ module.exports = {
 		host: '0.0.0.0',
 		publicPath: '/',
 		contentBase: './src',
-		historyApiFallback: true,
 		open: true,
 		openPage: '',
-		proxy: {
-			// OPTIONAL: proxy configuration:
-			// '/optional-prefix/**': { // path pattern to rewrite
-			//   target: 'http://target-host.com',
-			//   pathRewrite: path => path.replace(/^\/[^\/]+\//, '')   // strip first path segment
-			// }
-		}
+    hot: true,
+    historyApiFallback: {
+      index: '/index.html',
+    },
 	}
 };

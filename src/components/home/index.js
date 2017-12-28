@@ -1,7 +1,6 @@
 import { h } from 'preact';
-import ContentContainer from '../content-container/index';
-import Button from '../button';
-import './style.scss';
+import ContentContainer from '../content-wrapper';
+import SearchBox from '../../containers/search-box';
 
 export default () => {
   return (
@@ -9,9 +8,7 @@ export default () => {
       <h1>Hitta skyddsrum</h1>
       <p>Vi hjälper dig att hitta ditt närmaste skyddsrum. Så att du vet vart du ska ta vägen när det verkligen
         behövs.</p>
-      <Button>
-        Börja nu
-      </Button>
+      <SearchBox />
     </ContentContainer>
   );
 };

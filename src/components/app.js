@@ -1,26 +1,20 @@
-import { h, Component } from 'preact';
+import { h } from 'preact';
 import { Router } from 'preact-router';
 
-import Header from './header';
 import Home from './home';
+import Shelters from '../containers/shelters';
+import Redirect from '../containers/redirect/index';
 
-export default class App extends Component {
-	/** Gets fired when the route changes.
-	 *	@param {Object} event		"change" event from [preact-router](http://git.io/preact-router)
-	 *	@param {string} event.url	The newly routed URL
-	 */
-	handleRoute = e => {
-	  this.currentUrl = e.url;
-	};
+import '../style/index.scss';
 
-	render() {
-	  return (
-	    <div id="app">
-	      <Header />
-	      <Router onChange={this.handleRoute}>
-	        <Home path="/" />
-	      </Router>
-	    </div>
-	  );
-	}
-}
+export default () => {
+  return (
+    <div id="app">
+      <Router>
+        <Home path="/" />
+        <Redirect path="skyddsrum/koordinater/:lat/:lon" to="skyddsrum?lat=:lat&lon=:lon" />
+        <Shelters path="skyddsrum" />
+      </Router>
+    </div>
+  );
+};
