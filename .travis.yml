@@ -20,7 +20,6 @@ cache:
 install:
   - npm install yarn -g
   - yarn
-  - yarn add codecov
 
 jobs:
   include:
