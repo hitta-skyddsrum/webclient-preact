@@ -29,5 +29,5 @@ jobs:
     - stage: test
       script: yarn test && codecov
     - stage: e2e
-      if: env(TEST) = e2e
+      if: type = api
       script: yarn install-selenium && yarn e2e
