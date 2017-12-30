@@ -1,4 +1,12 @@
-{
+const fs = require('fs');
+
+const server_folder = 'node_modules/selenium-standalone/.selenium/selenium-server/';
+const server_path = server_folder
+  .concat(fs.readdirSync(server_folder)
+    .find(file => file.indexOf('.jar') !== -1)
+  );
+
+module.exports = {
   "src_folders" : ["test/e2e"],
   "output_folder" : "reports",
   "custom_commands_path" : "",
@@ -7,15 +15,15 @@
   "globals_path" : "",
 
   "selenium" : {
-    "start_process" : false,
-    "server_path" : "",
+    "start_process" : true,
+    server_path,
     "log_path" : "",
     "port" : 4444,
     "cli_args" : {
       "webdriver.chrome.driver" : "",
       "webdriver.gecko.driver" : "",
-      "webdriver.edge.driver" : ""
-    }
+      "webdriver.edge.driver" : "",
+    },
   },
 
   "test_settings" : {
@@ -26,27 +34,27 @@
       "silent": true,
       "screenshots" : {
         "enabled" : false,
-        "path" : ""
+        "path" : "",
       },
       "desiredCapabilities": {
         "browserName": "chrome",
         "marionette": true,
         "chromeOptions": {
-          "args" : ["--no-sandbox"]
-        }
-      }
+          "args" : ["--no-sandbox"],
+        },
+      },
     },
 
     "chrome" : {
       "desiredCapabilities": {
-        "browserName": "chrome"
-      }
+        "browserName": "chrome",
+      },
     },
 
     "edge" : {
       "desiredCapabilities": {
-        "browserName": "MicrosoftEdge"
-      }
-    }
-  }
-}
+        "browserName": "MicrosoftEdge",
+      },
+    },
+  },
+};

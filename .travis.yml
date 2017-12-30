@@ -5,6 +5,13 @@ dist: trusty
 
 language: node_js
 node_js: 8
+addons:
+  chrome: stable
+
+before_script:
+  - "export DISPLAY=:99.0"
+  - "sh -e /etc/init.d/xvfb start"
+  - sleep 3
 
 cache:
   directories:
@@ -21,3 +28,5 @@ jobs:
       script: yarn lint
     - stage: test
       script: yarn test && codecov
+    - stage: e2e
+      script: yarn install-selenium && yarn e2e
