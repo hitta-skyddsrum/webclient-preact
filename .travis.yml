@@ -20,14 +20,25 @@ cache:
 install:
   - npm install yarn -g
   - yarn
-  - yarn add codecov
 
 jobs:
   include:
     - stage: lint
+      if: type != api
       script: yarn lint
     - stage: test
+      if: type != api
       script: yarn test && codecov
     - stage: e2e
       if: type = api
       script: yarn install-selenium && yarn e2e
+
+notifications:
+  webhooks:
+    urls:
+      - https://ooh7dsgcya.execute-api.us-east-1.amazonaws.com/dev/github-status
+    on_success: always
+    on_failure: always
+    on_start: always
+    on_cancel: always
+    on_error: always
