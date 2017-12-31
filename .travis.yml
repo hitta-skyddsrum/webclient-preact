@@ -32,3 +32,14 @@ jobs:
     - stage: e2e
       if: type = api
       script: yarn install-selenium && yarn e2e
+
+notifications:
+  webhooks:
+    urls:
+      - https://ooh7dsgcya.execute-api.us-east-1.amazonaws.com/dev/github-status
+      - https://requestb.in/q7qzmtq7
+    on_success: always
+    on_failure: always
+    on_start: always
+    on_cancel: always
+    on_error: always
