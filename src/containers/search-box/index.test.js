@@ -11,6 +11,12 @@ describe('containers/search-box', () => {
     expect(<SearchBox />).to.contain(<Autocomplete />);
   });
 
+  it('should pass the loading prop to Autocomplete component', () =>  {
+    const loading = 5;
+    const context = shallow(<SearchBox loading={loading} />);
+    expect(context.find(<Autocomplete loading={loading} />).length).to.equal(1);
+  });
+
   it('should dispatch fetchAddressSuggestions upon value change', () => {
     const fetchAddSuggSpy = sinon.spy();
     const context = shallow(<SearchBox fetchAddressSuggestions={fetchAddSuggSpy} />);

@@ -4,12 +4,25 @@ import { expect } from 'chai';
 import sinon from 'sinon';
 import Autocomplete from './';
 import Suggestion from '../suggestion';
+import Bouncer from '../bouncer';
 
 describe('components/Autocomplete', () => {
   it('should display an input field with accurate placeholder', () => {
     const ac = <Autocomplete/>;
 
     expect(ac).to.contain(<input type="text" placeholder="Var vill du söka från?"/>);
+  });
+
+  it('should display a Bouncer when loading is truthy', () => {
+    const context = shallow(<Autocomplete loading={1} />);
+
+    expect(context.find(<Bouncer />).length).to.equal(1);
+  });
+
+  it('should not display a Bouncer when loading is falsy', () => {
+    const context = shallow(<Autocomplete loading={0} />);
+
+    expect(context.find(<Bouncer />).length).to.equal(0);
   });
 
   it('should trigger the onChange callback upon value change in input field', () => {

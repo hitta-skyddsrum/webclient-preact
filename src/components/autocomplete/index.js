@@ -1,6 +1,7 @@
 import { h } from 'preact';
 import style from './style.scss';
 
+import Bouncer from '../bouncer';
 import Suggestion from '../suggestion';
 
 export default ({
@@ -8,6 +9,7 @@ export default ({
   onChange,
   onSelection,
   suggestions,
+  loading,
 }) => {
   return (
     <div class={style.searchBox}>
@@ -17,6 +19,7 @@ export default ({
         onInput={event => onChange(event.target.value)}
         value={value}
       />
+      {!!loading && <Bouncer position="absolute" />}
 
       {suggestions &&
       <ul class={style.suggestions}>

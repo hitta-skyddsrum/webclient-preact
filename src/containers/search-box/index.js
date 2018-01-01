@@ -42,6 +42,7 @@ export class SearchBox extends Component {
         onChange={this.handleAddressChanged}
         onSelection={this.handleAddressSelection}
         value={this.state.searchValue}
+        loading={this.props.loading}
       />
     );
   }

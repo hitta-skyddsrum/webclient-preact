@@ -10,6 +10,24 @@ describe('containers/search-box/reducer', () => {
     expect(SearchBoxReducer(oldState, { type: 'NOT_MATCHING_ANYTHING'})).to.eql(oldState);
   });
 
+  it('should increment state `loading` upon FETCH_ADDRESS_SUGGESTIONS', () => {
+    const oldState = { loading: 2 };
+    expect(SearchBoxReducer(oldState, { type: types.FETCH_ADDRESS_SUGGESTIONS }).loading)
+      .to.equal(oldState.loading + 1);
+  });
+
+  it('should decrement state `loading` upon FETCH_ADDRESS_SUGGESTIONS_SUCCESS', () => {
+    const oldState = { loading: 5 };
+    expect(SearchBoxReducer(oldState, { type: types.FETCH_ADDRESS_SUGGESTIONS_SUCCESS }).loading)
+      .to.equal(oldState.loading - 1);
+  });
+
+  it('should decrement state `loading` upon FETCH_ADDRESS_SUGGESTIONS_FAILED', () => {
+    const oldState = { loading: 5 };
+    expect(SearchBoxReducer(oldState, { type: types.FETCH_ADDRESS_SUGGESTIONS_FAILED }).loading)
+      .to.equal(oldState.loading - 1);
+  });
+
   it('should add suggestions to state upon FETCH_ADDRESS_SUGGESTIONS_SUCCESS', () => {
     const oldAddressSuggestions = [{ street_name: 'Orvargatan 6'}];
     const oldState = {
