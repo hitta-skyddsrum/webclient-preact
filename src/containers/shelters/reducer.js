@@ -3,6 +3,7 @@ import {
   FETCH_SHELTERS_SUCCESS,
   FETCH_SHELTERS_FAILED,
   FETCH_ROUTE_TO_SHELTER_SUCCESS,
+  FETCH_ROUTE_TO_SHELTER_FAILED,
   SELECT_SHELTER,
 } from './types';
 
@@ -22,6 +23,11 @@ export default (state = { shelters: [], routes: [] }, action) => {
       return {
         ...state,
         routes: action.route.routes.map(route => ({ ...route, coordinates: polyline.decode(route.geometry) })),
+      };
+    case FETCH_ROUTE_TO_SHELTER_FAILED:
+      return {
+        ...state,
+        error: action.error,
       };
     case SELECT_SHELTER:
       return {

@@ -42,6 +42,12 @@ describe('containers/shelters/reducer', () => {
       .to.eql(decodedRoutes.map((route, index) => ({...route, ...encodedRoutes[index] })));
   });
 
+  it('should add error to state upon FETCH_ROUTE_TO_SHELTER_FAILED', () => {
+    const error = new Error();
+    expect(SheltersReducer(undefined, { type: types.FETCH_ROUTE_TO_SHELTER_FAILED, error}).error)
+      .to.equal(error);
+  });
+
   it('should add selected shelter to state upon SELECT_SHELTER', () => {
     const shelter = { shelter: 'is selected' };
 
