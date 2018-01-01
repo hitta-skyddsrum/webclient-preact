@@ -54,4 +54,9 @@ describe('containers/shelters/reducer', () => {
     expect(SheltersReducer(undefined, { type: types.SELECT_SHELTER, shelter }).selectedShelter)
       .to.eql(shelter);
   });
+
+  it('should remove error from state upon CLEAR_ERROR', () => {
+    expect(SheltersReducer(undefined, { type: types.CLEAR_ERROR }).error)
+      .to.eql(null);
+  });
 });

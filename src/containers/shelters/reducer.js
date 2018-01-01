@@ -5,6 +5,7 @@ import {
   FETCH_ROUTE_TO_SHELTER_SUCCESS,
   FETCH_ROUTE_TO_SHELTER_FAILED,
   SELECT_SHELTER,
+  CLEAR_ERROR,
 } from './types';
 
 export default (state = { shelters: [], routes: [] }, action) => {
@@ -33,6 +34,11 @@ export default (state = { shelters: [], routes: [] }, action) => {
       return {
         ...state,
         selectedShelter: { ...action.shelter },
+      };
+    case CLEAR_ERROR:
+      return {
+        ...state,
+        error: null,
       };
     default:
       return state;

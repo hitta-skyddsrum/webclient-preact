@@ -1,8 +1,9 @@
 import { h, Component } from 'preact';
 import { connect } from 'preact-redux';
 
-import { fetchShelters, fetchRouteToShelter, selectShelter } from './actions';
+import { fetchShelters, fetchRouteToShelter, selectShelter, clearError } from './actions';
 import SheltersMap from '../../components/shelters-map';
+import ErrorDialog from '../../components/error-dialog';
 
 export class Shelters extends Component {
   componentWillMount() {
@@ -41,13 +42,16 @@ export class Shelters extends Component {
   }
 
   render() {
-    return (<SheltersMap
-      center={[parseFloat(this.props.lat), parseFloat(this.props.lon)]}
-      shelters={this.props.shelters}
-      routes={this.props.routes}
-      onSelectShelter={this.props.handleSelectShelter}
-      bounds={this.state.bounds}
-    />);
+    return (<div>
+      {this.props.error && <ErrorDialog title={this.props.error.message} handleClose={this.props.clearError} />}
+      <SheltersMap
+        center={[parseFloat(this.props.lat), parseFloat(this.props.lon)]}
+        shelters={this.props.shelters}
+        routes={this.props.routes}
+        onSelectShelter={this.props.handleSelectShelter}
+        bounds={this.state.bounds}
+      />
+    </div>);
   }
 }
 
@@ -60,6 +64,7 @@ const mapDispatchToProps = dispatch => {
     fetchShelters: (lat, lon) => dispatch(fetchShelters(lat, lon)),
     fetchRouteToShelter: (from, to) => dispatch(fetchRouteToShelter(from, to)),
     handleSelectShelter: shelter => dispatch(selectShelter(shelter)),
+    clearError: () => dispatch(clearError()),
   };
 };
 

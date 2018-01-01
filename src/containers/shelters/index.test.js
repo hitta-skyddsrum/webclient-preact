@@ -4,12 +4,45 @@ import sinon from 'sinon';
 import { shallow } from 'preact-render-spy';
 import { Shelters } from './';
 import SheltersMap from '../../components/shelters-map';
+import ErrorDialog from '../../components/error-dialog';
 
 describe('containers/shelters', () => {
   let fetchShelters;
 
   beforeEach(() => {
     fetchShelters = sinon.spy();
+  });
+
+  it('displays an ErrorDialog upon incoming error', () => {
+    const fetchShelters = sinon.spy();
+    const error = new Error('What\'s going on?');
+    const context = shallow(<Shelters
+      fetchShelters={fetchShelters}
+      shelters={[]}
+    />);
+
+    expect(context.find(<ErrorDialog />).length).to.equal(0);
+
+    context.render(<Shelters
+      error={error}
+      fetchShelters={fetchShelters}
+      shelters={[]}
+    />);
+
+    expect(context.find(<ErrorDialog />).length).to.equal(1);
+  });
+
+  it('fires clearError upon closing ErrorDialog', () => {
+    const clearError = sinon.spy();
+    const context = shallow(<Shelters
+      fetchShelters={sinon.spy()}
+      error={new Error('What\'s going on?')}
+      clearError={clearError}
+    />);
+
+    context.find(<ErrorDialog />).attr('handleClose')();
+
+    expect(clearError.calledOnce).to.equal(true);
   });
 
   it('should contain SheltersMap component', () => {

@@ -8,6 +8,7 @@ import {
   FETCH_ROUTE_TO_SHELTER_SUCCESS,
   FETCH_ROUTE_TO_SHELTER_FAILED,
   SELECT_SHELTER,
+  CLEAR_ERROR,
 } from './types';
 
 export const fetchShelters = (lat, lon) => {
@@ -50,5 +51,11 @@ export const selectShelter = shelter => {
   return {
     type: SELECT_SHELTER,
     shelter,
+  };
+};
+
+export const clearError = () => {
+  return {
+    type: CLEAR_ERROR,
   };
 };

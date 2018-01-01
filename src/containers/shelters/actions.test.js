@@ -150,3 +150,11 @@ describe('containers/shelters/actions/selectShelter', () => {
     });
   });
 });
+
+describe('containers/shelters/actions/clearError', () => {
+  it('creates CLEAR_ERROR', () => {
+    expect(require('./actions').clearError()).to.eql({
+      type: types.CLEAR_ERROR,
+    });
+  });
+});
