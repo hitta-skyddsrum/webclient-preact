@@ -13,9 +13,12 @@ describe('containers/shelters', () => {
     fetchShelters = sinon.spy();
   });
 
-  it('displays an ErrorDialog upon incoming error', () => {
+  it('displays an ErrorDialog upon incoming humanError', () => {
     const fetchShelters = sinon.spy();
-    const error = new Error('What\'s going on?');
+    const humanError = {
+      message: 'Varning',
+      desc: 'Hold on',
+    };
     const context = shallow(<Shelters
       fetchShelters={fetchShelters}
       shelters={[]}
@@ -24,19 +27,19 @@ describe('containers/shelters', () => {
     expect(context.find(<ErrorDialog />).length).to.equal(0);
 
     context.render(<Shelters
-      error={error}
+      humanError={humanError}
       fetchShelters={fetchShelters}
       shelters={[]}
     />);
 
-    expect(context.find(<ErrorDialog />).length).to.equal(1);
+    expect(context.find(<ErrorDialog title={humanError.message} desc={humanError.desc} />).length).to.equal(1);
   });
 
   it('fires clearError upon closing ErrorDialog', () => {
     const clearError = sinon.spy();
     const context = shallow(<Shelters
       fetchShelters={sinon.spy()}
-      error={new Error('What\'s going on?')}
+      humanError={new Error('What\'s going on?')}
       clearError={clearError}
     />);
 

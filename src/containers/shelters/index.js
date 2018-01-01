@@ -43,7 +43,11 @@ export class Shelters extends Component {
 
   render() {
     return (<div>
-      {this.props.error && <ErrorDialog title={this.props.error.message} handleClose={this.props.clearError} />}
+      {this.props.humanError && <ErrorDialog
+        title={this.props.humanError.message}
+        desc={this.props.humanError.desc}
+        handleClose={this.props.clearError}
+      />}
       <SheltersMap
         center={[parseFloat(this.props.lat), parseFloat(this.props.lon)]}
         shelters={this.props.shelters}

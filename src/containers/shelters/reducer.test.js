@@ -25,8 +25,13 @@ describe('containers/shelters/reducer', () => {
 
   it('should add error to state upon FETCH_SHELTERS_FAILED', () => {
     const error = new Error();
+
     expect(SheltersReducer(undefined, { type: types.FETCH_SHELTERS_FAILED, error}).error)
       .to.equal(error);
+    expect(SheltersReducer(undefined, { type: types.FETCH_SHELTERS_FAILED, error}).humanError.message)
+      .to.equal('Fel vid hämtning skyddsrumsdata');
+    expect(SheltersReducer(undefined, { type: types.FETCH_SHELTERS_FAILED, error}).humanError.desc)
+      .to.match(new RegExp('misslyckades'));
   });
 
   it('should add routes to state upon FETCH_ROUTE_TO_SHELTER_SUCCESS', () => {
@@ -46,6 +51,10 @@ describe('containers/shelters/reducer', () => {
     const error = new Error();
     expect(SheltersReducer(undefined, { type: types.FETCH_ROUTE_TO_SHELTER_FAILED, error}).error)
       .to.equal(error);
+    expect(SheltersReducer(undefined, { type: types.FETCH_ROUTE_TO_SHELTER_FAILED, error}).humanError.message)
+      .to.equal('Fel vid hämtning av vägbeskrivning');
+    expect(SheltersReducer(undefined, { type: types.FETCH_ROUTE_TO_SHELTER_FAILED, error}).humanError.desc)
+      .to.match(new RegExp('misslyckades'));
   });
 
   it('should add selected shelter to state upon SELECT_SHELTER', () => {
@@ -56,7 +65,9 @@ describe('containers/shelters/reducer', () => {
   });
 
   it('should remove error from state upon CLEAR_ERROR', () => {
-    expect(SheltersReducer(undefined, { type: types.CLEAR_ERROR }).error)
+    expect(SheltersReducer({ error: true }, { type: types.CLEAR_ERROR }).error)
+      .to.eql(null);
+    expect(SheltersReducer({ humanError: true }, { type: types.CLEAR_ERROR }).humanError)
       .to.eql(null);
   });
 });
