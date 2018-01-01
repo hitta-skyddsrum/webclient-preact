@@ -13,7 +13,6 @@ $searchBoxInputHeight: 60px;
   margin: 0 auto;
 
   input[type=text], .button {
-
     display: block;
     width: 100%;
     @include box-sizing(border-box);
@@ -25,14 +24,6 @@ $searchBoxInputHeight: 60px;
     @include border-radius(2px 0px 0px 2px);
     height: $searchBoxInputHeight;
     outline-color: $orange;
-  }
-
-  .bouncer {
-    right: 20px;
-    @include vertical-align(absolute);
-    div {
-      background-color: $orange;
-    }
   }
 }
 
