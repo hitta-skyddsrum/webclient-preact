@@ -3,9 +3,11 @@ import { expect } from 'chai';
 import sinon from 'sinon';
 import { shallow } from 'preact-render-spy';
 import { Shelters } from './';
+
 import SheltersMap from '../../components/shelters-map';
 import ErrorDialog from '../../components/error-dialog';
 import LoadingIndicator from '../../components/loading-indicator';
+import ShelterDetail from '../../components/shelter-detail';
 
 describe('containers/shelters', () => {
   let fetchShelters;
@@ -130,5 +132,43 @@ describe('containers/shelters', () => {
       center,
       { lat: selectedShelter.position.lat, lon: selectedShelter.position.long }
     );
+  });
+
+  it('should display ShelterDetail upon selected shelter', () => {
+    const fetchRouteToShelter = sinon.spy();
+    const context = shallow(<Shelters
+      shelters={[]}
+      fetchRouteToShelter={fetchRouteToShelter}
+      fetchShelters={fetchShelters}
+    />);
+    context.setState({ hideShelterDetail: true });
+
+    expect(context.find(<ShelterDetail />).length).to.equal(0);
+
+    const selectedShelter = { shelterId: '1337', position: {} };
+
+    context.render(<Shelters
+      fetchShelters={fetchShelters}
+      shelters={[]}
+      selectedShelter={selectedShelter}
+    />);
+
+    expect(context.find(<ShelterDetail open={true} shelter={selectedShelter} />).length).to.equal(1);
+  });
+
+  it('should hide ShelterDetail upon selected shelter', () => {
+    const fetchRouteToShelter = sinon.spy();
+    const selectedShelter = { shelterId: '1337', position: {} };
+    const context = shallow(<Shelters
+      fetchRouteToShelter={fetchRouteToShelter}
+      selectedShelter={selectedShelter}
+      fetchShelters={fetchShelters}
+      shelters={[]}
+    />);
+
+    context.find(<ShelterDetail />).attr('onClose')();
+    context.rerender();
+
+    expect(context.find(<ShelterDetail open={false} />).length).to.equal(1);
   });
 });

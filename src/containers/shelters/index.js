@@ -1,12 +1,18 @@
 import { h, Component } from 'preact';
 import { connect } from 'preact-redux';
+import { autobind } from 'core-decorators';
 
 import { fetchShelters, fetchRouteToShelter, selectShelter, clearError } from './actions';
 import SheltersMap from '../../components/shelters-map';
 import ErrorDialog from '../../components/error-dialog';
 import LoadingIndicator from '../../components/loading-indicator';
+import ShelterDetail from '../../components/shelter-detail';
 
 export class Shelters extends Component {
+  state = {
+    hideShelterDetail: true,
+  };
+
   componentWillMount() {
     this.props.fetchShelters(this.props.lat, this.props.lon);
   }
@@ -22,6 +28,7 @@ export class Shelters extends Component {
     }
 
     if (nextProps.selectedShelter !== this.props.selectedShelter) {
+      this.setState({ hideShelterDetail: false });
       this.props.fetchRouteToShelter({
         lon: this.props.lon,
         lat: this.props.lat,
@@ -42,6 +49,11 @@ export class Shelters extends Component {
       .shift();
   }
 
+  @autobind
+  handleCloseShelterDetail() {
+    this.setState({ hideShelterDetail: true });
+  }
+
   render() {
     return (<div>
       {!!this.props.loading && <LoadingIndicator />}
@@ -57,6 +69,11 @@ export class Shelters extends Component {
         onSelectShelter={this.props.handleSelectShelter}
         bounds={this.state.bounds}
       />
+      {this.props.selectedShelter && <ShelterDetail
+        open={!this.state.hideShelterDetail}
+        shelter={this.props.selectedShelter}
+        onClose={this.handleCloseShelterDetail}
+      />}
     </div>);
   }
 }
