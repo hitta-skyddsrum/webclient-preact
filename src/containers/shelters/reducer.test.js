@@ -15,6 +15,27 @@ describe('containers/shelters/reducer', () => {
     expect(SheltersReducer(oldState, { type: 'NOT_MATCHING_ANYTHING'})).to.eql(oldState);
   });
 
+  it('should increment loading upon FETCH_SHELTERS', () => {
+    const loading = 34;
+
+    expect(SheltersReducer({ loading }, { type: types.FETCH_SHELTERS }).loading)
+      .to.equal(loading + 1);
+  });
+
+  it('should decrement loading upon FETCH_SHELTERS_SUCCESS', () => {
+    const loading = 34;
+
+    expect(SheltersReducer({ loading }, { type: types.FETCH_SHELTERS_SUCCESS }).loading)
+      .to.equal(loading - 1);
+  });
+
+  it('should decrement loading upon FETCH_SHELTERS_FAILED', () => {
+    const loading = 34;
+
+    expect(SheltersReducer({ loading }, { type: types.FETCH_SHELTERS_FAILED }).loading)
+      .to.equal(loading - 1);
+  });
+
   it('should replace shelters in state upon FETCH_SHELTERS_SUCCESS', () => {
     const oldState = { shelters: [{ name: 'release me' }] };
     const shelters = [{ name: 'Im the king' }];
@@ -32,6 +53,27 @@ describe('containers/shelters/reducer', () => {
       .to.equal('Fel vid hämtning skyddsrumsdata');
     expect(SheltersReducer(undefined, { type: types.FETCH_SHELTERS_FAILED, error}).humanError.desc)
       .to.match(new RegExp('misslyckades'));
+  });
+
+  it('should increment loading upon FETCH_ROUTE_TO_SHELTER', () => {
+    const loading = 1;
+
+    expect(SheltersReducer({ loading }, { type: types.FETCH_ROUTE_TO_SHELTER }).loading)
+      .to.equal(loading + 1);
+  });
+
+  it('should decrement loading upon FETCH_ROUTE_TO_SHELTER_SUCCESS', () => {
+    const loading = 3;
+
+    expect(SheltersReducer({ loading }, { type: types.FETCH_ROUTE_TO_SHELTER_SUCCESS, route: { routes: [] } }).loading)
+      .to.equal(loading - 1);
+  });
+
+  it('should decrement loading upon FETCH_ROUTE_TO_SHELTER_FAILED', () => {
+    const loading = 3321;
+
+    expect(SheltersReducer({ loading }, { type: types.FETCH_ROUTE_TO_SHELTER_FAILED }).loading)
+      .to.equal(loading - 1);
   });
 
   it('should add routes to state upon FETCH_ROUTE_TO_SHELTER_SUCCESS', () => {

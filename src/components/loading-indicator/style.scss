@@ -1,0 +1,25 @@
+@import "../../style/variables";
+
+.overlay {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background-color: rgba($gray, 0.7);
+  z-index: 1000;
+}
+
+.loadingBox {
+  background-color: $gray;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  text-align: center;
+  padding: 20px;
+}
+
+:export {
+  orange: $orange;
+}

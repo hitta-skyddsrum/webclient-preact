@@ -4,6 +4,7 @@ import { connect } from 'preact-redux';
 import { fetchShelters, fetchRouteToShelter, selectShelter, clearError } from './actions';
 import SheltersMap from '../../components/shelters-map';
 import ErrorDialog from '../../components/error-dialog';
+import LoadingIndicator from '../../components/loading-indicator';
 
 export class Shelters extends Component {
   componentWillMount() {
@@ -43,6 +44,7 @@ export class Shelters extends Component {
 
   render() {
     return (<div>
+      {!!this.props.loading && <LoadingIndicator />}
       {this.props.humanError && <ErrorDialog
         title={this.props.humanError.message}
         desc={this.props.humanError.desc}

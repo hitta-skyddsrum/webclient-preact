@@ -5,12 +5,19 @@ import { shallow } from 'preact-render-spy';
 import { Shelters } from './';
 import SheltersMap from '../../components/shelters-map';
 import ErrorDialog from '../../components/error-dialog';
+import LoadingIndicator from '../../components/loading-indicator';
 
 describe('containers/shelters', () => {
   let fetchShelters;
 
   beforeEach(() => {
     fetchShelters = sinon.spy();
+  });
+
+  it('displays a LoadingIndicator when loading is truthy', () => {
+    const context = shallow(<Shelters fetchShelters={fetchShelters} loading={4} />);
+
+    expect(context.find(<LoadingIndicator />).length).to.equal(1);
   });
 
   it('displays an ErrorDialog upon incoming humanError', () => {
