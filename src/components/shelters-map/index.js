@@ -12,10 +12,12 @@ export default ({
   onSelectShelter,
   bounds,
 }) => {
+  const mapCenter = center.filter(pos => pos).length ? center : false;
+
   return (
     <div className={style.mapContainer}>
       <Map
-        center={center}
+        center={mapCenter}
         zoom={10}
         style={{height: '100vh'}}
         bounds={bounds}
@@ -24,15 +26,15 @@ export default ({
           url='http://{s}.tile.osm.org/{z}/{x}/{y}.png'
           attribution="&copy; <a href=&quot;http://osm.org/copyright&quot;>OpenStreetMap</a> contributors"
         />
-        <Marker
-          position={center}
+        {!!mapCenter && <Marker
+          position={mapCenter}
           icon={
             L.icon({
               iconUrl: '/assets/images/icon-you_are_here.png',
               iconSize: [22, 40],
             })
           }
-        />
+        />}
         {shelters.map(shelter => (<Marker
           position={[shelter.position.lat, shelter.position.long]}
           onClick={() => onSelectShelter(shelter)}

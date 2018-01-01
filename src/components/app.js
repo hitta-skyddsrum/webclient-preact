@@ -15,7 +15,7 @@ export default () => {
         <Router>
           <Home path="/" />
           <Redirect path="skyddsrum/koordinater/:lat/:lon" to="skyddsrum?lat=:lat&lon=:lon" />
-          <Shelters path="skyddsrum" />
+          <Shelters path="skyddsrum/:id?" />
         </Router>
       </MuiThemeProvider>
     </div>

@@ -1,5 +1,8 @@
 import polyline from 'polyline';
 import {
+  FETCH_SINGLE_SHELTER,
+  FETCH_SINGLE_SHELTER_SUCCESS,
+  FETCH_SINGLE_SHELTER_FAILED,
   FETCH_SHELTERS,
   FETCH_SHELTERS_SUCCESS,
   FETCH_SHELTERS_FAILED,
@@ -20,6 +23,29 @@ const initialState = {
 
 export default (state = initialState, action) => {
   switch (action.type) {
+    case FETCH_SINGLE_SHELTER:
+      return {
+        ...state,
+        loading: state.loading + 1,
+      };
+    case FETCH_SINGLE_SHELTER_SUCCESS:
+      return {
+        ...state,
+        loading: state.loading - 1,
+        shelters: [...state.shelters, action.shelter],
+      };
+    case FETCH_SINGLE_SHELTER_FAILED:
+      return {
+        ...state,
+        loading: state.loading - 1,
+        error: action.error,
+        humanError: {
+          message: 'Fel vid hämtning av skyddsrumsdata',
+          desc: `Hämtningen av skyddsrumsdata för det skyddsrum du söker misslyckades.
+            Felet kan bero på att länken är gammal eller på grund av ett tillfälligt fel.
+            Vi rekommenderar att du besöker msb.se för att hämta data om skyddsrum.`,
+        },
+      };
     case FETCH_SHELTERS:
       return {
         ...state,

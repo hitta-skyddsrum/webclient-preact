@@ -1,6 +1,9 @@
 import fetchJson from '../../lib/fetch-json';
 
 import {
+  FETCH_SINGLE_SHELTER,
+  FETCH_SINGLE_SHELTER_SUCCESS,
+  FETCH_SINGLE_SHELTER_FAILED,
   FETCH_SHELTERS,
   FETCH_SHELTERS_SUCCESS,
   FETCH_SHELTERS_FAILED,
@@ -10,6 +13,24 @@ import {
   SELECT_SHELTER,
   CLEAR_ERROR,
 } from './types';
+
+export const fetchSingleShelter = (id) => {
+  return dispatch => {
+    dispatch({
+      type: FETCH_SINGLE_SHELTER,
+    });
+
+    return fetchJson(`https://api.hittaskyddsrum.se/api/v1/shelters/${id}`)
+      .then(response => dispatch({
+        type: FETCH_SINGLE_SHELTER_SUCCESS,
+        shelter: response,
+      }))
+      .catch(error => dispatch({
+        type: FETCH_SINGLE_SHELTER_FAILED,
+        error,
+      }));
+  };
+};
 
 export const fetchShelters = (lat, lon) => {
   return dispatch => {

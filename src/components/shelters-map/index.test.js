@@ -38,6 +38,12 @@ describe('components/SheltersMap', () => {
     expect(mapContext.find(<Marker position={center} />).length).to.equal(1);
   });
 
+  it('should not render a marker if no center is given', () => {
+    mapContext.render(<SheltersMap center={[undefined, undefined]} shelters={[]} routes={[]} />);
+
+    expect(mapContext.find(<Marker />).length).to.equal(0);
+  });
+
   it('should render all the shelters as markers', () => {
     expect(shelters.length).to.be.greaterThan(1);
 

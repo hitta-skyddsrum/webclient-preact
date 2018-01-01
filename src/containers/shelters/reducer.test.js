@@ -15,6 +15,48 @@ describe('containers/shelters/reducer', () => {
     expect(SheltersReducer(oldState, { type: 'NOT_MATCHING_ANYTHING'})).to.eql(oldState);
   });
 
+  it('should increment loading upon FETCH_SINGLE_SHELTER', () => {
+    const loading = 1337;
+
+    expect(SheltersReducer({ loading }, { type: types.FETCH_SINGLE_SHELTER }).loading)
+      .to.equal(loading + 1);
+  });
+
+  it('should append shelter to shelters upon FETCH_SINGLE_SHELTER_SUCCESS', () => {
+    const oldShelters = [
+      { shelterId: 1 },
+    ];
+    const shelter = { shelterId: 2 };
+
+    expect(SheltersReducer({ shelters: oldShelters }, { type: types.FETCH_SINGLE_SHELTER_SUCCESS, shelter }).shelters)
+      .to.eql([...oldShelters, shelter]);
+  });
+
+  it('should decrement loading upon FETCH_SINGLE_SHELTER_SUCCESS', () => {
+    const loading = 2;
+
+    expect(SheltersReducer({ loading }, { type: types.FETCH_SINGLE_SHELTER_SUCCESS }).loading)
+      .to.equal(loading - 1);
+  });
+
+  it('should set error state upon FETCH_SINGLE_SHELTER_FAILED', () => {
+    const error = new Error();
+
+    expect(SheltersReducer(undefined, { type: types.FETCH_SINGLE_SHELTER_FAILED, error }).error)
+      .to.eql(error);
+    expect(SheltersReducer(undefined, { type: types.FETCH_SINGLE_SHELTER_FAILED, error }).humanError.message)
+      .to.match(new RegExp('Fel'));
+    expect(SheltersReducer(undefined, { type: types.FETCH_SINGLE_SHELTER_FAILED, error }).humanError.desc)
+      .to.match(new RegExp('misslyckades'));
+  });
+
+  it('should decrement loading upon FETCH_SINGLE_SHELTER_FAILED', () => {
+    const loading = 2;
+
+    expect(SheltersReducer({ loading }, { type: types.FETCH_SINGLE_SHELTER_FAILED }).loading)
+      .to.equal(loading - 1);
+  });
+
   it('should increment loading upon FETCH_SHELTERS', () => {
     const loading = 34;
 

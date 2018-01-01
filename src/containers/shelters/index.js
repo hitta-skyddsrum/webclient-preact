@@ -1,8 +1,9 @@
 import { h, Component } from 'preact';
 import { connect } from 'preact-redux';
+import { route } from 'preact-router';
 import { autobind } from 'core-decorators';
 
-import { fetchShelters, fetchRouteToShelter, selectShelter, clearError } from './actions';
+import { fetchShelters, fetchRouteToShelter, selectShelter, clearError, fetchSingleShelter } from './actions';
 import SheltersMap from '../../components/shelters-map';
 import ErrorDialog from '../../components/error-dialog';
 import LoadingIndicator from '../../components/loading-indicator';
@@ -14,10 +15,24 @@ export class Shelters extends Component {
   };
 
   componentWillMount() {
-    this.props.fetchShelters(this.props.lat, this.props.lon);
+    if (this.props.id) {
+      this.fetchAndSelectShelter(this.props.id);
+    } else {
+      this.props.fetchShelters(this.props.lat, this.props.lon);
+    }
   }
 
   componentWillUpdate(nextProps) {
+    if (nextProps.id && nextProps.id !== this.props.id) {
+      const shelter = this.props.shelters.find(({ id }) => parseInt(nextProps.id, 10) === id);
+
+      if (!shelter) {
+        this.fetchAndSelectShelter(nextProps.id);
+      } else {
+        this.props.handleSelectShelter(shelter);
+      }
+    }
+
     if (nextProps.shelters.length && !this.props.shelters.length) {
       const bounds = [
         [this.getShelterPosition(nextProps.shelters, 'lat', 'smallest'), this.getShelterPosition(nextProps.shelters, 'long', 'smallest')],
@@ -27,7 +42,7 @@ export class Shelters extends Component {
       this.setState({ bounds });
     }
 
-    if (nextProps.selectedShelter !== this.props.selectedShelter) {
+    if (nextProps.selectedShelter && nextProps.selectedShelter !== this.props.selectedShelter) {
       this.setState({ hideShelterDetail: false });
       this.props.fetchRouteToShelter({
         lon: this.props.lon,
@@ -38,6 +53,11 @@ export class Shelters extends Component {
         lat: nextProps.selectedShelter.position.lat,
       });
     }
+  }
+
+  fetchAndSelectShelter(id) {
+    this.props.fetchSingleShelter(id)
+      .then(({ shelter }) => this.props.handleSelectShelter(shelter));
   }
 
   getShelterPosition(shelters, axle, sortedBy) {
@@ -54,6 +74,11 @@ export class Shelters extends Component {
     this.setState({ hideShelterDetail: true });
   }
 
+  @autobind
+  handleSelectShelter(shelter) {
+    route(`/skyddsrum/${shelter.id}`, false);
+  }
+
   render() {
     return (<div>
       {!!this.props.loading && <LoadingIndicator />}
@@ -63,10 +88,10 @@ export class Shelters extends Component {
         handleClose={this.props.clearError}
       />}
       <SheltersMap
-        center={[parseFloat(this.props.lat), parseFloat(this.props.lon)]}
+        center={[this.props.lat, this.props.lon]}
         shelters={this.props.shelters}
         routes={this.props.routes}
-        onSelectShelter={this.props.handleSelectShelter}
+        onSelectShelter={this.handleSelectShelter}
         bounds={this.state.bounds}
       />
       {this.props.selectedShelter && <ShelterDetail
@@ -84,6 +109,7 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
   return {
+    fetchSingleShelter: id => dispatch(fetchSingleShelter(id)),
     fetchShelters: (lat, lon) => dispatch(fetchShelters(lat, lon)),
     fetchRouteToShelter: (from, to) => dispatch(fetchRouteToShelter(from, to)),
     handleSelectShelter: shelter => dispatch(selectShelter(shelter)),

@@ -18,6 +18,6 @@ describe('App', () => {
   });
 
   it('should route /skyddsrum to Shelters component', () => {
-    expect(shallow(<App />).find(<Shelters path='skyddsrum' />).length).to.equal(1);
+    expect(shallow(<App />).find(<Shelters path='skyddsrum/:id?' />).length).to.equal(1);
   });
 });

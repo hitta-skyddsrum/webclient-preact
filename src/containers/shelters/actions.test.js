@@ -7,6 +7,65 @@ import * as types from './types';
 const middlewares = [thunk];
 const mockStore = configureMockStore(middlewares);
 
+describe('containers/shelters/actions/fetchSingleShelter', () => {
+  let fetchJson;
+
+  beforeAll(() => {
+    jest.mock('../../lib/fetch-json');
+    fetchJson = require('../../lib/fetch-json').default;
+  });
+
+  afterEach(() => {
+    fetchJson.mockReset();
+    jest.unmock('../../lib/fetch-json');
+  });
+
+  it('creates FETCH_SINGLE_SHELTER', () => {
+    fetchJson.mockReturnValueOnce(Promise.resolve());
+
+    const store = mockStore({ shelters: [] });
+
+    return store.dispatch(require('./actions').fetchSingleShelter(1))
+      .then(() => expect(store.getActions()[0]).to.eql({
+        type: types.FETCH_SINGLE_SHELTER,
+      }));
+  });
+
+  it('calls the API with accurate id', () => {
+    const id = 892743843;
+    fetchJson.mockReturnValueOnce(Promise.resolve());
+
+    const store = mockStore({ shelters: [] });
+
+    return store.dispatch(require('./actions').fetchSingleShelter(id))
+      .then(() => expect(fetchJson.mock.calls[0][0]).to.match(new RegExp(`shelters/${id}`)));
+  });
+
+  it('creates FETCH_SINGLE_SHELTER_SUCCESS when fetching shelter is finished', () => {
+    const store = mockStore({ shelters: [] });
+    const shelter = { shelterId: '123213-asd12132-675' };
+    fetchJson.mockReturnValueOnce(Promise.resolve(shelter));
+
+    return store.dispatch(require('./actions').fetchSingleShelter(1))
+      .then(() => expect(store.getActions().pop()).to.eql({
+        type: types.FETCH_SINGLE_SHELTER_SUCCESS,
+        shelter,
+      }));
+  });
+
+  it('creates FETCH_SINGLE_SHELTER_FAILED when fetching shelter fails', () => {
+    const store = mockStore({ shelters: [] });
+    const error = { error: '123213-asd12132-675' };
+    fetchJson.mockReturnValueOnce(Promise.reject(error));
+
+    return store.dispatch(require('./actions').fetchSingleShelter(1))
+      .then(() => expect(store.getActions().pop()).to.eql({
+        type: types.FETCH_SINGLE_SHELTER_FAILED,
+        error,
+      }));
+  });
+});
+
 describe('containers/shelters/actions/fetchShelters', () => {
   let fetchJson;
 
