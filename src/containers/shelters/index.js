@@ -89,7 +89,19 @@ export class Shelters extends Component {
 
   @autobind
   handleSelectShelter(shelter) {
-    route(`/skyddsrum/${shelter.id}`, false);
+    let url = `/skyddsrum/${shelter.id}`;
+
+    const { lat, lon } = this.props;
+
+    if (lat && lon) {
+      const searchParams = new URLSearchParams();
+      const position = { lat, lon };
+      Object.keys(position).forEach(key => searchParams.append(key, position[key]));
+
+      url += `?${searchParams.toString()}`;
+    }
+
+    route(url, false);
   }
 
   render() {

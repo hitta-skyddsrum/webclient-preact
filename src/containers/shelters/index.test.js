@@ -82,23 +82,44 @@ describe('containers/shelters', () => {
       .to.equal(1, 'Expected ShelersMap component to exist');
   });
 
-  it('should change route upon clicking on a shelter on SheltersMap', () => {
+  it('should change route and keep center upon clicking on a shelter on SheltersMap', () => {
     jest.mock('preact-router');
 
     const shelter = { id: 37 };
     const routes = 'route 69';
-    const center = [5, 8];
+    const center = {
+      lat: 5,
+      lon: 9,
+    };
     const context = shallow(<Shelters
       routes={routes}
       shelters={[shelter]}
       fetchShelters={fetchShelters}
-      lat={center[0]}
-      lon={center[1]}
+      lat={center.lat}
+      lon={center.lon}
     />);
 
     context.find(<SheltersMap />).attr('onSelectShelter')(shelter);
 
-    expect(route).to.have.been.calledWith(`/skyddsrum/${shelter.id}`);
+    expect(route).to.have.been
+      .calledWith(`/skyddsrum/${shelter.id}?lat=${center.lat}&lon=${center.lon}`);
+  });
+
+  it('should change route when no center is given upon clicking on a shelter', () => {
+    jest.mock('preact-router');
+
+    const shelter = { id: 37 };
+    const routes = 'route 69';
+    const context = shallow(<Shelters
+      routes={routes}
+      shelters={[shelter]}
+      fetchShelters={fetchShelters}
+    />);
+
+    context.find(<SheltersMap />).attr('onSelectShelter')(shelter);
+
+    expect(route).to.have.been
+      .calledWith(`/skyddsrum/${shelter.id}`);
   });
 
   it('should fetch shelters upon load', () => {
