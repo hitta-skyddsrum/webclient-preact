@@ -216,6 +216,20 @@ describe('containers/shelters', () => {
     );
   });
 
+  it('should not fetch route to shelter when selectedShelter is updated and no lat is provided', () => {
+    const fetchRouteToShelter = sinon.spy();
+    const context = shallow(<Shelters
+      fetchShelters={fetchShelters}
+      fetchRouteToShelter={fetchRouteToShelter}
+      shelters={[]}
+    />);
+    const selectedShelter = { position: { lat: 180, long: 183 } };
+
+    context.render(<Shelters shelters={[]} selectedShelter={selectedShelter} />);
+
+    expect(fetchRouteToShelter).to.not.have.been.called;
+  });
+
   it('should not fetch route to shelter when selectedShelter is updated with falsy value', () => {
     const fetchRouteToShelter = sinon.spy();
     const context = shallow(<Shelters

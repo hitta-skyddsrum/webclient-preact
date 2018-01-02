@@ -39,14 +39,17 @@ export class Shelters extends Component {
 
     if (nextProps.selectedShelter && nextProps.selectedShelter !== this.props.selectedShelter) {
       this.setState({ hideShelterDetail: false });
-      this.props.fetchRouteToShelter({
-        lon: this.props.lon,
-        lat: this.props.lat,
-      },
-      {
-        lon: nextProps.selectedShelter.position.long,
-        lat: nextProps.selectedShelter.position.lat,
-      });
+
+      if (this.props.lat) {
+        this.props.fetchRouteToShelter({
+          lon: this.props.lon,
+          lat: this.props.lat,
+        },
+        {
+          lon: nextProps.selectedShelter.position.long,
+          lat: nextProps.selectedShelter.position.lat,
+        });
+      }
     }
   }
 
