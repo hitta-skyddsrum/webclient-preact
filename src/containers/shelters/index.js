@@ -11,7 +11,7 @@ import ShelterDetail from '../../components/shelter-detail';
 
 export class Shelters extends Component {
   state = {
-    hideShelterDetail: true,
+    hideShelterDetail: false,
   };
 
   componentWillMount() {
@@ -38,8 +38,6 @@ export class Shelters extends Component {
     }
 
     if (nextProps.selectedShelter && nextProps.selectedShelter !== this.props.selectedShelter) {
-      this.setState({ hideShelterDetail: false });
-
       if (this.props.lat) {
         this.props.fetchRouteToShelter({
           lon: this.props.lon,
@@ -102,6 +100,7 @@ export class Shelters extends Component {
     }
 
     route(url, false);
+    this.setState({ hideShelterDetail: false });
   }
 
   render() {
