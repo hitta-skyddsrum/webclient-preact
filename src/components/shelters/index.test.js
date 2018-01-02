@@ -3,12 +3,12 @@ import { route } from 'preact-router';
 import { expect } from 'chai';
 import sinon from 'sinon';
 import { shallow } from 'preact-render-spy';
-import { Shelters } from './';
+import Shelters from './';
 
-import SheltersMap from '../../components/shelters-map';
-import ErrorDialog from '../../components/error-dialog';
-import LoadingIndicator from '../../components/loading-indicator';
-import ShelterDetail from '../../components/shelter-detail';
+import SheltersMap from '../shelters-map';
+import ErrorDialog from '../error-dialog';
+import LoadingIndicator from '../loading-indicator';
+import ShelterDetail from '../shelter-detail';
 
 describe('containers/shelters', () => {
   let fetchShelters;
