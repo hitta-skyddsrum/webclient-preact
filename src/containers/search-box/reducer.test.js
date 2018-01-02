@@ -52,4 +52,11 @@ describe('containers/search-box/reducer', () => {
     expect(SearchBoxReducer(undefined, { type: types.SET_ADDRESS, address }).address)
       .to.eql(address);
   });
+
+  it('should clear all suggestions upon CLEAR_SUGGESTIONS', () => {
+    const state = { suggestions: ['many'] };
+
+    expect(SearchBoxReducer(state, { type: types.CLEAR_SUGGESTIONS }).addressSuggestions)
+      .to.eql([]);
+  });
 });

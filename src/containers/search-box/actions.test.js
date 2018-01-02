@@ -87,3 +87,11 @@ describe('containers/search-box/actions/setAddress', () => {
     });
   });
 });
+
+describe('containers/search-box/actions/clearSuggestions', () => {
+  it('creates CLEAR_SUGGESTIONS', () => {
+    expect(require('./actions').clearSuggestions()).to.eql({
+      type: types.CLEAR_SUGGESTIONS,
+    });
+  });
+});

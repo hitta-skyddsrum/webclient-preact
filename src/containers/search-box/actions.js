@@ -6,6 +6,7 @@ import {
   FETCH_ADDRESS_SUGGESTIONS_FAILED,
   FETCH_ADDRESS_SUGGESTIONS_SUCCESS,
   SET_ADDRESS,
+  CLEAR_SUGGESTIONS,
 } from './types';
 
 export const fetchAddressSuggestions = query => {
@@ -38,5 +39,11 @@ export const setAddress = address => {
   return {
     type: SET_ADDRESS,
     address,
+  };
+};
+
+export const clearSuggestions = () => {
+  return {
+    type: CLEAR_SUGGESTIONS,
   };
 };

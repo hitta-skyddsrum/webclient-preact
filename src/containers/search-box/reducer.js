@@ -3,6 +3,7 @@ import {
   FETCH_ADDRESS_SUGGESTIONS_SUCCESS,
   FETCH_ADDRESS_SUGGESTIONS_FAILED,
   SET_ADDRESS,
+  CLEAR_SUGGESTIONS,
 } from './types';
 
 const initState = {
@@ -33,6 +34,11 @@ export default (state = initState, action) => {
       return {
         ...state,
         address: action.address,
+      };
+    case CLEAR_SUGGESTIONS:
+      return {
+        ...state,
+        addressSuggestions: [],
       };
     default:
       return state;
