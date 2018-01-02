@@ -34,12 +34,7 @@ export class Shelters extends Component {
     }
 
     if (nextProps.shelters.length && !this.props.shelters.length) {
-      const bounds = [
-        [this.getShelterPosition(nextProps.shelters, 'lat', 'smallest'), this.getShelterPosition(nextProps.shelters, 'long', 'smallest')],
-        [this.getShelterPosition(nextProps.shelters, 'lat', 'biggest'), this.getShelterPosition(nextProps.shelters, 'long', 'biggest')],
-      ];
-
-      this.setState({ bounds });
+      this.setState({ bounds: this.getBoundsForShelters(nextProps.shelters) });
     }
 
     if (nextProps.selectedShelter && nextProps.selectedShelter !== this.props.selectedShelter) {
@@ -60,13 +55,28 @@ export class Shelters extends Component {
       .then(({ shelter }) => this.props.handleSelectShelter(shelter));
   }
 
-  getShelterPosition(shelters, axle, sortedBy) {
+  getBoundsForShelters(shelters) {
+    return [
+      this.getShelterPosition(shelters, 'smallest'),
+      this.getShelterPosition(shelters, 'biggest'),
+    ];
+  }
+
+  getShelterPosition(shelters, sortedBy) {
     const biggest = sortedBy === 'biggest' ? true : false;
 
-    return shelters
-      .map(shelter => parseFloat(shelter.position[axle]))
-      .sort((a, b) => biggest ? b - a : a - b)
-      .shift();
+    const sorter = (a, b) => biggest ? b - a : a - b;
+
+    return [
+      shelters
+        .map(shelter => parseFloat(shelter.position['lat']))
+        .sort(sorter)
+        .shift(),
+      shelters
+        .map(shelter => parseFloat(shelter.position['long']))
+        .sort(sorter)
+        .shift(),
+    ];
   }
 
   @autobind
