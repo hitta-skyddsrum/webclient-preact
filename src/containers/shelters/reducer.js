@@ -12,6 +12,7 @@ import {
   SELECT_SHELTER,
   UNSELECT_SHELTER,
   CLEAR_ERROR,
+  SET_BOUNDS,
 } from './types';
 
 const initialState = {
@@ -70,6 +71,11 @@ export default (state = initialState, action) => {
             tjänsten är överbelastad. Vi rekommenderar att
             du besöker msb.se för att hämta data om skyddsrum.`,
         },
+      };
+    case SET_BOUNDS:
+      return {
+        ...state,
+        bounds: action.bounds,
       };
     case FETCH_ROUTE_TO_SHELTER:
       return {

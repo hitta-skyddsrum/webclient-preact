@@ -65,13 +65,12 @@ describe('containers/shelters', () => {
     const bounds = [15, 1];
     const context = shallow(<Shelters
       routes={routes}
+      bounds={bounds}
       shelters={shelters}
       fetchShelters={fetchShelters}
       lat={center[0]}
       lon={center[1]}
     />);
-
-    context.setState({ bounds });
 
     expect(context.find(<SheltersMap
       routes={routes}
@@ -216,27 +215,6 @@ describe('containers/shelters', () => {
     />);
 
     expect(handleUnselectShelter).to.have.been.calledWith();
-  });
-
-  it('should set state property bounds upon first shelters received', () => {
-    const smallest = { lat: 1, long: 2 };
-    const biggest = { lat: 300, long: 400 };
-    const shelters = [
-      { position: { lat: 14, long: 3 } },
-      { position: biggest },
-      { position: smallest },
-      { position: { lat: 20, long: 154 } },
-    ];
-    const context = shallow(<Shelters shelters={[]} fetchShelters={fetchShelters} />);
-
-    context.render(<Shelters shelters={shelters} />);
-    const bounds = [[smallest.lat, smallest.long], [biggest.lat, biggest.long]];
-
-    expect(context.state('bounds')).to.eql(bounds);
-
-    context.render(<Shelters shelters={[...shelters, { position: { lat: 3000, lon: 4000 } }]} />);
-
-    expect(context.state('bounds')).to.eql(bounds);
   });
 
   it('should fetch route to shelter when selectedShelter is updated', () => {

@@ -93,17 +93,22 @@ describe('containers/shelters/actions/fetchShelters', () => {
   });
 
   it('creates FETCH_SHELTERS_SUCCESS when fetching shelters is finished', () => {
-    const shelters = [
-      { lat: 1, lon: 2, display_name: 'This play' },
-    ];
+    const shelter = { position: { lat: 1, long: 2 }, display_name: 'This play' };
     const query = { lat: 3, lon: 4 };
-    fetchJson.mockReturnValueOnce(Promise.resolve(shelters));
+    fetchJson.mockReturnValueOnce(Promise.resolve([shelter]));
 
     const expectedActions = [
       { type: types.FETCH_SHELTERS },
       {
         type: types.FETCH_SHELTERS_SUCCESS,
-        shelters,
+        shelters: [shelter],
+      },
+      {
+        type: types.SET_BOUNDS,
+        bounds: [
+          [shelter.position.lat, shelter.position.long],
+          [shelter.position.lat, shelter.position.long],
+        ],
       },
     ];
 
@@ -130,6 +135,26 @@ describe('containers/shelters/actions/fetchShelters', () => {
 
     return store.dispatch(require('./actions').fetchShelters(query.lat, query.lon))
       .then(() => expect(store.getActions()).to.eql(expectedActions));
+  });
+});
+
+describe('containers/shelters/actions/setBoundsForShelters', () => {
+  it('creates SET_BOUNDS with accurate bounds', () => {
+    const smallest = { lat: 1, long: 2 };
+    const biggest = { lat: 300, long: 400 };
+    const shelters = [
+      { position: { lat: 14, long: 3 } },
+      { position: biggest },
+      { position: smallest },
+      { position: { lat: 20, long: 154 } },
+    ];
+    const bounds = [[smallest.lat, smallest.long], [biggest.lat, biggest.long]];
+
+    console.log(require('./actions').setBoundsForShelters(shelters));
+    expect(require('./actions').setBoundsForShelters(shelters)).to.eql({
+      type: types.SET_BOUNDS,
+      bounds,
+    });
   });
 });
 

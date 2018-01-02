@@ -97,6 +97,13 @@ describe('containers/shelters/reducer', () => {
       .to.match(new RegExp('misslyckades'));
   });
 
+  it('should set bounds upon SET_BOUNDS', () => {
+    const bounds = [{ bound: 's' }];
+
+    expect(SheltersReducer(undefined, { type: types.SET_BOUNDS, bounds }).bounds)
+      .to.eql(bounds);
+  });
+
   it('should increment loading upon FETCH_ROUTE_TO_SHELTER', () => {
     const loading = 1;
 

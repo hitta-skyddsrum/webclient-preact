@@ -13,6 +13,7 @@ import {
   SELECT_SHELTER,
   UNSELECT_SHELTER,
   CLEAR_ERROR,
+  SET_BOUNDS,
 } from './types';
 
 export const fetchSingleShelter = (id) => {
@@ -40,14 +41,42 @@ export const fetchShelters = (lat, lon) => {
     });
 
     return fetchJson(`https://api.hittaskyddsrum.se/api/v1/shelters/?lat=${lat}&long=${lon}`)
-      .then(response => dispatch({
+      .then(shelters => dispatch({
         type: FETCH_SHELTERS_SUCCESS,
-        shelters: response,
+        shelters,
       }))
+      .then(({ shelters }) => dispatch(setBoundsForShelters(shelters)))
       .catch(error => dispatch({
         type: FETCH_SHELTERS_FAILED,
         error,
       }));
+  };
+};
+
+export const setBoundsForShelters = shelters => {
+  const getShelterPosition = sortedBy => {
+    const biggest = sortedBy === 'biggest' ? true : false;
+
+    const sorter = (a, b) => biggest ? b - a : a - b;
+
+    return [
+      shelters
+        .map(shelter => parseFloat(shelter.position['lat']))
+        .sort(sorter)
+        .shift(),
+      shelters
+        .map(shelter => parseFloat(shelter.position['long']))
+        .sort(sorter)
+        .shift(),
+    ];
+  };
+
+  return {
+    type: SET_BOUNDS,
+    bounds: [
+      getShelterPosition('smallest'),
+      getShelterPosition('biggest'),
+    ],
   };
 };
 

@@ -24,16 +24,11 @@ export class Shelters extends Component {
 
   componentWillUpdate(nextProps) {
     if (!nextProps.id && nextProps.id !== this.props.id) {
-      this.setState({ bounds: this.getBoundsForShelters(nextProps.shelters) });
       this.props.handleUnselectShelter();
     }
 
     if (nextProps.id && nextProps.id !== this.props.id) {
       this.props.handleSelectShelter(nextProps.id);
-    }
-
-    if (nextProps.shelters.length && !this.props.shelters.length) {
-      this.setState({ bounds: this.getBoundsForShelters(nextProps.shelters) });
     }
 
     if (nextProps.selectedShelter && nextProps.selectedShelter !== this.props.selectedShelter) {
@@ -49,30 +44,6 @@ export class Shelters extends Component {
         });
       }
     }
-  }
-
-  getBoundsForShelters(shelters) {
-    return [
-      this.getShelterPosition(shelters, 'smallest'),
-      this.getShelterPosition(shelters, 'biggest'),
-    ];
-  }
-
-  getShelterPosition(shelters, sortedBy) {
-    const biggest = sortedBy === 'biggest' ? true : false;
-
-    const sorter = (a, b) => biggest ? b - a : a - b;
-
-    return [
-      shelters
-        .map(shelter => parseFloat(shelter.position['lat']))
-        .sort(sorter)
-        .shift(),
-      shelters
-        .map(shelter => parseFloat(shelter.position['long']))
-        .sort(sorter)
-        .shift(),
-    ];
   }
 
   @autobind
@@ -100,7 +71,7 @@ export class Shelters extends Component {
         shelters={this.props.shelters}
         routes={this.props.routes}
         onSelectShelter={this.handleClickShelter}
-        bounds={this.state.bounds}
+        bounds={this.props.bounds}
       />
       {this.props.selectedShelter && <ShelterDetail
         open={!this.state.hideShelterDetail}

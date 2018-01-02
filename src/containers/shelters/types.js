@@ -14,3 +14,5 @@ export const SELECT_SHELTER = 'SELECT_SHELTER';
 export const UNSELECT_SHELTER = 'UNSELECT_SHELTER';
 
 export const CLEAR_ERROR = 'CLEAR_ERROR';
+
+export const SET_BOUNDS = 'SET_BOUNDS';
