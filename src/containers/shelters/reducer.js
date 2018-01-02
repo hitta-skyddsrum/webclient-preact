@@ -10,6 +10,7 @@ import {
   FETCH_ROUTE_TO_SHELTER_SUCCESS,
   FETCH_ROUTE_TO_SHELTER_FAILED,
   SELECT_SHELTER,
+  UNSELECT_SHELTER,
   CLEAR_ERROR,
 } from './types';
 
@@ -97,6 +98,12 @@ export default (state = initialState, action) => {
       return {
         ...state,
         selectedShelter: { ...action.shelter },
+      };
+    case UNSELECT_SHELTER:
+      return {
+        ...state,
+        selectedShelter: null,
+        routes: [],
       };
     case CLEAR_ERROR:
       return {

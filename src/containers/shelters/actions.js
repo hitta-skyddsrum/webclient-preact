@@ -11,6 +11,7 @@ import {
   FETCH_ROUTE_TO_SHELTER_SUCCESS,
   FETCH_ROUTE_TO_SHELTER_FAILED,
   SELECT_SHELTER,
+  UNSELECT_SHELTER,
   CLEAR_ERROR,
 } from './types';
 
@@ -21,9 +22,9 @@ export const fetchSingleShelter = (id) => {
     });
 
     return fetchJson(`https://api.hittaskyddsrum.se/api/v1/shelters/${id}`)
-      .then(response => dispatch({
+      .then(shelter => dispatch({
         type: FETCH_SINGLE_SHELTER_SUCCESS,
-        shelter: response,
+        shelter,
       }))
       .catch(error => dispatch({
         type: FETCH_SINGLE_SHELTER_FAILED,
@@ -68,10 +69,19 @@ export const fetchRouteToShelter = (from, shelter) => {
   };
 };
 
-export const selectShelter = shelter => {
+export const selectShelter = id => {
+  return dispatch => {
+    return dispatch(fetchSingleShelter(id))
+      .then(({ shelter }) => dispatch({
+        type: SELECT_SHELTER,
+        shelter,
+      }));
+  };
+};
+
+export const unselectShelter = () => {
   return {
-    type: SELECT_SHELTER,
-    shelter,
+    type: UNSELECT_SHELTER,
   };
 };
 

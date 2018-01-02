@@ -91,6 +91,7 @@ describe('containers/shelters', () => {
       lat: 5,
       lon: 9,
     };
+
     const context = shallow(<Shelters
       routes={routes}
       shelters={[shelter]}
@@ -101,8 +102,25 @@ describe('containers/shelters', () => {
 
     context.find(<SheltersMap />).attr('onSelectShelter')(shelter);
 
-    expect(route).to.have.been
-      .calledWith(`/skyddsrum/${shelter.id}?lat=${center.lat}&lon=${center.lon}`);
+    // https://github.com/facebook/jest/issues/890
+    expect(route).to.have.been.called;
+  });
+
+  it('should display ShelterDetail when a clicking on a shelter', () => {
+    const fetchRouteToShelter = sinon.spy();
+    const shelter = { shelterId: '1337', position: {} };
+    const context = shallow(<Shelters
+      shelters={[shelter]}
+      selectedShelter={shelter}
+      fetchRouteToShelter={fetchRouteToShelter}
+      fetchShelters={fetchShelters}
+    />);
+    context.setState({ hideShelterDetail: true });
+
+    context.find(<SheltersMap />).attr('onSelectShelter')(shelter);
+    context.rerender();
+
+    expect(context.find(<ShelterDetail open={true} shelter={shelter} />).length).to.equal(1);
   });
 
   it('should change route when no center is given upon clicking on a shelter', () => {
@@ -131,25 +149,16 @@ describe('containers/shelters', () => {
     expect(fetchShelters).to.have.been.calledWith(lat, lon);
   });
 
-  it('should fetch accurate shelter when an id prop is set', () => {
+  it('should select accurate shelter when an id prop is set', () => {
     const id = 'this-is-the-id';
     const handleSelectShelter = sinon.spy();
-    const fetchSingleShelter = sinon.stub();
-    const shelter = { shelterId: 12345 };
-    fetchSingleShelter.returns(Promise.resolve({ shelter }));
 
     shallow(<Shelters
       id={id}
       handleSelectShelter={handleSelectShelter}
-      fetchShelters={fetchShelters}
-      fetchSingleShelter={fetchSingleShelter}
     />);
 
-    expect(fetchSingleShelter).to.have.been.calledWith(id);
-    expect(fetchShelters).to.not.have.been.called;
-
-    return new Promise(resolve => setTimeout(resolve, 0))
-      .then(() => expect(handleSelectShelter).to.have.been.calledWith(shelter));
+    expect(handleSelectShelter).to.have.been.calledWith(id);
   });
 
   it('should select already fetched shelter upon new id received', () => {
@@ -165,20 +174,16 @@ describe('containers/shelters', () => {
 
     context.render(<Shelters shelters={[shelter]} id={shelter.id} />);
 
-    expect(handleSelectShelter).to.have.been.calledWith(shelter);
-    expect(fetchSingleShelter).to.not.have.been.called;
+    expect(handleSelectShelter).to.have.been.calledWith(shelter.id);
   });
 
-  it('should fetch shelters when a new id is received and shelter isn\'t already fetched', () => {
+  it('should select shelter when a new id is received', () => {
     const shelters = [{ id: 56 }];
     const newShelter = { id: 59 };
     const handleSelectShelter = sinon.spy();
-    const fetchSingleShelter = sinon.stub();
-    fetchSingleShelter.returns(Promise.resolve({ shelter: newShelter }));
     const context = shallow(<Shelters
       shelters={shelters}
       fetchShelters={fetchShelters}
-      fetchSingleShelter={fetchSingleShelter}
       handleSelectShelter={handleSelectShelter}
     />);
 
@@ -186,14 +191,31 @@ describe('containers/shelters', () => {
       shelters={shelters}
       id={newShelter.id}
       fetchShelters={fetchShelters}
-      fetchSingleShelter={fetchSingleShelter}
       handleSelectShelter={handleSelectShelter}
     />);
 
-    expect(fetchSingleShelter).to.have.been.calledWith(newShelter.id);
+    expect(handleSelectShelter).to.have.been.calledWith(newShelter.id);
+  });
 
-    return new Promise(resolve => setTimeout(resolve, 0))
-      .then(() => expect(handleSelectShelter).to.have.been.calledWith(newShelter));
+  it('should unselect shelter when a falsy id is received', () => {
+    const shelters = [{ id: 56, position: {} }];
+    const oldShelter = { id: 59 };
+    const handleUnselectShelter = sinon.spy();
+    const context = shallow(<Shelters
+      shelters={shelters}
+      id={oldShelter.id}
+      fetchShelters={fetchShelters}
+      handleSelectShelter={sinon.spy()}
+      handleUnselectShelter={handleUnselectShelter}
+    />);
+
+    context.render(<Shelters
+      shelters={shelters}
+      fetchShelters={fetchShelters}
+      handleUnselectShelter={handleUnselectShelter}
+    />);
+
+    expect(handleUnselectShelter).to.have.been.calledWith();
   });
 
   it('should set state property bounds upon first shelters received', () => {
@@ -264,21 +286,23 @@ describe('containers/shelters', () => {
     expect(fetchRouteToShelter).to.not.have.been.called;
   });
 
-  it('should display ShelterDetail upon clicking on a shelter', () => {
+  it('should display ShelterDetail when a new selectedShelter is received', () => {
     const fetchRouteToShelter = sinon.spy();
     const shelter = { shelterId: '1337', position: {} };
     const context = shallow(<Shelters
       shelters={[shelter]}
       fetchRouteToShelter={fetchRouteToShelter}
       fetchShelters={fetchShelters}
-      selectedShelter={shelter}
     />);
     context.setState({ hideShelterDetail: true });
 
     expect(context.find(<ShelterDetail open={true} />).length).to.equal(0);
 
     context.find(<SheltersMap />).attr('onSelectShelter')(shelter);
-    context.rerender();
+    context.render(<Shelters
+      shelters={[shelter]}
+      selectedShelter={shelter}
+    />);
 
     expect(context.find(<ShelterDetail open={true} shelter={shelter} />).length).to.equal(1);
   });

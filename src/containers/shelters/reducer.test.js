@@ -148,6 +148,18 @@ describe('containers/shelters/reducer', () => {
       .to.eql(shelter);
   });
 
+  it('should clear selectedShelter and routes upon UNSELECT_SHELTER', () => {
+    const state = {
+      selectedShelter: { some: 'thing' },
+      routes: ['very', 'much'],
+    };
+
+    expect(SheltersReducer(state, { type: types.UNSELECT_SHELTER }).selectedShelter)
+      .to.equal(null);
+    expect(SheltersReducer(state, { type: types.UNSELECT_SHELTER }).routes)
+      .to.eql([]);
+  });
+
   it('should remove error from state upon CLEAR_ERROR', () => {
     expect(SheltersReducer({ error: true }, { type: types.CLEAR_ERROR }).error)
       .to.eql(null);

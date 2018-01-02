@@ -201,12 +201,39 @@ describe('containers/shelters/actions/fetchRouteToShelter', () => {
 });
 
 describe('containers/shelters/actions/selectShelter', () => {
-  it('creates SELECT_SHELTER', () => {
+  let fetchJson;
+
+  beforeAll(() => {
+    jest.mock('../../lib/fetch-json');
+    fetchJson = require('../../lib/fetch-json').default;
+  });
+
+  afterEach(() => {
+    fetchJson.mockReset();
+    jest.unmock('../../lib/fetch-json');
+  });
+
+  it('fetches the shelter and then creates SELECT_SHELTER', () => {
     const shelter = { shelter: 1 };
-    expect(require('./actions').selectShelter(shelter)).to.eql({
-      type: types.SELECT_SHELTER,
-      shelter,
-    });
+    fetchJson.mockReturnValueOnce(Promise.resolve(shelter));
+
+    const expectedActions = [
+      { type: types.FETCH_SINGLE_SHELTER },
+      { type: types.FETCH_SINGLE_SHELTER_SUCCESS, shelter },
+      { type: types.SELECT_SHELTER, shelter },
+    ];
+
+    const store = mockStore({ shelters: [] });
+
+    return store.dispatch(require('./actions').selectShelter(shelter.id))
+      .then(() => expect(store.getActions()).to.eql(expectedActions));
+  });
+});
+
+describe('containers/shelters/actions/unselectShelter', () => {
+  it('creates UNSELECT_SHELTER', () => {
+    expect(require('./actions').unselectShelter())
+      .to.eql({ type: types.UNSELECT_SHELTER });
   });
 });
 

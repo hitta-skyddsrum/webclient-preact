@@ -3,7 +3,7 @@ import { connect } from 'preact-redux';
 import { route } from 'preact-router';
 import { autobind } from 'core-decorators';
 
-import { fetchShelters, fetchRouteToShelter, selectShelter, clearError, fetchSingleShelter } from './actions';
+import { fetchShelters, fetchRouteToShelter, selectShelter, unselectShelter, clearError, fetchSingleShelter } from './actions';
 import SheltersMap from '../../components/shelters-map';
 import ErrorDialog from '../../components/error-dialog';
 import LoadingIndicator from '../../components/loading-indicator';
@@ -16,21 +16,20 @@ export class Shelters extends Component {
 
   componentWillMount() {
     if (this.props.id) {
-      this.fetchAndSelectShelter(this.props.id);
+      this.props.handleSelectShelter(this.props.id);
     } else {
       this.props.fetchShelters(this.props.lat, this.props.lon);
     }
   }
 
   componentWillUpdate(nextProps) {
-    if (nextProps.id && nextProps.id !== this.props.id) {
-      const shelter = this.props.shelters.find(({ id }) => parseInt(nextProps.id, 10) === id);
+    if (!nextProps.id && nextProps.id !== this.props.id) {
+      this.setState({ bounds: this.getBoundsForShelters(nextProps.shelters) });
+      this.props.handleUnselectShelter();
+    }
 
-      if (!shelter) {
-        this.fetchAndSelectShelter(nextProps.id);
-      } else {
-        this.props.handleSelectShelter(shelter);
-      }
+    if (nextProps.id && nextProps.id !== this.props.id) {
+      this.props.handleSelectShelter(nextProps.id);
     }
 
     if (nextProps.shelters.length && !this.props.shelters.length) {
@@ -38,6 +37,7 @@ export class Shelters extends Component {
     }
 
     if (nextProps.selectedShelter && nextProps.selectedShelter !== this.props.selectedShelter) {
+      this.setState({ hideShelterDetail: false });
       if (this.props.lat) {
         this.props.fetchRouteToShelter({
           lon: this.props.lon,
@@ -49,11 +49,6 @@ export class Shelters extends Component {
         });
       }
     }
-  }
-
-  fetchAndSelectShelter(id) {
-    this.props.fetchSingleShelter(id)
-      .then(({ shelter }) => this.props.handleSelectShelter(shelter));
   }
 
   getBoundsForShelters(shelters) {
@@ -86,19 +81,8 @@ export class Shelters extends Component {
   }
 
   @autobind
-  handleSelectShelter(shelter) {
-    let url = `/skyddsrum/${shelter.id}`;
-
-    const { lat, lon } = this.props;
-
-    if (lat && lon) {
-      const searchParams = new URLSearchParams();
-      const position = { lat, lon };
-      Object.keys(position).forEach(key => searchParams.append(key, position[key]));
-
-      url += `?${searchParams.toString()}`;
-    }
-
+  handleClickShelter({ id }) {
+    const url = `/skyddsrum/${id}${location.search}`;
     route(url, false);
     this.setState({ hideShelterDetail: false });
   }
@@ -115,7 +99,7 @@ export class Shelters extends Component {
         center={[this.props.lat, this.props.lon]}
         shelters={this.props.shelters}
         routes={this.props.routes}
-        onSelectShelter={this.handleSelectShelter}
+        onSelectShelter={this.handleClickShelter}
         bounds={this.state.bounds}
       />
       {this.props.selectedShelter && <ShelterDetail
@@ -137,6 +121,7 @@ const mapDispatchToProps = dispatch => {
     fetchShelters: (lat, lon) => dispatch(fetchShelters(lat, lon)),
     fetchRouteToShelter: (from, to) => dispatch(fetchRouteToShelter(from, to)),
     handleSelectShelter: shelter => dispatch(selectShelter(shelter)),
+    handleUnselectShelter: () => dispatch(unselectShelter()),
     clearError: () => dispatch(clearError()),
   };
 };
