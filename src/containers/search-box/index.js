@@ -32,6 +32,9 @@ export class SearchBox extends Component {
 
   @autobind
   handleAddressSelection(address) {
+    this.setState({
+      searchValue: address.name,
+    });
     this.props.clearSuggestions();
     route(`/skyddsrum?lat=${address.lat}&lon=${address.lon}`, false);
   }

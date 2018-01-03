@@ -73,4 +73,16 @@ describe('containers/search-box', () => {
 
     expect(clearSuggestions).to.have.been.calledOnce;
   });
+
+  it('should change search value upon address selection', () => {
+    const shelter = {
+      name: 'The best shelter',
+    };
+    const context = shallow(<SearchBox clearSuggestions={sinon.spy()} />);
+    const autocomplete = context.find(<Autocomplete />);
+
+    autocomplete.output().attributes.onSelection(shelter);
+
+    expect(context.state('searchValue')).to.equal(shelter.name);
+  });
 });
