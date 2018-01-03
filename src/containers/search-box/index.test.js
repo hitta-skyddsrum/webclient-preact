@@ -11,10 +11,10 @@ describe('containers/search-box', () => {
     expect(<SearchBox />).to.contain(<Autocomplete />);
   });
 
-  it('should pass the loading prop to Autocomplete component', () =>  {
-    const loading = 5;
-    const context = shallow(<SearchBox loading={loading} />);
-    expect(context.find(<Autocomplete loading={loading} />).length).to.equal(1);
+  it('should pass all props to Autocomplete component', () =>  {
+    const randomProp = 5;
+    const context = shallow(<SearchBox randomProp={randomProp} />);
+    expect(context.find(<Autocomplete randomProp={randomProp} />).length).to.equal(1);
   });
 
   it('should dispatch fetchAddressSuggestions upon value change', () => {

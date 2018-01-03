@@ -6,6 +6,9 @@ import SheltersMap from '../shelters-map';
 import ErrorDialog from '../error-dialog';
 import LoadingIndicator from '../loading-indicator';
 import ShelterDetail from '../shelter-detail';
+import SearchBox from '../../containers/search-box';
+
+import style from './style.scss';
 
 export default class Shelters extends Component {
   state = {
@@ -64,6 +67,7 @@ export default class Shelters extends Component {
         desc={this.props.humanError.desc}
         handleClose={this.props.clearError}
       />}
+      <SearchBox styles={style.searchBox} />
       <SheltersMap
         center={[this.props.lat, this.props.lon]}
         shelters={this.props.shelters}

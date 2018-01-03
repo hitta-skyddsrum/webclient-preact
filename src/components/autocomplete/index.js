@@ -1,4 +1,5 @@
 import { h } from 'preact';
+import classNames from 'classnames';
 import style from './style.scss';
 
 import Bouncer from '../bouncer';
@@ -10,9 +11,10 @@ export default ({
   onSelection,
   suggestions,
   loading,
+  styles,
 }) => {
   return (
-    <div class={style.searchBox}>
+    <div class={classNames(style.searchBox, styles)}>
       <input
         type="text"
         placeholder="Var vill du söka från?"

@@ -9,6 +9,7 @@ import SheltersMap from '../shelters-map';
 import ErrorDialog from '../error-dialog';
 import LoadingIndicator from '../loading-indicator';
 import ShelterDetail from '../shelter-detail';
+import SearchBox from '../../containers/search-box';
 
 describe('containers/shelters', () => {
   let fetchShelters;
@@ -56,6 +57,14 @@ describe('containers/shelters', () => {
     context.find(<ErrorDialog />).attr('handleClose')();
 
     expect(clearError.calledOnce).to.equal(true);
+  });
+
+  it('should contain a SearchBox container', () => {
+    const context = shallow(<Shelters
+      fetchShelters={fetchShelters}
+    />);
+
+    expect(context.find(<SearchBox />).length).to.equal(1);
   });
 
   it('should contain SheltersMap component', () => {

@@ -7,6 +7,15 @@ import Suggestion from '../suggestion';
 import Bouncer from '../bouncer';
 
 describe('components/Autocomplete', () => {
+  it('should apply styles prop value to outer div', () => {
+    const styles = {
+      position: 'absolute',
+    };
+    const context = shallow(<Autocomplete styles={styles} />);
+
+    expect(context.attr('styles')).to.eql(styles);
+  });
+
   it('should display an input field with accurate placeholder', () => {
     const ac = <Autocomplete/>;
 
