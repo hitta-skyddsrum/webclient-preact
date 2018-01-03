@@ -19,7 +19,7 @@ describe('containers/search-box', () => {
 
   it('should dispatch fetchAddressSuggestions upon value change', () => {
     const fetchAddSuggSpy = sinon.spy();
-    const context = shallow(<SearchBox fetchAddressSuggestions={fetchAddSuggSpy} />);
+    const context = shallow(<SearchBox onSearchValueChange={fetchAddSuggSpy} />);
     const autocomplete = context.find(<Autocomplete />);
     const newValue = 'Rikemansgatan 1';
 
@@ -32,7 +32,7 @@ describe('containers/search-box', () => {
 
   it('should not dispatch fetchAddressSuggestions when the component is unmounted', () => {
     const fetchAddSuggSpy = sinon.spy();
-    const context = shallow(<SearchBox fetchAddressSuggestions={fetchAddSuggSpy} />);
+    const context = shallow(<SearchBox onSearchValueChange={fetchAddSuggSpy} />);
     const autocomplete = context.find(<Autocomplete />);
 
     autocomplete.output().attributes.onChange('');
@@ -46,7 +46,7 @@ describe('containers/search-box', () => {
     jest.mock('preact-router');
 
     const clearSuggestions = sinon.spy();
-    const context = shallow(<SearchBox clearSuggestions={clearSuggestions} />);
+    const context = shallow(<SearchBox onSelectAddress={clearSuggestions} />);
     const autocomplete = context.find(<Autocomplete />);
     const lat = 14.53;
     const lon = 15.54;
@@ -66,7 +66,7 @@ describe('containers/search-box', () => {
 
   it('should clear suggestions upon address selection', () => {
     const clearSuggestions = sinon.spy();
-    const context = shallow(<SearchBox clearSuggestions={clearSuggestions} />);
+    const context = shallow(<SearchBox onSelectAddress={clearSuggestions} />);
     const autocomplete = context.find(<Autocomplete />);
 
     autocomplete.output().attributes.onSelection({});
@@ -78,7 +78,7 @@ describe('containers/search-box', () => {
     const shelter = {
       name: 'The best shelter',
     };
-    const context = shallow(<SearchBox clearSuggestions={sinon.spy()} />);
+    const context = shallow(<SearchBox onSelectAddress={sinon.spy()} />);
     const autocomplete = context.find(<Autocomplete />);
 
     autocomplete.output().attributes.onSelection(shelter);

@@ -17,7 +17,7 @@ export class SearchBox extends Component {
     this.debouncedSearchValue
       .debounceTime(250)
       .takeWhile(() => this.isMounted)
-      .subscribe(searchValue => this.props.fetchAddressSuggestions(searchValue));
+      .subscribe(searchValue => this.props.onSearchValueChange(searchValue));
   }
 
   componentWillUnmount() {
@@ -35,7 +35,7 @@ export class SearchBox extends Component {
     this.setState({
       searchValue: address.name,
     });
-    this.props.clearSuggestions();
+    this.props.onSelectAddress();
     route(`/skyddsrum?lat=${address.lat}&lon=${address.lon}`, false);
   }
 
@@ -58,8 +58,8 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    fetchAddressSuggestions: query => dispatch(fetchAddressSuggestions(query)),
-    clearSuggestions: () => dispatch(clearSuggestions()),
+    onSearchValueChange: query => dispatch(fetchAddressSuggestions(query)),
+    onSelectAddress: () => dispatch(clearSuggestions()),
   };
 };
 
