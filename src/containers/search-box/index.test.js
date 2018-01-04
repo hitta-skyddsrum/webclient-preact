@@ -45,8 +45,7 @@ describe('containers/search-box', () => {
   it('should change route upon address selection', () => {
     jest.mock('preact-router');
 
-    const clearSuggestions = sinon.spy();
-    const context = shallow(<SearchBox onSelectAddress={clearSuggestions} />);
+    const context = shallow(<SearchBox onSelectAddress={sinon.spy()} />);
     const autocomplete = context.find(<Autocomplete />);
     const lat = 14.53;
     const lon = 15.54;
@@ -64,14 +63,15 @@ describe('containers/search-box', () => {
     jest.unmock('preact-router');
   });
 
-  it('should clear suggestions upon address selection', () => {
-    const clearSuggestions = sinon.spy();
-    const context = shallow(<SearchBox onSelectAddress={clearSuggestions} />);
+  it('should call onSelectAddress cb upon address selection', () => {
+    const onSelectAddress = sinon.spy();
+    const context = shallow(<SearchBox onSelectAddress={onSelectAddress} />);
     const autocomplete = context.find(<Autocomplete />);
+    const address = { lat: 14, lon: 89 };
 
-    autocomplete.output().attributes.onSelection({});
+    autocomplete.output().attributes.onSelection(address);
 
-    expect(clearSuggestions).to.have.been.calledOnce;
+    expect(onSelectAddress).to.have.been.calledWith(address);
   });
 
   it('should change search value upon address selection', () => {

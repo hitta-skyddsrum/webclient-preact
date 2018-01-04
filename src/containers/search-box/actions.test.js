@@ -1,5 +1,6 @@
 import configureMockStore from 'redux-mock-store';
 import thunk from 'redux-thunk';
+import sinon from 'sinon';
 import { expect } from 'chai';
 
 import * as types from './types';
@@ -78,20 +79,28 @@ describe('containers/search-box/actions/fetchAddressSuggestions', () => {
   });
 });
 
-describe('containers/search-box/actions/setAddress', () => {
-  it('creates SET_ADDRESS', () => {
-    const address = 'Blåbärsbacken 7';
-    expect(require('./actions').setAddress(address)).to.eql({
-      type: types.SET_ADDRESS,
+describe('containers/search-box/actions/selectAddress', () => {
+  jest.mock('../shelters/actions', () => ({ fetchShelters: () => ({ type: 'FETCH_SHELTERS' }) }));
+
+  it('creates SELECT_ADDRESS', () => {
+    const address = { street: 1 };
+    const store = mockStore({ addressSuggestions: [] });
+
+    store.dispatch(require('./actions').selectAddress(address));
+
+    expect(store.getActions().shift()).to.eql({
+      type: types.SELECT_ADDRESS,
       address,
     });
   });
-});
 
-describe('containers/search-box/actions/clearSuggestions', () => {
-  it('creates CLEAR_SUGGESTIONS', () => {
-    expect(require('./actions').clearSuggestions()).to.eql({
-      type: types.CLEAR_SUGGESTIONS,
-    });
+  it('calls fetchShelters', () => {
+    const spyFetchShelters = sinon.spy(require('../shelters/actions'), 'fetchShelters');
+    const address = { street: 1, lat: 133, lon: 14 };
+    const store = mockStore({ addressSuggestions: [] });
+
+    store.dispatch(require('./actions').selectAddress(address));
+
+    expect(spyFetchShelters).to.have.been.calledWith(address.lat, address.lon);
   });
 });

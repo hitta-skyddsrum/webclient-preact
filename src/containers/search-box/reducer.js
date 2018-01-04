@@ -2,8 +2,7 @@ import {
   FETCH_ADDRESS_SUGGESTIONS,
   FETCH_ADDRESS_SUGGESTIONS_SUCCESS,
   FETCH_ADDRESS_SUGGESTIONS_FAILED,
-  SET_ADDRESS,
-  CLEAR_SUGGESTIONS,
+  SELECT_ADDRESS,
 } from './types';
 
 const initState = {
@@ -30,12 +29,7 @@ export default (state = initState, action) => {
         error: action.error,
         loading: state.loading - 1,
       };
-    case SET_ADDRESS:
-      return {
-        ...state,
-        address: action.address,
-      };
-    case CLEAR_SUGGESTIONS:
+    case SELECT_ADDRESS:
       return {
         ...state,
         addressSuggestions: [],

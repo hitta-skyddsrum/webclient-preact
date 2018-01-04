@@ -1,12 +1,12 @@
 import fetchJson from '../../lib/fetch-json';
 import formatNominatimAddress from '../../lib/format-nominatim-address';
 
+import { fetchShelters } from '../shelters/actions';
 import {
   FETCH_ADDRESS_SUGGESTIONS,
   FETCH_ADDRESS_SUGGESTIONS_FAILED,
   FETCH_ADDRESS_SUGGESTIONS_SUCCESS,
-  SET_ADDRESS,
-  CLEAR_SUGGESTIONS,
+  SELECT_ADDRESS,
 } from './types';
 
 export const fetchAddressSuggestions = query => {
@@ -35,15 +35,13 @@ export const fetchAddressSuggestions = query => {
   };
 };
 
-export const setAddress = address => {
-  return {
-    type: SET_ADDRESS,
-    address,
-  };
-};
+export const selectAddress = address => {
+  return dispatch => {
+    dispatch({
+      type: SELECT_ADDRESS,
+      address,
+    });
 
-export const clearSuggestions = () => {
-  return {
-    type: CLEAR_SUGGESTIONS,
+    return dispatch(fetchShelters(address.lat, address.lon));
   };
 };

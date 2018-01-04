@@ -46,17 +46,10 @@ describe('containers/search-box/reducer', () => {
       .to.eql(error);
   });
 
-  it('should set the state address upon SET_ADDRESS', () => {
-    const address = 'Grönmyllevägen 14';
-
-    expect(SearchBoxReducer(undefined, { type: types.SET_ADDRESS, address }).address)
-      .to.eql(address);
-  });
-
-  it('should clear all suggestions upon CLEAR_SUGGESTIONS', () => {
+  it('should clear all suggestions upon SELECT_ADDRESS', () => {
     const state = { suggestions: ['many'] };
 
-    expect(SearchBoxReducer(state, { type: types.CLEAR_SUGGESTIONS }).addressSuggestions)
+    expect(SearchBoxReducer(state, { type: types.SELECT_ADDRESS }).addressSuggestions)
       .to.eql([]);
   });
 });
