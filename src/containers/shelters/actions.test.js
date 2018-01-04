@@ -150,7 +150,6 @@ describe('containers/shelters/actions/setBoundsForShelters', () => {
     ];
     const bounds = [[smallest.lat, smallest.long], [biggest.lat, biggest.long]];
 
-    console.log(require('./actions').setBoundsForShelters(shelters));
     expect(require('./actions').setBoundsForShelters(shelters)).to.eql({
       type: types.SET_BOUNDS,
       bounds,
