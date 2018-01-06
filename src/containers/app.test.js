@@ -3,9 +3,9 @@ import { expect } from 'chai';
 import { shallow } from 'preact-render-spy';
 
 import App from './app';
-import Home from './home';
-import Redirect from '../containers/redirect';
-import Shelters from '../containers/shelters';
+import Home from '../components/home';
+import Redirect from './redirect';
+import Shelters from './shelters';
 
 describe('App', () => {
   it('should route / to Home component', () => {
