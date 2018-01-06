@@ -35,16 +35,6 @@ export default class Shelters extends Component {
 
     if (nextProps.selectedShelter && nextProps.selectedShelter !== this.props.selectedShelter) {
       this.setState({ hideShelterDetail: false });
-      if (this.props.youAreHere) {
-        this.props.fetchRouteToShelter({
-          lat: this.props.youAreHere[0],
-          lon: this.props.youAreHere[1],
-        },
-        {
-          lat: nextProps.selectedShelter.position.lat,
-          lon: nextProps.selectedShelter.position.long,
-        });
-      }
     }
   }
 

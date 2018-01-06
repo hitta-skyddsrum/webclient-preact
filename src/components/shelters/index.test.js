@@ -113,12 +113,10 @@ describe('containers/shelters', () => {
   });
 
   it('should display ShelterDetail when a clicking on a shelter', () => {
-    const fetchRouteToShelter = sinon.spy();
     const shelter = { shelterId: '1337', position: {} };
     const context = shallow(<Shelters
       shelters={[shelter]}
       selectedShelter={shelter}
-      fetchRouteToShelter={fetchRouteToShelter}
       fetchShelters={fetchShelters}
     />);
     context.setState({ hideShelterDetail: true });
@@ -239,58 +237,10 @@ describe('containers/shelters', () => {
     expect(fetchShelters).to.have.been.calledWith();
   });
 
-  it('should fetch route to shelter when selectedShelter is updated', () => {
-    const center = { lat: 14, lon: 17 };
-    const fetchRouteToShelter = sinon.spy();
-    const context = shallow(<Shelters
-      youAreHere={[center.lat, center.lon]}
-      fetchShelters={fetchShelters}
-      fetchRouteToShelter={fetchRouteToShelter}
-      shelters={[]}
-    />);
-    const selectedShelter = { position: { lat: 180, long: 183 } };
-
-    context.render(<Shelters shelters={[]} selectedShelter={selectedShelter} />);
-
-    expect(fetchRouteToShelter).to.have.been.calledWith(
-      center,
-      { lat: selectedShelter.position.lat, lon: selectedShelter.position.long }
-    );
-  });
-
-  it('should not fetch route to shelter when selectedShelter is updated and no lat is provided', () => {
-    const fetchRouteToShelter = sinon.spy();
-    const context = shallow(<Shelters
-      fetchShelters={fetchShelters}
-      fetchRouteToShelter={fetchRouteToShelter}
-      shelters={[]}
-    />);
-    const selectedShelter = { position: { lat: 180, long: 183 } };
-
-    context.render(<Shelters shelters={[]} selectedShelter={selectedShelter} />);
-
-    expect(fetchRouteToShelter).to.not.have.been.called;
-  });
-
-  it('should not fetch route to shelter when selectedShelter is updated with falsy value', () => {
-    const fetchRouteToShelter = sinon.spy();
-    const context = shallow(<Shelters
-      fetchShelters={fetchShelters}
-      fetchRouteToShelter={fetchRouteToShelter}
-      shelters={[]}
-    />);
-
-    context.render(<Shelters shelters={[]} selectedShelter={undefined} />);
-
-    expect(fetchRouteToShelter).to.not.have.been.called;
-  });
-
   it('should display ShelterDetail when a new selectedShelter is received', () => {
-    const fetchRouteToShelter = sinon.spy();
     const shelter = { shelterId: '1337', position: {} };
     const context = shallow(<Shelters
       shelters={[shelter]}
-      fetchRouteToShelter={fetchRouteToShelter}
       fetchShelters={fetchShelters}
     />);
     context.setState({ hideShelterDetail: true });
@@ -307,10 +257,8 @@ describe('containers/shelters', () => {
   });
 
   it('should hide ShelterDetail upon closing selected shelter', () => {
-    const fetchRouteToShelter = sinon.spy();
     const selectedShelter = { shelterId: '1337', position: {} };
     const context = shallow(<Shelters
-      fetchRouteToShelter={fetchRouteToShelter}
       selectedShelter={selectedShelter}
       fetchShelters={fetchShelters}
       shelters={[]}

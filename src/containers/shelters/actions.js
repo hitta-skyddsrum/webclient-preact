@@ -86,10 +86,10 @@ export const fetchRouteToShelter = (from, shelter) => {
       type: FETCH_ROUTE_TO_SHELTER,
     });
 
-    return fetchJson(`https://api.openrouteservice.org/directions?api_key=${process.env.ORS_API_KEY}&coordinates=${from.lon},${from.lat}|${shelter.lon},${shelter.lat}&profile=driving-car`)
-      .then(response => dispatch({
+    return fetchJson(`https://api.openrouteservice.org/directions?api_key=${process.env.ORS_API_KEY}&coordinates=${from[1]},${from[0]}|${shelter.position.long},${shelter.position.lat}&profile=driving-car`)
+      .then(route => dispatch({
         type: FETCH_ROUTE_TO_SHELTER_SUCCESS,
-        route: response,
+        route,
       }))
       .catch(error => dispatch({
         type: FETCH_ROUTE_TO_SHELTER_FAILED,
@@ -99,12 +99,15 @@ export const fetchRouteToShelter = (from, shelter) => {
 };
 
 export const selectShelter = id => {
-  return dispatch => {
+  return (dispatch, getStore) => {
+    const state = getStore().Shelters;
+
     return dispatch(fetchSingleShelter(id))
       .then(({ shelter }) => dispatch({
         type: SELECT_SHELTER,
         shelter,
-      }));
+      }))
+      .then(({ shelter }) => dispatch(fetchRouteToShelter(state.youAreHere, shelter)));
   };
 };
 

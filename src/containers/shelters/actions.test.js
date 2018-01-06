@@ -170,23 +170,27 @@ describe('containers/shelters/actions/fetchRouteToShelter', () => {
     jest.unmock('../../lib/fetch-json');
   });
 
+  afterEach(() => {
+    fetchJson.mockReset();
+  });
+
   it('calls the API with accurate query params', () => {
-    const from = { lat: 3, lon: 4 };
-    const to = { lat: 14, lon: 18 };
+    const from = [18, 14];
+    const shelter = { position: { lat: 14, long: 18 } };
     fetchJson.mockReturnValueOnce(Promise.resolve());
 
     const store = mockStore({ shelters: [] });
 
-    return store.dispatch(require('./actions').fetchRouteToShelter(from, to))
+    return store.dispatch(require('./actions').fetchRouteToShelter(from, shelter))
       .then(() => {
-        expect(fetchJson.mock.calls[0][0]).to.match(new RegExp(`coordinates=${from.lon},${from.lat}|${to.lon},${to.lat}`));
+        expect(fetchJson.mock.calls[0][0]).to.match(new RegExp(`coordinates=${from[1]},${from[0]}|${shelter.position.long},${shelter.position.lat}`));
       });
   });
 
   it('creates FETCH_ROUTE_TO_SHELTER_SUCCESS when fetching shelters is finished', () => {
     const route = { route: '66' };
     const from = { lat: 3, lon: 4 };
-    const to = { lat: 14, lon: 18 };
+    const shelter = { position: { lat: 14, long: 18 } };
     fetchJson.mockReturnValueOnce(Promise.resolve(route));
 
     const expectedActions = [
@@ -199,14 +203,14 @@ describe('containers/shelters/actions/fetchRouteToShelter', () => {
 
     const store = mockStore({ shelters: [] });
 
-    return store.dispatch(require('./actions').fetchRouteToShelter(from, to))
+    return store.dispatch(require('./actions').fetchRouteToShelter(from, shelter))
       .then(() => expect(store.getActions()).to.eql(expectedActions));
   });
 
   it('creates FETCH_ROUTE_TO_SHELTER_FAILED when fetching shelters failed', () => {
     const error = new Error();
     const from = { lat: 13, lon: 40 };
-    const to = { lat: 114, lon: 108 };
+    const shelter = { position: { lat: 114, long: 18 } };
     fetchJson.mockReturnValueOnce(Promise.reject(error));
 
     const expectedActions = [
@@ -219,7 +223,7 @@ describe('containers/shelters/actions/fetchRouteToShelter', () => {
 
     const store = mockStore({ shelters: [] });
 
-    return store.dispatch(require('./actions').fetchRouteToShelter(from, to))
+    return store.dispatch(require('./actions').fetchRouteToShelter(from, shelter))
       .then(() => expect(store.getActions()).to.eql(expectedActions));
   });
 });
@@ -238,7 +242,8 @@ describe('containers/shelters/actions/selectShelter', () => {
   });
 
   it('fetches the shelter and then creates SELECT_SHELTER', () => {
-    const shelter = { shelter: 1 };
+    const shelter = { shelter: 1, position: {} };
+    fetchJson.mockReturnValueOnce(Promise.resolve(shelter));
     fetchJson.mockReturnValueOnce(Promise.resolve(shelter));
 
     const expectedActions = [
@@ -247,10 +252,25 @@ describe('containers/shelters/actions/selectShelter', () => {
       { type: types.SELECT_SHELTER, shelter },
     ];
 
-    const store = mockStore({ shelters: [] });
+    const store = mockStore({ Shelters: { youAreHere: [] } });
 
     return store.dispatch(require('./actions').selectShelter(shelter.id))
-      .then(() => expect(store.getActions()).to.eql(expectedActions));
+      .then(() => expect(store.getActions().slice(0, 3)).to.eql(expectedActions));
+  });
+
+  it('creates FETCH_ROUTE_TO_SHELTER after selecting the shelter', () => {
+    const shelter = { shelter: 1, position: {} };
+    fetchJson.mockReturnValueOnce(Promise.resolve(shelter));
+    fetchJson.mockReturnValueOnce(Promise.resolve(shelter));
+
+    const expectedActions = [
+      { type: types.FETCH_ROUTE_TO_SHELTER },
+    ];
+
+    const store = mockStore({ Shelters: { youAreHere: [] } });
+
+    return store.dispatch(require('./actions').selectShelter(shelter.id))
+      .then(() => expect(store.getActions().slice(3, 4)).to.eql(expectedActions));
   });
 });
 
