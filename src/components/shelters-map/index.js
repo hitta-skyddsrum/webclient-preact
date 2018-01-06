@@ -29,6 +29,7 @@ export default ({
         />
         {youAreHere.length && <Marker
           position={youAreHere}
+          interactive={false}
           icon={
             L.icon({
               iconUrl: '/assets/images/icon-you_are_here.png',

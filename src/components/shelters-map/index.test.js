@@ -37,7 +37,7 @@ describe('components/SheltersMap', () => {
   });
 
   it('should render a marker at the youAreHere position', () => {
-    expect(mapContext.find(<Marker position={youAreHere} />).length).to.equal(1);
+    expect(mapContext.find(<Marker position={youAreHere} interactive={false} />).length).to.equal(1);
   });
 
   it('should not render a marker if no youAreHere is given', () => {
