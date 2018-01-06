@@ -1,5 +1,5 @@
 import { connect } from 'preact-redux';
-import { fetchShelters, fetchRouteToShelter, selectShelter, unselectShelter, clearError, fetchSingleShelter } from './actions';
+import { fetchShelters, fetchRouteToShelter, selectShelter, unselectShelter, clearError } from './actions';
 
 import SheltersComponent from '../../components/shelters';
 
@@ -9,12 +9,11 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    fetchSingleShelter: id => dispatch(fetchSingleShelter(id)),
     fetchShelters: (lat, lon) => dispatch(fetchShelters(lat, lon)),
     fetchRouteToShelter: (from, to) => dispatch(fetchRouteToShelter(from, to)),
-    handleSelectShelter: shelter => dispatch(selectShelter(shelter)),
-    handleUnselectShelter: () => dispatch(unselectShelter()),
-    clearError: () => dispatch(clearError()),
+    onSelectShelter: shelter => dispatch(selectShelter(shelter)),
+    onUnselectShelter: () => dispatch(unselectShelter()),
+    onCloseErrorDialog: () => dispatch(clearError()),
   };
 };
 

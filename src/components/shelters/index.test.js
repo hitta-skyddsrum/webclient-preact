@@ -46,17 +46,17 @@ describe('containers/shelters', () => {
     expect(context.find(<ErrorDialog title={humanError.message} desc={humanError.desc} />).length).to.equal(1);
   });
 
-  it('fires clearError upon closing ErrorDialog', () => {
-    const clearError = sinon.spy();
+  it('fires onCloseError upon closing ErrorDialog', () => {
+    const onCloseError = sinon.spy();
     const context = shallow(<Shelters
       fetchShelters={sinon.spy()}
       humanError={new Error('What\'s going on?')}
-      clearError={clearError}
+      onCloseErrorDialog={onCloseError}
     />);
 
     context.find(<ErrorDialog />).attr('handleClose')();
 
-    expect(clearError.calledOnce).to.equal(true);
+    expect(onCloseError.calledOnce).to.equal(true);
   });
 
   it('should contain a SearchBox container', () => {
@@ -159,71 +159,86 @@ describe('containers/shelters', () => {
 
   it('should select accurate shelter when an id prop is set', () => {
     const id = 'this-is-the-id';
-    const handleSelectShelter = sinon.spy();
+    const onSelectShelter = sinon.spy();
 
     shallow(<Shelters
       id={id}
-      handleSelectShelter={handleSelectShelter}
+      onSelectShelter={onSelectShelter}
     />);
 
-    expect(handleSelectShelter).to.have.been.calledWith(id);
+    expect(onSelectShelter).to.have.been.calledWith(id);
   });
 
   it('should select already fetched shelter upon new id received', () => {
     const shelter = { id: 56 };
-    const handleSelectShelter = sinon.spy();
-    const fetchSingleShelter = sinon.spy();
+    const onSelectShelter = sinon.spy();
     const context = shallow(<Shelters
       shelters={[shelter]}
       fetchShelters={fetchShelters}
-      fetchSingleShelter={fetchSingleShelter}
-      handleSelectShelter={handleSelectShelter}
+      onSelectShelter={onSelectShelter}
     />);
 
     context.render(<Shelters shelters={[shelter]} id={shelter.id} />);
 
-    expect(handleSelectShelter).to.have.been.calledWith(shelter.id);
+    expect(onSelectShelter).to.have.been.calledWith(shelter.id);
   });
 
   it('should select shelter when a new id is received', () => {
     const shelters = [{ id: 56 }];
     const newShelter = { id: 59 };
-    const handleSelectShelter = sinon.spy();
+    const onSelectShelter = sinon.spy();
     const context = shallow(<Shelters
       shelters={shelters}
       fetchShelters={fetchShelters}
-      handleSelectShelter={handleSelectShelter}
+      onSelectShelter={onSelectShelter}
     />);
 
     context.render(<Shelters
       shelters={shelters}
       id={newShelter.id}
       fetchShelters={fetchShelters}
-      handleSelectShelter={handleSelectShelter}
+      onSelectShelter={onSelectShelter}
     />);
 
-    expect(handleSelectShelter).to.have.been.calledWith(newShelter.id);
+    expect(onSelectShelter).to.have.been.calledWith(newShelter.id);
   });
 
   it('should unselect shelter when a falsy id is received', () => {
     const shelters = [{ id: 56, position: {} }];
     const oldShelter = { id: 59 };
-    const handleUnselectShelter = sinon.spy();
+    const onUnselectShelter = sinon.spy();
     const context = shallow(<Shelters
       shelters={shelters}
       id={oldShelter.id}
       fetchShelters={fetchShelters}
-      handleSelectShelter={sinon.spy()}
-      handleUnselectShelter={handleUnselectShelter}
+      onSelectShelter={sinon.spy()}
+      onUnselectShelter={onUnselectShelter}
     />);
 
     context.render(<Shelters
       shelters={shelters}
       fetchShelters={fetchShelters}
-      handleUnselectShelter={handleUnselectShelter}
+      onUnselectShelter={onUnselectShelter}
     />);
 
-    expect(handleUnselectShelter).to.have.been.calledWith();
+    expect(onUnselectShelter).to.have.been.calledWith();
+  });
+
+  it('should fetch shelters when a falsy id is received', () => {
+    const oldShelter = { id: 59 };
+    const context = shallow(<Shelters
+      id={oldShelter.id}
+      fetchShelters={fetchShelters}
+      onSelectShelter={sinon.spy()}
+      onUnselectShelter={sinon.spy()}
+    />);
+
+    context.render(<Shelters
+      fetchShelters={fetchShelters}
+      onUnselectShelter={sinon.spy()}
+    />);
+
+    expect(fetchShelters).to.have.been.calledWith();
   });
 
   it('should fetch route to shelter when selectedShelter is updated', () => {

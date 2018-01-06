@@ -17,19 +17,20 @@ export default class Shelters extends Component {
 
   componentWillMount() {
     if (this.props.id) {
-      this.props.handleSelectShelter(this.props.id);
+      this.props.onSelectShelter(this.props.id);
     } else {
       this.props.fetchShelters(this.props.lat, this.props.lon);
     }
   }
 
   componentWillUpdate(nextProps) {
-    if (!nextProps.id && nextProps.id !== this.props.id) {
-      this.props.handleUnselectShelter();
-    }
-
-    if (nextProps.id && nextProps.id !== this.props.id) {
-      this.props.handleSelectShelter(nextProps.id);
+    if (nextProps.id !== this.props.id) {
+      if (nextProps.id) {
+        this.props.onSelectShelter(nextProps.id);
+      } else {
+        this.props.onUnselectShelter();
+        this.props.fetchShelters(this.props.lat, this.props.lon);
+      }
     }
 
     if (nextProps.selectedShelter && nextProps.selectedShelter !== this.props.selectedShelter) {
@@ -65,7 +66,7 @@ export default class Shelters extends Component {
       {this.props.humanError && <ErrorDialog
         title={this.props.humanError.message}
         desc={this.props.humanError.desc}
-        handleClose={this.props.clearError}
+        handleClose={this.props.onCloseErrorDialog}
       />}
       <SearchBox styles={style.searchBox} />
       <SheltersMap
