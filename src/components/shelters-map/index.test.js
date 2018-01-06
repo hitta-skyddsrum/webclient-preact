@@ -9,6 +9,7 @@ import SheltersMap from './';
 describe('components/SheltersMap', () => {
   const bounds = [ [1, 2], [3, 4]];
   const center = [1, 2];
+  const youAreHere = [123123, 87495];
   const shelters = [
     { position: { lat: 12, long: 13 } },
     { position: { lat: 14, long: 15 } },
@@ -27,18 +28,19 @@ describe('components/SheltersMap', () => {
       shelters={shelters}
       onSelectShelter={onSelectShelter}
       routes={routes}
-    />, { depth: 2 });
+      youAreHere={youAreHere}
+    />, { depth: 1 });
   });
 
   it('should render a map', () => {
     expect(mapContext.find(<Map zoom={10} bounds={bounds} center={center} />).length).to.equal(1);
   });
 
-  it('should render a marker at the map center', () => {
-    expect(mapContext.find(<Marker position={center} />).length).to.equal(1);
+  it('should render a marker at the youAreHere position', () => {
+    expect(mapContext.find(<Marker position={youAreHere} />).length).to.equal(1);
   });
 
-  it('should not render a marker if no center is given', () => {
+  it('should not render a marker if no youAreHere is given', () => {
     mapContext.render(<SheltersMap center={[]} shelters={[]} routes={[]} />);
 
     expect(mapContext.find(<Marker />).length).to.equal(0);

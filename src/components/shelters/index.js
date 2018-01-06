@@ -11,11 +11,21 @@ import SearchBox from '../../containers/search-box';
 import style from './style.scss';
 
 export default class Shelters extends Component {
+  static defaultProps = {
+    youAreHere: [],
+  };
+
   state = {
     hideShelterDetail: false,
   };
 
   componentWillMount() {
+    if (!this.props.youAreHere.length) {
+      this.setState({ center: [62.166667, 14.95] });
+    } else {
+      this.setState({ center: this.props.youAreHere });
+    }
+
     if (this.props.selectedShelterId) {
       this.props.onSelectShelter(this.props.selectedShelterId);
     } else {
@@ -60,7 +70,8 @@ export default class Shelters extends Component {
       />}
       <SearchBox styles={style.searchBox} />
       <SheltersMap
-        center={this.props.youAreHere}
+        center={this.state.center}
+        youAreHere={this.props.youAreHere}
         shelters={this.props.shelters}
         routes={this.props.routes}
         onSelectShelter={this.handleClickShelter}

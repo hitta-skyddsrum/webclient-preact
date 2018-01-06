@@ -22,6 +22,7 @@ const initialState = {
   error: null,
   humanError: null,
   loading: 0,
+  youAreHere: [],
 };
 
 export default (state = initialState, action) => {

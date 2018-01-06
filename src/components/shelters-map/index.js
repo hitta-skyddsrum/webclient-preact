@@ -11,6 +11,7 @@ export default ({
   routes,
   onSelectShelter,
   bounds,
+  youAreHere = [],
 }) => {
   const mapCenter = center.filter(pos => pos).length ? center : false;
 
@@ -26,8 +27,8 @@ export default ({
           url='http://{s}.tile.osm.org/{z}/{x}/{y}.png'
           attribution="&copy; <a href=&quot;http://osm.org/copyright&quot;>OpenStreetMap</a> contributors"
         />
-        {!!mapCenter && <Marker
-          position={mapCenter}
+        {youAreHere.length && <Marker
+          position={youAreHere}
           icon={
             L.icon({
               iconUrl: '/assets/images/icon-you_are_here.png',

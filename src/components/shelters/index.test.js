@@ -70,23 +70,32 @@ describe('containers/shelters', () => {
   it('should contain SheltersMap component', () => {
     const shelters = [{ name: 'shelter 1 '}];
     const routes = 'route 69';
-    const center = [5, 8];
+    const youAreHere = [5, 8];
     const bounds = [15, 1];
     const context = shallow(<Shelters
       routes={routes}
       bounds={bounds}
       shelters={shelters}
       fetchShelters={fetchShelters}
-      youAreHere={center}
+      youAreHere={youAreHere}
     />);
 
     expect(context.find(<SheltersMap
       routes={routes}
       shelters={shelters}
-      center={center}
+      center={youAreHere}
+      youAreHere={youAreHere}
       bounds={bounds}
     />).length)
       .to.equal(1, 'Expected ShelersMap component to exist');
+  });
+
+  it('should provide Ytterhogdal as center if youAreHere is empty', () => {
+    const context = shallow(<Shelters
+      fetchShelters={fetchShelters}
+    />);
+
+    expect(context.find(<SheltersMap />).attr('center')).to.eql([62.166667, 14.95]);
   });
 
   it('should change route and keep center upon clicking on a shelter on SheltersMap', () => {
