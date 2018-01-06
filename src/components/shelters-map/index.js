@@ -34,6 +34,7 @@ export default ({
             L.icon({
               iconUrl: '/assets/images/icon-you_are_here.png',
               iconSize: [22, 40],
+              className: 'youAreHere',
             })
           }
         />}
@@ -44,6 +45,7 @@ export default ({
             L.icon({
               iconUrl: '/assets/images/icon-shelter.png',
               iconSize: [50, 49],
+              className: 'shelter',
             })
           }
         />))}
