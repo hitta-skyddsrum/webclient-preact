@@ -1,4 +1,5 @@
 import polyline from 'polyline';
+import { getSearchParam, getValueAfterSection } from '../../lib/url-parser';
 import {
   FETCH_SINGLE_SHELTER,
   FETCH_SINGLE_SHELTER_SUCCESS,
@@ -29,18 +30,10 @@ export default (state = initialState, action) => {
       return {
         ...state,
         youAreHere: [
-          action.payload.search.substring(1)
-            .split('&')
-            .filter(query => query.indexOf('lat=') !== -1)
-            .map(query => query.split('=').pop())
-            .pop(),
-          action.payload.search.substring(1)
-            .split('&')
-            .filter(query => query.indexOf('lon=') !== -1)
-            .map(query => query.split('=').pop())
-            .pop(),
-        ],
-        selectedShelterId: action.payload.pathname.split('/skyddsrum/').length > 1 && action.payload.pathname.split('/skyddsrum/').pop(),
+          getSearchParam(action.payload.search, 'lat'),
+          getSearchParam(action.payload.search, 'lon'),
+        ].filter(pos => !!pos),
+        selectedShelterId: getValueAfterSection(action.payload.pathname, 'skyddsrum'),
       };
     case FETCH_SINGLE_SHELTER:
       return {

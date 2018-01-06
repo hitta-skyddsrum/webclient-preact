@@ -31,7 +31,7 @@ describe('containers/shelters/reducer', () => {
     const payload = { search, pathname: '' };
 
     expect(SheltersReducer(oldState, { type: '@@router/LOCATION_CHANGE', payload }).youAreHere)
-      .to.eql([undefined, undefined]);
+      .to.eql([]);
   });
 
   it('should set selectedShelterId upon @@router/LOCATION_CHANGE', () => {
