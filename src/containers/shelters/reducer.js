@@ -25,6 +25,23 @@ const initialState = {
 
 export default (state = initialState, action) => {
   switch (action.type) {
+    case '@@router/LOCATION_CHANGE':
+      return {
+        ...state,
+        youAreHere: [
+          action.payload.search.substring(1)
+            .split('&')
+            .filter(query => query.indexOf('lat=') !== -1)
+            .map(query => query.split('=').pop())
+            .pop(),
+          action.payload.search.substring(1)
+            .split('&')
+            .filter(query => query.indexOf('lon=') !== -1)
+            .map(query => query.split('=').pop())
+            .pop(),
+        ],
+        selectedShelterId: action.payload.pathname.split('/skyddsrum/').length > 1 && action.payload.pathname.split('/skyddsrum/').pop(),
+      };
     case FETCH_SINGLE_SHELTER:
       return {
         ...state,

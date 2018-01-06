@@ -9,7 +9,7 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    fetchShelters: (lat, lon) => dispatch(fetchShelters(lat, lon)),
+    fetchShelters: position => dispatch(fetchShelters(position[0], position[1])),
     fetchRouteToShelter: (from, to) => dispatch(fetchRouteToShelter(from, to)),
     onSelectShelter: shelter => dispatch(selectShelter(shelter)),
     onUnselectShelter: () => dispatch(unselectShelter()),

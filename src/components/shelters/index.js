@@ -16,33 +16,33 @@ export default class Shelters extends Component {
   };
 
   componentWillMount() {
-    if (this.props.id) {
-      this.props.onSelectShelter(this.props.id);
+    if (this.props.selectedShelterId) {
+      this.props.onSelectShelter(this.props.selectedShelterId);
     } else {
-      this.props.fetchShelters(this.props.lat, this.props.lon);
+      this.props.fetchShelters(this.props.youAreHere);
     }
   }
 
   componentWillUpdate(nextProps) {
-    if (nextProps.id !== this.props.id) {
-      if (nextProps.id) {
-        this.props.onSelectShelter(nextProps.id);
+    if (nextProps.selectedShelterId !== this.props.selectedShelterId) {
+      if (nextProps.selectedShelterId) {
+        this.props.onSelectShelter(nextProps.selectedShelterId);
       } else {
         this.props.onUnselectShelter();
-        this.props.fetchShelters(this.props.lat, this.props.lon);
+        this.props.fetchShelters(this.props.youAreHere);
       }
     }
 
     if (nextProps.selectedShelter && nextProps.selectedShelter !== this.props.selectedShelter) {
       this.setState({ hideShelterDetail: false });
-      if (this.props.lat) {
+      if (this.props.youAreHere) {
         this.props.fetchRouteToShelter({
-          lon: this.props.lon,
-          lat: this.props.lat,
+          lat: this.props.youAreHere[0],
+          lon: this.props.youAreHere[1],
         },
         {
-          lon: nextProps.selectedShelter.position.long,
           lat: nextProps.selectedShelter.position.lat,
+          lon: nextProps.selectedShelter.position.long,
         });
       }
     }
@@ -70,7 +70,7 @@ export default class Shelters extends Component {
       />}
       <SearchBox styles={style.searchBox} />
       <SheltersMap
-        center={[this.props.lat, this.props.lon]}
+        center={this.props.youAreHere}
         shelters={this.props.shelters}
         routes={this.props.routes}
         onSelectShelter={this.handleClickShelter}

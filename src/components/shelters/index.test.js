@@ -77,8 +77,7 @@ describe('containers/shelters', () => {
       bounds={bounds}
       shelters={shelters}
       fetchShelters={fetchShelters}
-      lat={center[0]}
-      lon={center[1]}
+      youAreHere={center}
     />);
 
     expect(context.find(<SheltersMap
@@ -104,8 +103,7 @@ describe('containers/shelters', () => {
       routes={routes}
       shelters={[shelter]}
       fetchShelters={fetchShelters}
-      lat={center.lat}
-      lon={center.lon}
+      youAreHere={[center.lat, center.lon]}
     />);
 
     context.find(<SheltersMap />).attr('onSelectShelter')(shelter);
@@ -152,24 +150,24 @@ describe('containers/shelters', () => {
     const lat = 14.53;
     const lon = 12.01;
 
-    shallow(<Shelters lat={lat} lon={lon} fetchShelters={fetchShelters} />);
+    shallow(<Shelters youAreHere={[lat, lon]} fetchShelters={fetchShelters} />);
 
-    expect(fetchShelters).to.have.been.calledWith(lat, lon);
+    expect(fetchShelters).to.have.been.calledWith([lat, lon]);
   });
 
-  it('should select accurate shelter when an id prop is set', () => {
+  it('should select accurate shelter when an selectedShelterId prop is set', () => {
     const id = 'this-is-the-id';
     const onSelectShelter = sinon.spy();
 
     shallow(<Shelters
-      id={id}
+      selectedShelterId={id}
       onSelectShelter={onSelectShelter}
     />);
 
     expect(onSelectShelter).to.have.been.calledWith(id);
   });
 
-  it('should select already fetched shelter upon new id received', () => {
+  it('should select already fetched shelter upon new selectedShelterId received', () => {
     const shelter = { id: 56 };
     const onSelectShelter = sinon.spy();
     const context = shallow(<Shelters
@@ -178,12 +176,12 @@ describe('containers/shelters', () => {
       onSelectShelter={onSelectShelter}
     />);
 
-    context.render(<Shelters shelters={[shelter]} id={shelter.id} />);
+    context.render(<Shelters shelters={[shelter]} selectedShelterId={shelter.id} />);
 
     expect(onSelectShelter).to.have.been.calledWith(shelter.id);
   });
 
-  it('should select shelter when a new id is received', () => {
+  it('should select shelter when a new selectedShelterId is received', () => {
     const shelters = [{ id: 56 }];
     const newShelter = { id: 59 };
     const onSelectShelter = sinon.spy();
@@ -195,7 +193,7 @@ describe('containers/shelters', () => {
 
     context.render(<Shelters
       shelters={shelters}
-      id={newShelter.id}
+      selectedShelterId={newShelter.id}
       fetchShelters={fetchShelters}
       onSelectShelter={onSelectShelter}
     />);
@@ -203,13 +201,13 @@ describe('containers/shelters', () => {
     expect(onSelectShelter).to.have.been.calledWith(newShelter.id);
   });
 
-  it('should unselect shelter when a falsy id is received', () => {
+  it('should unselect shelter when a falsy selectedShelterId is received', () => {
     const shelters = [{ id: 56, position: {} }];
     const oldShelter = { id: 59 };
     const onUnselectShelter = sinon.spy();
     const context = shallow(<Shelters
       shelters={shelters}
-      id={oldShelter.id}
+      selectedShelterId={oldShelter.id}
       fetchShelters={fetchShelters}
       onSelectShelter={sinon.spy()}
       onUnselectShelter={onUnselectShelter}
@@ -224,10 +222,10 @@ describe('containers/shelters', () => {
     expect(onUnselectShelter).to.have.been.calledWith();
   });
 
-  it('should fetch shelters when a falsy id is received', () => {
+  it('should fetch shelters when a falsy selectedShelterId is received', () => {
     const oldShelter = { id: 59 };
     const context = shallow(<Shelters
-      id={oldShelter.id}
+      selectedShelterId={oldShelter.id}
       fetchShelters={fetchShelters}
       onSelectShelter={sinon.spy()}
       onUnselectShelter={sinon.spy()}
@@ -245,8 +243,7 @@ describe('containers/shelters', () => {
     const center = { lat: 14, lon: 17 };
     const fetchRouteToShelter = sinon.spy();
     const context = shallow(<Shelters
-      lat={center.lat}
-      lon={center.lon}
+      youAreHere={[center.lat, center.lon]}
       fetchShelters={fetchShelters}
       fetchRouteToShelter={fetchRouteToShelter}
       shelters={[]}
