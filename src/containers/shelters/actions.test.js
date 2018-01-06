@@ -138,19 +138,19 @@ describe('containers/shelters/actions/fetchShelters', () => {
   });
 });
 
-describe('containers/shelters/actions/setBoundsForShelters', () => {
+describe('containers/shelters/actions/setBoundsForPositions', () => {
   it('creates SET_BOUNDS with accurate bounds', () => {
-    const smallest = { lat: 1, long: 2 };
-    const biggest = { lat: 300, long: 400 };
-    const shelters = [
-      { position: { lat: 14, long: 3 } },
-      { position: biggest },
-      { position: smallest },
-      { position: { lat: 20, long: 154 } },
+    const smallest = [1, 2];
+    const biggest = [300, 400];
+    const positions = [
+      [14, 3],
+      biggest,
+      smallest,
+      [20, 154],
     ];
-    const bounds = [[smallest.lat, smallest.long], [biggest.lat, biggest.long]];
+    const bounds = [[smallest[0], smallest[1]], [biggest[0], biggest[1]]];
 
-    expect(require('./actions').setBoundsForShelters(shelters)).to.eql({
+    expect(require('./actions').setBoundsForPositions(positions)).to.eql({
       type: types.SET_BOUNDS,
       bounds,
     });

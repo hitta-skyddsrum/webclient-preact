@@ -45,7 +45,9 @@ export const fetchShelters = (lat, lon) => {
         type: FETCH_SHELTERS_SUCCESS,
         shelters,
       }))
-      .then(({ shelters }) => dispatch(setBoundsForShelters(shelters)))
+      .then(({ shelters }) => dispatch(
+        setBoundsForPositions(shelters.map(({ position: { lat, long } }) => [lat, long])))
+      )
       .catch(error => dispatch({
         type: FETCH_SHELTERS_FAILED,
         error,
@@ -53,19 +55,22 @@ export const fetchShelters = (lat, lon) => {
   };
 };
 
-export const setBoundsForShelters = shelters => {
-  const getShelterPosition = sortedBy => {
-    const biggest = sortedBy === 'biggest' ? true : false;
+export const setBoundsForPositions = positions => {
+  const parsedPositions = positions
+    .filter(pos => pos.length === 2)
+    .map(([lat, lon]) => [parseFloat(lat), parseFloat(lon)]);
 
+  const getExtremePosition = sortedBy => {
+    const biggest = sortedBy === 'biggest' ? true : false;
     const sorter = (a, b) => biggest ? b - a : a - b;
 
     return [
-      shelters
-        .map(shelter => parseFloat(shelter.position['lat']))
+      parsedPositions
+        .map(([lat]) => lat)
         .sort(sorter)
         .shift(),
-      shelters
-        .map(shelter => parseFloat(shelter.position['long']))
+      parsedPositions
+        .map(([, lon]) => lon)
         .sort(sorter)
         .shift(),
     ];
@@ -74,8 +79,8 @@ export const setBoundsForShelters = shelters => {
   return {
     type: SET_BOUNDS,
     bounds: [
-      getShelterPosition('smallest'),
-      getShelterPosition('biggest'),
+      getExtremePosition('smallest'),
+      getExtremePosition('biggest'),
     ],
   };
 };
@@ -107,7 +112,9 @@ export const selectShelter = id => {
         type: SELECT_SHELTER,
         shelter,
       }))
-      .then(({ shelter }) => dispatch(fetchRouteToShelter(state.youAreHere, shelter)));
+      .then(({ shelter }) => {
+        dispatch(fetchRouteToShelter(state.youAreHere, shelter));
+      });
   };
 };
 
