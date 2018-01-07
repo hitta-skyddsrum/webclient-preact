@@ -1,4 +1,5 @@
 import fetchJson from '../../lib/fetch-json';
+import { getBoundsAroundPositions } from '../../lib/geo-utils';
 
 import {
   FETCH_SINGLE_SHELTER,
@@ -56,32 +57,9 @@ export const fetchShelters = (lat, lon) => {
 };
 
 export const setBoundsForPositions = positions => {
-  const parsedPositions = positions
-    .filter(pos => pos.length === 2)
-    .map(([lat, lon]) => [parseFloat(lat), parseFloat(lon)]);
-
-  const getExtremePosition = sortedBy => {
-    const biggest = sortedBy === 'biggest' ? true : false;
-    const sorter = (a, b) => biggest ? b - a : a - b;
-
-    return [
-      parsedPositions
-        .map(([lat]) => lat)
-        .sort(sorter)
-        .shift(),
-      parsedPositions
-        .map(([, lon]) => lon)
-        .sort(sorter)
-        .shift(),
-    ];
-  };
-
   return {
     type: SET_BOUNDS,
-    bounds: [
-      getExtremePosition('smallest'),
-      getExtremePosition('biggest'),
-    ],
+    bounds: getBoundsAroundPositions(positions),
   };
 };
 
