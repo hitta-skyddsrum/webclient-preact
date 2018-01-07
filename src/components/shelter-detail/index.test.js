@@ -17,6 +17,10 @@ describe('components/shelter-detail', () => {
     municipality: 'Jukkasjärvi',
   };
 
+  it('should be able to render without provided shelter', () => {
+    expect(shallow(<ShelterDetail />)).to.not.throw;
+  });
+
   it('should include have a BottomSheet', () => {
     const onClose = sinon.spy();
     const context = shallow(<ShelterDetail
