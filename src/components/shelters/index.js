@@ -17,7 +17,7 @@ export default class Shelters extends Component {
   };
 
   state = {
-    hideShelterDetail: false,
+    hideShelterDetail: true,
   };
 
   componentWillMount() {
