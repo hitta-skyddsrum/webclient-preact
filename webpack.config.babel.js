@@ -131,7 +131,8 @@ module.exports = {
 			minify: { collapseWhitespace: true }
 		}),
 		new CopyWebpackPlugin([
-			{ from: './manifest.json', to: './' },
+      { from: './manifest.json', to: './' },
+      { from: './_redirects', to: './' },
 			{ from: './favicon.ico', to: './' }
 		])
 	]).concat(ENV==='production' ? [
