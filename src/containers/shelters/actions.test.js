@@ -142,15 +142,9 @@ describe('containers/shelters/actions/setBoundsForPositions', () => {
   it('creates SET_BOUNDS with accurate bounds', () => {
     const smallest = [1, 2];
     const biggest = [300, 400];
-    const positions = [
-      [14, 3],
-      biggest,
-      smallest,
-      [20, 154],
-    ];
-    const bounds = [[smallest[0], smallest[1]], [biggest[0], biggest[1]]];
+    const bounds = [smallest, biggest];
 
-    expect(require('./actions').setBoundsForPositions(positions)).to.eql({
+    expect(require('./actions').setBoundsForPositions(bounds)).to.eql({
       type: types.SET_BOUNDS,
       bounds,
     });
