@@ -246,7 +246,7 @@ describe('containers/shelters/actions/selectShelter', () => {
       { type: types.SELECT_SHELTER, shelter },
     ];
 
-    const store = mockStore({ Shelters: { youAreHere: [] } });
+    const store = mockStore({ Shelters: { youAreHere: [], bounds: [] } });
 
     return store.dispatch(require('./actions').selectShelter(shelter.id))
       .then(() => expect(store.getActions().slice(0, 3)).to.eql(expectedActions));
@@ -261,7 +261,7 @@ describe('containers/shelters/actions/selectShelter', () => {
       { type: types.FETCH_ROUTE_TO_SHELTER },
     ];
 
-    const store = mockStore({ Shelters: { youAreHere: [] } });
+    const store = mockStore({ Shelters: { youAreHere: [], bounds: [] } });
 
     return store.dispatch(require('./actions').selectShelter(shelter.id))
       .then(() => expect(store.getActions().slice(3, 4)).to.eql(expectedActions));
@@ -277,7 +277,22 @@ describe('containers/shelters/actions/selectShelter', () => {
       { type: types.SET_BOUNDS, bounds: [youAreHere, [shelter.position.lat, shelter.position.long]] },
     ];
 
-    const store = mockStore({ Shelters: { youAreHere } });
+    const store = mockStore({ Shelters: { youAreHere, bounds: [] } });
+
+    return store.dispatch(require('./actions').selectShelter(13))
+      .then(() => expect(store.getActions().slice(5, 6)).to.eql(expectedActions));
+  });
+
+  it('doesnt creates SET_BOUNDS when bounds is already set in state', () => {
+    const youAreHere = [5, 10];
+    const shelter = { position: { lat: 132, long: 8000 } };
+    fetchJson.mockReturnValueOnce(Promise.resolve(shelter));
+    fetchJson.mockReturnValueOnce(Promise.resolve());
+
+    const expectedActions = [
+    ];
+
+    const store = mockStore({ Shelters: { youAreHere, bounds: [youAreHere, [shelter.position.lat, shelter.position.long]] } });
 
     return store.dispatch(require('./actions').selectShelter(13))
       .then(() => expect(store.getActions().slice(5, 6)).to.eql(expectedActions));

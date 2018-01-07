@@ -23,6 +23,7 @@ const initialState = {
   humanError: null,
   loading: 0,
   youAreHere: [],
+  bounds: [],
 };
 
 export default (state = initialState, action) => {

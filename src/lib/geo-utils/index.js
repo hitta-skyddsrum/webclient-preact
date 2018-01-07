@@ -25,3 +25,13 @@ export const getBoundsAroundPositions = positions => {
     getExtremePosition('biggest'),
   ];
 };
+
+export const isPositionWithinBounds = (position, bounds) => {
+  return bounds
+    .filter((pos, index) => {
+      if (index === 0) {
+        return position[0] >= pos[0] && position[1] >= pos[1];
+      }
+      return position[0] <= pos[0] && position[1] <= pos[1];
+    }).length === 2;
+};

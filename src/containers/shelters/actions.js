@@ -1,5 +1,5 @@
 import fetchJson from '../../lib/fetch-json';
-import { getBoundsAroundPositions } from '../../lib/geo-utils';
+import { getBoundsAroundPositions, isPositionWithinBounds } from '../../lib/geo-utils';
 
 import {
   FETCH_SINGLE_SHELTER,
@@ -92,7 +92,13 @@ export const selectShelter = id => {
         dispatch({ type: SELECT_SHELTER, shelter });
       })
       .then(() => dispatch(fetchRouteToShelter(state.youAreHere, selectedShelter)))
-      .then(() => dispatch(setBoundsForPositions([[selectedShelter.position.lat, selectedShelter.position.long], state.youAreHere])));
+      .then(() => {
+        const shelterPos = [selectedShelter.position.lat, selectedShelter.position.long];
+
+        if (!state.bounds.length || !isPositionWithinBounds(shelterPos, state.bounds)) {
+          dispatch(setBoundsForPositions([shelterPos, state.youAreHere]));
+        }
+      });
   };
 };
 
