@@ -20,7 +20,7 @@ module.exports = {
       .expect.element('h1').text.to.contain('Skyddsrum');
 
     browser
-      .expect.element('.leaflet-overlay-pane svg').to.be.present;
+      .waitForElementVisible('.leaflet-overlay-pane svg', 2000);
 
     browser
       .end();
