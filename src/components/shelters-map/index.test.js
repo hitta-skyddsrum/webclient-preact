@@ -18,6 +18,7 @@ describe('components/SheltersMap', () => {
     { coordinates: [[1, 2], [3, 4], [5, 6]] },
     { coordinates: [[7, 8], [9, 10], [11, 12]] },
   ];
+  const bottomPadding = 1337;
   const onSelectShelter = sinon.spy();
   let mapContext;
 
@@ -29,11 +30,19 @@ describe('components/SheltersMap', () => {
       onSelectShelter={onSelectShelter}
       routes={routes}
       youAreHere={youAreHere}
+      bottomPadding={bottomPadding}
     />, { depth: 1 });
   });
 
   it('should render a map', () => {
-    expect(mapContext.find(<Map zoom={10} bounds={bounds} center={center} />).length).to.equal(1);
+    expect(mapContext.find(
+      <Map
+        zoom={10}
+        bounds={bounds}
+        center={center}
+        boundsOptions={{ paddingBottomRight: [0, bottomPadding] }}
+      />
+    ).length).to.equal(1);
   });
 
   it('should render a marker at the youAreHere position', () => {

@@ -12,6 +12,7 @@ export default ({
   onSelectShelter,
   bounds,
   youAreHere = [],
+  bottomPadding = 0,
 }) => {
   const mapCenter = center.filter(pos => pos).length ? center : false;
 
@@ -22,6 +23,7 @@ export default ({
         zoom={10}
         style={{height: '100vh'}}
         bounds={bounds}
+        boundsOptions={{ paddingBottomRight: [0, bottomPadding]}}
       >
         <TileLayer
           url='http://{s}.tile.osm.org/{z}/{x}/{y}.png'
