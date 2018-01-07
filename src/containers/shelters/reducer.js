@@ -119,7 +119,7 @@ export default (state = initialState, action) => {
     case UNSELECT_SHELTER:
       return {
         ...state,
-        selectedShelter: null,
+        selectedShelter: undefined,
         routes: [],
       };
     case CLEAR_ERROR:

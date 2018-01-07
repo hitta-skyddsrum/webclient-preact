@@ -199,7 +199,7 @@ describe('containers/shelters/reducer', () => {
     };
 
     expect(SheltersReducer(state, { type: types.UNSELECT_SHELTER }).selectedShelter)
-      .to.equal(null);
+      .to.equal(undefined);
     expect(SheltersReducer(state, { type: types.UNSELECT_SHELTER }).routes)
       .to.eql([]);
   });
