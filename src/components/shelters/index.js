@@ -58,8 +58,9 @@ export default class Shelters extends Component {
   }
 
   setMapBottomPadding() {
+    const mapBottomPadding = !this.shelterDetailElem ? 0 : this.shelterDetailElem.base.firstChild.offsetHeight;
     this.setState({
-      mapBottomPadding: this.shelterDetailElem.base.firstChild.offsetHeight,
+      mapBottomPadding,
     });
   }
 
