@@ -106,15 +106,15 @@ export const fetchRouteToShelter = (from, shelter) => {
 export const selectShelter = id => {
   return (dispatch, getStore) => {
     const state = getStore().Shelters;
+    let selectedShelter;
 
     return dispatch(fetchSingleShelter(id))
-      .then(({ shelter }) => dispatch({
-        type: SELECT_SHELTER,
-        shelter,
-      }))
       .then(({ shelter }) => {
-        dispatch(fetchRouteToShelter(state.youAreHere, shelter));
-      });
+        selectedShelter = shelter;
+        dispatch({ type: SELECT_SHELTER, shelter });
+      })
+      .then(() => dispatch(fetchRouteToShelter(state.youAreHere, selectedShelter)))
+      .then(() => dispatch(setBoundsForPositions([[selectedShelter.position.lat, selectedShelter.position.long], state.youAreHere])));
   };
 };
 
