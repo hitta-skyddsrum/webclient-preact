@@ -13,6 +13,7 @@ import style from './style.scss';
 export default class Shelters extends Component {
   static defaultProps = {
     youAreHere: [],
+    mapBottomPadding: 0,
   };
 
   state = {
@@ -33,6 +34,10 @@ export default class Shelters extends Component {
     }
   }
 
+  componentDidMount() {
+    this.shelterDetailElem.base.addEventListener('transitionend', this.setMapBottomPadding.bind(this));
+  }
+
   componentWillUpdate(nextProps) {
     if (nextProps.selectedShelterId !== this.props.selectedShelterId) {
       if (nextProps.selectedShelterId) {
@@ -46,6 +51,16 @@ export default class Shelters extends Component {
     if (nextProps.selectedShelter && nextProps.selectedShelter !== this.props.selectedShelter) {
       this.setState({ hideShelterDetail: false });
     }
+  }
+
+  componeDidUnmount() {
+    this.shelterDetailElem.base.removeEventListener('transitionend', this.setMapBottomPadding.bind(this));
+  }
+
+  setMapBottomPadding() {
+    this.setState({
+      mapBottomPadding: this.shelterDetailElem.base.firstChild.offsetHeight,
+    });
   }
 
   @autobind
@@ -76,12 +91,14 @@ export default class Shelters extends Component {
         routes={this.props.routes}
         onSelectShelter={this.handleClickShelter}
         bounds={this.props.bounds}
+        bottomPadding={this.state.mapBottomPadding}
       />
-      {this.props.selectedShelter && <ShelterDetail
+      <ShelterDetail
         open={!this.state.hideShelterDetail}
         shelter={this.props.selectedShelter}
         onClose={this.handleCloseShelterDetail}
-      />}
+        ref={elem => { this.shelterDetailElem = elem; }}
+      />
     </div>);
   }
 }
