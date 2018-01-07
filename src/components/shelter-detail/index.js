@@ -3,7 +3,7 @@ import { BottomSheet } from 'material-ui-bottom-sheet';
 import { List, ListItem, Subheader, FloatingActionButton } from 'material-ui';
 import ClearIcon from 'material-ui/svg-icons/content/clear';
 
-export default ({ shelter, open, onClose }) => {
+export default ({ shelter = {}, open, onClose }) => {
   const closeButton = <FloatingActionButton onClick={onClose}>
     <ClearIcon />
   </FloatingActionButton>;
