@@ -48,8 +48,8 @@ export default class Shelters extends Component {
       }
     }
 
-    if (nextProps.selectedShelter && nextProps.selectedShelter !== this.props.selectedShelter) {
-      this.setState({ hideShelterDetail: false });
+    if (nextProps.selectedShelter !== this.props.selectedShelter) {
+      this.setState({ hideShelterDetail: !nextProps.selectedShelter });
     }
   }
 

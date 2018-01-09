@@ -265,6 +265,25 @@ describe('containers/shelters', () => {
     expect(context.find(<ShelterDetail open={true} shelter={shelter} />).length).to.equal(1);
   });
 
+  it('should hide ShelterDetail when a falsy selectedShelter is received', () => {
+    const shelter = { shelterId: '1337', position: {} };
+    const context = shallow(<Shelters
+      shelters={[shelter]}
+      fetchShelters={fetchShelters}
+      selectedShelter={shelter}
+    />);
+    context.setState({ hideShelterDetail: false });
+
+    expect(context.find(<ShelterDetail open={true} />).length).to.equal(1);
+
+    context.render(<Shelters
+      shelters={[shelter]}
+      selectedShelter={false}
+    />);
+
+    expect(context.find(<ShelterDetail open={true} />).length).to.equal(0);
+  });
+
   it('should hide ShelterDetail upon closing selected shelter', () => {
     const selectedShelter = { shelterId: '1337', position: {} };
     const context = shallow(<Shelters
