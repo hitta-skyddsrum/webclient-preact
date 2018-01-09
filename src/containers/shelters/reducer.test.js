@@ -16,8 +16,8 @@ describe('containers/shelters/reducer', () => {
   });
 
   it('should update youAreHere state upon @@router/LOCATION_CHANGE', () => {
-    const lat = '14.57';
-    const lon = '13.12';
+    const lat = 14.57;
+    const lon = 13.12;
     const search = `?lat=${lat}&lon=${lon}`;
     const payload = { search, pathname: '' };
 

@@ -34,7 +34,8 @@ export default (state = initialState, action) => {
         youAreHere: [
           getSearchParam(action.payload.search, 'lat'),
           getSearchParam(action.payload.search, 'lon'),
-        ].filter(pos => !!pos),
+        ].filter(pos => !!pos)
+          .map(pos => parseFloat(pos)),
         selectedShelterId: getValueAfterSection(action.payload.pathname, 'skyddsrum'),
       };
     case FETCH_SINGLE_SHELTER:
