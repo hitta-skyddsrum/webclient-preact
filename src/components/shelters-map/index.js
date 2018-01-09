@@ -10,7 +10,7 @@ export default ({
   shelters,
   routes,
   onSelectShelter,
-  bounds,
+  bounds = [],
   youAreHere = [],
   bottomPadding = 0,
 }) => {
@@ -22,14 +22,14 @@ export default ({
         center={mapCenter}
         zoom={10}
         style={{height: '100vh'}}
-        bounds={bounds}
         boundsOptions={{ paddingBottomRight: [0, bottomPadding]}}
+        {...!!bounds.length && { bounds }}
       >
         <TileLayer
           url='http://{s}.tile.osm.org/{z}/{x}/{y}.png'
           attribution="&copy; <a href=&quot;http://osm.org/copyright&quot;>OpenStreetMap</a> contributors"
         />
-        {youAreHere.length && <Marker
+        {!!youAreHere.length && <Marker
           position={youAreHere}
           interactive={false}
           icon={
