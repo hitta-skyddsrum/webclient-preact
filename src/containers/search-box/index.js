@@ -5,7 +5,7 @@ import { Subject } from 'rxjs';
 import 'rxjs/add/operator/debounceTime';
 import { route } from 'preact-router';
 
-import { fetchAddressSuggestions, selectAddress } from './actions';
+import { fetchsuggestions, selectAddress } from './actions';
 import Autocomplete from '../../components/autocomplete';
 
 export class SearchBox extends Component {
@@ -42,7 +42,7 @@ export class SearchBox extends Component {
   render() {
     return (
       <Autocomplete
-        suggestions={this.props.addressSuggestions}
+        suggestions={this.props.suggestions}
         onChange={this.handleAddressChanged}
         onSelection={this.handleAddressSelection}
         value={this.state.searchValue}
@@ -58,7 +58,7 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    onSearchValueChange: query => dispatch(fetchAddressSuggestions(query)),
+    onSearchValueChange: query => dispatch(fetchsuggestions(query)),
     onSelectAddress: address => dispatch(selectAddress(address)),
   };
 };

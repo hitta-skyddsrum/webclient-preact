@@ -17,7 +17,7 @@ describe('containers/search-box', () => {
     expect(context.find(<Autocomplete randomProp={randomProp} />).length).to.equal(1);
   });
 
-  it('should dispatch fetchAddressSuggestions upon value change', () => {
+  it('should dispatch fetchsuggestions upon value change', () => {
     const fetchAddSuggSpy = sinon.spy();
     const context = shallow(<SearchBox onSearchValueChange={fetchAddSuggSpy} />);
     const autocomplete = context.find(<Autocomplete />);
@@ -30,7 +30,7 @@ describe('containers/search-box', () => {
       .then(() => expect(fetchAddSuggSpy).to.have.been.calledWith(newValue));
   });
 
-  it('should not dispatch fetchAddressSuggestions when the component is unmounted', () => {
+  it('should not dispatch fetchsuggestions when the component is unmounted', () => {
     const fetchAddSuggSpy = sinon.spy();
     const context = shallow(<SearchBox onSearchValueChange={fetchAddSuggSpy} />);
     const autocomplete = context.find(<Autocomplete />);

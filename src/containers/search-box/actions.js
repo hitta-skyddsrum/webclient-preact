@@ -9,7 +9,7 @@ import {
   SELECT_ADDRESS,
 } from './types';
 
-export const fetchAddressSuggestions = query => {
+export const fetchSuggestions = query => {
   return dispatch => {
     dispatch({
       type: FETCH_ADDRESS_SUGGESTIONS,
@@ -20,7 +20,7 @@ export const fetchAddressSuggestions = query => {
     return fetchJson(`https://nominatim.openstreetmap.org/search?format=json&countrycodes=se&addressdetails=1&zoom=10&accept-language=sv&q=${query}&email=${process.env.OSM_EMAIL}`)
       .then(response => dispatch({
         type: FETCH_ADDRESS_SUGGESTIONS_SUCCESS,
-        addressSuggestions: response
+        suggestions: response
           .filter(place => place.type !== 'commercial')
           .map(place => ({
             lat: place.lat,

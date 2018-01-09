@@ -8,7 +8,7 @@ import * as types from './types';
 const middlewares = [thunk];
 const mockStore = configureMockStore(middlewares);
 
-describe('containers/search-box/actions/fetchAddressSuggestions', () => {
+describe('containers/search-box/actions/fetchSuggestions', () => {
   let fetchJson;
 
   beforeAll(() => {
@@ -27,9 +27,9 @@ describe('containers/search-box/actions/fetchAddressSuggestions', () => {
 
     fetchJson.mockReturnValueOnce(Promise.resolve({}));
 
-    const store = mockStore({ addressSuggestions: [] });
+    const store = mockStore({ suggestions: [] });
 
-    return store.dispatch(require('./actions').fetchAddressSuggestions(query))
+    return store.dispatch(require('./actions').fetchSuggestions(query))
       .then(() => expect(fetchJson.mock.calls[0][0]).to.match(new RegExp(`q=${query}`)));
   });
 
@@ -38,24 +38,24 @@ describe('containers/search-box/actions/fetchAddressSuggestions', () => {
     const formatNominatimAddress = require('../../lib/format-nominatim-address').default;
     formatNominatimAddress.mockImplementation(() => formattedAddress);
 
-    const addressSuggestions = [
+    const suggestions = [
       { lat: 1, lon: 2, display_name: 'This play' },
     ];
     const query = 'Lövängsgatan 1';
 
-    fetchJson.mockReturnValueOnce(Promise.resolve(addressSuggestions));
+    fetchJson.mockReturnValueOnce(Promise.resolve(suggestions));
 
     const expectedActions = [
       { type: types.FETCH_ADDRESS_SUGGESTIONS, query },
       {
         type: types.FETCH_ADDRESS_SUGGESTIONS_SUCCESS,
-        addressSuggestions: addressSuggestions.map(sugg => ({ lat: sugg.lat, lon: sugg.lon, name: formattedAddress })),
+        suggestions: suggestions.map(sugg => ({ lat: sugg.lat, lon: sugg.lon, name: formattedAddress })),
       },
     ];
 
-    const store = mockStore({ addressSuggestions: [] });
+    const store = mockStore({ suggestions: [] });
 
-    return store.dispatch(require('./actions').fetchAddressSuggestions(query))
+    return store.dispatch(require('./actions').fetchSuggestions(query))
       .then(() => expect(store.getActions()).to.eql(expectedActions));
   });
 
@@ -72,9 +72,9 @@ describe('containers/search-box/actions/fetchAddressSuggestions', () => {
       { type: types.FETCH_ADDRESS_SUGGESTIONS_FAILED, error },
     ];
 
-    const store = mockStore({ addressSuggestions: [] });
+    const store = mockStore({ suggestions: [] });
 
-    return store.dispatch(require('./actions').fetchAddressSuggestions(query))
+    return store.dispatch(require('./actions').fetchSuggestions(query))
       .then(() => expect(store.getActions()).to.eql(expectedActions));
   });
 });
@@ -84,7 +84,7 @@ describe('containers/search-box/actions/selectAddress', () => {
 
   it('creates SELECT_ADDRESS', () => {
     const address = { street: 1 };
-    const store = mockStore({ addressSuggestions: [] });
+    const store = mockStore({ suggestions: [] });
 
     store.dispatch(require('./actions').selectAddress(address));
 
@@ -97,7 +97,7 @@ describe('containers/search-box/actions/selectAddress', () => {
   it('calls fetchShelters', () => {
     const spyFetchShelters = sinon.spy(require('../shelters/actions'), 'fetchShelters');
     const address = { street: 1, lat: 133, lon: 14 };
-    const store = mockStore({ addressSuggestions: [] });
+    const store = mockStore({ suggestions: [] });
 
     store.dispatch(require('./actions').selectAddress(address));
 

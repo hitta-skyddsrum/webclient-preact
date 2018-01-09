@@ -29,14 +29,14 @@ describe('containers/search-box/reducer', () => {
   });
 
   it('should add suggestions to state upon FETCH_ADDRESS_SUGGESTIONS_SUCCESS', () => {
-    const oldAddressSuggestions = [{ street_name: 'Orvargatan 6'}];
+    const oldsuggestions = [{ street_name: 'Orvargatan 6'}];
     const oldState = {
-      addressSuggestions: oldAddressSuggestions,
+      suggestions: oldsuggestions,
     };
-    const addressSuggestions = [{ street_name: 'Myrsloksvägen 6'}];
+    const suggestions = [{ street_name: 'Myrsloksvägen 6'}];
 
-    expect(SearchBoxReducer(oldState, { type: types.FETCH_ADDRESS_SUGGESTIONS_SUCCESS, addressSuggestions }).addressSuggestions)
-      .to.eql(addressSuggestions);
+    expect(SearchBoxReducer(oldState, { type: types.FETCH_ADDRESS_SUGGESTIONS_SUCCESS, suggestions }).suggestions)
+      .to.eql(suggestions);
   });
 
   it('should add error to state upon FETCH_ADDRESS_SUGGESTIONS_FAILED', () => {
@@ -49,7 +49,7 @@ describe('containers/search-box/reducer', () => {
   it('should clear all suggestions upon SELECT_ADDRESS', () => {
     const state = { suggestions: ['many'] };
 
-    expect(SearchBoxReducer(state, { type: types.SELECT_ADDRESS }).addressSuggestions)
+    expect(SearchBoxReducer(state, { type: types.SELECT_ADDRESS }).suggestions)
       .to.eql([]);
   });
 });

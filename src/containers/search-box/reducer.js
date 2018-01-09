@@ -6,7 +6,7 @@ import {
 } from './types';
 
 const initState = {
-  addressSuggestions: [],
+  suggestions: [],
   loading: 0,
 };
 
@@ -20,7 +20,7 @@ export default (state = initState, action) => {
     case FETCH_ADDRESS_SUGGESTIONS_SUCCESS:
       return {
         ...state,
-        addressSuggestions: action.addressSuggestions,
+        suggestions: action.suggestions,
         loading: state.loading - 1,
       };
     case FETCH_ADDRESS_SUGGESTIONS_FAILED:
@@ -32,7 +32,7 @@ export default (state = initState, action) => {
     case SELECT_ADDRESS:
       return {
         ...state,
-        addressSuggestions: [],
+        suggestions: [],
       };
     default:
       return state;
