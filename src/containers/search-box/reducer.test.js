@@ -10,6 +10,19 @@ describe('containers/search-box/reducer', () => {
     expect(SearchBoxReducer(oldState, { type: 'NOT_MATCHING_ANYTHING'})).to.eql(oldState);
   });
 
+  it('should store query params lat and lon upon @@router/LOCATION_CHANGE', () => {
+    const lat = '113.13';
+    const lon = '423.14';
+    const payload = {
+      search: `?lat=${lat}&lon=${lon}`,
+    };
+
+    expect(SearchBoxReducer(undefined, { type: '@@router/LOCATION_CHANGE', payload }).lat)
+      .to.equal(lat);
+    expect(SearchBoxReducer(undefined, { type: '@@router/LOCATION_CHANGE', payload }).lon)
+      .to.equal(lon);
+  });
+
   it('should increment state `loading` upon FETCH_ADDRESS_SUGGESTIONS', () => {
     const oldState = { loading: 2 };
     expect(SearchBoxReducer(oldState, { type: types.FETCH_ADDRESS_SUGGESTIONS }).loading)
@@ -44,6 +57,13 @@ describe('containers/search-box/reducer', () => {
 
     expect(SearchBoxReducer(undefined, { type: types.FETCH_ADDRESS_SUGGESTIONS_FAILED, error }).error)
       .to.eql(error);
+  });
+
+  it('should store the address upon SELECT_ADDRESS', () => {
+    const address = 'The address street 3';
+
+    expect(SearchBoxReducer(undefined, { type: types.SELECT_ADDRESS, address }).selectedAddress)
+      .to.equal(address);
   });
 
   it('should clear all suggestions upon SELECT_ADDRESS', () => {

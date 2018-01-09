@@ -1,3 +1,4 @@
+import { getSearchParam } from '../../lib/url-parser';
 import {
   FETCH_ADDRESS_SUGGESTIONS,
   FETCH_ADDRESS_SUGGESTIONS_SUCCESS,
@@ -12,6 +13,12 @@ const initState = {
 
 export default (state = initState, action) => {
   switch (action.type) {
+    case '@@router/LOCATION_CHANGE':
+      return {
+        ...state,
+        lat: getSearchParam(action.payload.search, 'lat'),
+        lon: getSearchParam(action.payload.search, 'lon'),
+      };
     case FETCH_ADDRESS_SUGGESTIONS:
       return {
         ...state,
@@ -32,6 +39,7 @@ export default (state = initState, action) => {
     case SELECT_ADDRESS:
       return {
         ...state,
+        selectedAddress: action.address,
         suggestions: [],
       };
     default:

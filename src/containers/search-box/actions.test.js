@@ -1,6 +1,5 @@
 import configureMockStore from 'redux-mock-store';
 import thunk from 'redux-thunk';
-import sinon from 'sinon';
 import { expect } from 'chai';
 
 import * as types from './types';
@@ -20,6 +19,10 @@ describe('containers/search-box/actions/fetchSuggestions', () => {
   afterAll(() => {
     jest.unmock('../../lib/format-nominatim-address');
     jest.unmock('../../lib/fetch-json');
+  });
+
+  afterEach(() => {
+    return fetchJson.mockReset();
   });
 
   it('calls the API with accurate query params', () => {
@@ -93,14 +96,48 @@ describe('containers/search-box/actions/selectAddress', () => {
       address,
     });
   });
+});
 
-  it('calls fetchShelters', () => {
-    const spyFetchShelters = sinon.spy(require('../shelters/actions'), 'fetchShelters');
-    const address = { street: 1, lat: 133, lon: 14 };
+describe('containers/search-box/actions/reverseGeocode', () => {
+  let fetchJson;
+  let formatNominatimAddress;
+
+  beforeAll(() => {
+    jest.mock('../../lib/format-nominatim-address');
+    formatNominatimAddress = require('../../lib/format-nominatim-address').default;
+    jest.mock('../../lib/fetch-json');
+    fetchJson = require('../../lib/fetch-json').default;
+  });
+
+  afterAll(() => {
+    jest.unmock('../../lib/format-nominatim-address');
+    jest.unmock('../../lib/fetch-json');
+  });
+
+  afterEach(() => {
+    return fetchJson.mockReset();
+  });
+
+  it('calls the API with accurate query params', () => {
+    const lat = 192;
+    const lon = 133;
+    const address = {
+      lon: 13,
+      lat: 19,
+    };
+    const formattedAddress = 'The streets';
+
+    formatNominatimAddress.mockReturnValueOnce(formattedAddress);
+    fetchJson.mockReturnValueOnce(Promise.resolve(address));
+
     const store = mockStore({ suggestions: [] });
 
-    store.dispatch(require('./actions').selectAddress(address));
-
-    expect(spyFetchShelters).to.have.been.calledWith(address.lat, address.lon);
+    return store.dispatch(require('./actions').reverseGeocode(lat, lon))
+      .then(({ address }) => {
+        expect(address.name).to.equal(formattedAddress);
+        expect(address.lat).to.equal(address.lat);
+        expect(address.lon).to.equal(address.lon);
+        expect(fetchJson.mock.calls[0][0]).to.match(new RegExp(`lat=${lat}&lon=${lon}`));
+      });
   });
 });
