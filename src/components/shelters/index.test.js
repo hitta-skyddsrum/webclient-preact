@@ -3,6 +3,8 @@ import { route } from 'preact-router';
 import { expect } from 'chai';
 import sinon from 'sinon';
 import { shallow } from 'preact-render-spy';
+import Helmet from 'preact-helmet';
+
 import Shelters from './';
 
 import SheltersMap from '../shelters-map';
@@ -12,35 +14,49 @@ import ShelterDetail from '../shelter-detail';
 import SearchBox from '../../containers/search-box';
 
 describe('containers/shelters', () => {
-  let fetchShelters;
+  let defaultProps;
 
   beforeEach(() => {
-    fetchShelters = sinon.spy();
+    defaultProps = {
+      fetchShelters: sinon.spy(),
+      selectedAddress: {},
+    };
+  });
+
+  it('displays a correct title', () => {
+    const selectedAddress = {
+      name: 'Gatvägen 1',
+    };
+    const context = shallow(<Shelters
+      fetchShelters={sinon.spy()}
+      selectedAddress={selectedAddress}
+    />);
+
+    expect(context.find(<Helmet />).attr('title')).to.match(new RegExp(selectedAddress.name));
   });
 
   it('displays a LoadingIndicator when loading is truthy', () => {
-    const context = shallow(<Shelters fetchShelters={fetchShelters} loading={4} />);
+    const context = shallow(<Shelters loading={4} {...defaultProps} />);
 
     expect(context.find(<LoadingIndicator />).length).to.equal(1);
   });
 
   it('displays an ErrorDialog upon incoming humanError', () => {
-    const fetchShelters = sinon.spy();
     const humanError = {
       message: 'Varning',
       desc: 'Hold on',
     };
     const context = shallow(<Shelters
-      fetchShelters={fetchShelters}
       shelters={[]}
+      {...defaultProps}
     />);
 
     expect(context.find(<ErrorDialog />).length).to.equal(0);
 
     context.render(<Shelters
       humanError={humanError}
-      fetchShelters={fetchShelters}
       shelters={[]}
+      {...defaultProps}
     />);
 
     expect(context.find(<ErrorDialog title={humanError.message} desc={humanError.desc} />).length).to.equal(1);
@@ -49,9 +65,9 @@ describe('containers/shelters', () => {
   it('fires onCloseError upon closing ErrorDialog', () => {
     const onCloseError = sinon.spy();
     const context = shallow(<Shelters
-      fetchShelters={sinon.spy()}
       humanError={new Error('What\'s going on?')}
       onCloseErrorDialog={onCloseError}
+      {...defaultProps}
     />);
 
     context.find(<ErrorDialog />).attr('handleClose')();
@@ -61,7 +77,7 @@ describe('containers/shelters', () => {
 
   it('should contain a SearchBox container', () => {
     const context = shallow(<Shelters
-      fetchShelters={fetchShelters}
+      {...defaultProps}
     />);
 
     expect(context.find(<SearchBox />).length).to.equal(1);
@@ -76,8 +92,8 @@ describe('containers/shelters', () => {
       routes={routes}
       bounds={bounds}
       shelters={shelters}
-      fetchShelters={fetchShelters}
       youAreHere={youAreHere}
+      {...defaultProps}
     />);
 
     expect(context.find(<SheltersMap
@@ -92,7 +108,7 @@ describe('containers/shelters', () => {
 
   it('should provide Ytterhogdal as center if youAreHere is empty', () => {
     const context = shallow(<Shelters
-      fetchShelters={fetchShelters}
+      {...defaultProps}
     />);
 
     expect(context.find(<SheltersMap />).attr('center')).to.eql([62.166667, 14.95]);
@@ -111,8 +127,8 @@ describe('containers/shelters', () => {
     const context = shallow(<Shelters
       routes={routes}
       shelters={[shelter]}
-      fetchShelters={fetchShelters}
       youAreHere={[center.lat, center.lon]}
+      {...defaultProps}
     />);
 
     context.find(<SheltersMap />).attr('onSelectShelter')(shelter);
@@ -126,7 +142,7 @@ describe('containers/shelters', () => {
     const context = shallow(<Shelters
       shelters={[shelter]}
       selectedShelter={shelter}
-      fetchShelters={fetchShelters}
+      {...defaultProps}
     />);
     context.setState({ hideShelterDetail: true });
 
@@ -144,7 +160,7 @@ describe('containers/shelters', () => {
     const context = shallow(<Shelters
       routes={routes}
       shelters={[shelter]}
-      fetchShelters={fetchShelters}
+      {...defaultProps}
     />);
 
     context.find(<SheltersMap />).attr('onSelectShelter')(shelter);
@@ -157,9 +173,12 @@ describe('containers/shelters', () => {
     const lat = 14.53;
     const lon = 12.01;
 
-    shallow(<Shelters youAreHere={[lat, lon]} fetchShelters={fetchShelters} />);
+    shallow(<Shelters
+      youAreHere={[lat, lon]}
+      {...defaultProps}
+    />);
 
-    expect(fetchShelters).to.have.been.calledWith([lat, lon]);
+    expect(defaultProps.fetchShelters).to.have.been.calledWith([lat, lon]);
   });
 
   it('should select accurate shelter when an selectedShelterId prop is set', () => {
@@ -169,6 +188,7 @@ describe('containers/shelters', () => {
     shallow(<Shelters
       selectedShelterId={id}
       onSelectShelter={onSelectShelter}
+      {...defaultProps}
     />);
 
     expect(onSelectShelter).to.have.been.calledWith(id);
@@ -179,11 +199,15 @@ describe('containers/shelters', () => {
     const onSelectShelter = sinon.spy();
     const context = shallow(<Shelters
       shelters={[shelter]}
-      fetchShelters={fetchShelters}
       onSelectShelter={onSelectShelter}
+      {...defaultProps}
     />);
 
-    context.render(<Shelters shelters={[shelter]} selectedShelterId={shelter.id} />);
+    context.render(<Shelters
+      shelters={[shelter]}
+      selectedShelterId={shelter.id}
+      {...defaultProps}
+    />);
 
     expect(onSelectShelter).to.have.been.calledWith(shelter.id);
   });
@@ -194,15 +218,15 @@ describe('containers/shelters', () => {
     const onSelectShelter = sinon.spy();
     const context = shallow(<Shelters
       shelters={shelters}
-      fetchShelters={fetchShelters}
       onSelectShelter={onSelectShelter}
+      {...defaultProps}
     />);
 
     context.render(<Shelters
       shelters={shelters}
       selectedShelterId={newShelter.id}
-      fetchShelters={fetchShelters}
       onSelectShelter={onSelectShelter}
+      {...defaultProps}
     />);
 
     expect(onSelectShelter).to.have.been.calledWith(newShelter.id);
@@ -215,15 +239,15 @@ describe('containers/shelters', () => {
     const context = shallow(<Shelters
       shelters={shelters}
       selectedShelterId={oldShelter.id}
-      fetchShelters={fetchShelters}
       onSelectShelter={sinon.spy()}
       onUnselectShelter={onUnselectShelter}
+      {...defaultProps}
     />);
 
     context.render(<Shelters
       shelters={shelters}
-      fetchShelters={fetchShelters}
       onUnselectShelter={onUnselectShelter}
+      {...defaultProps}
     />);
 
     expect(onUnselectShelter).to.have.been.calledWith();
@@ -233,24 +257,24 @@ describe('containers/shelters', () => {
     const oldShelter = { id: 59 };
     const context = shallow(<Shelters
       selectedShelterId={oldShelter.id}
-      fetchShelters={fetchShelters}
       onSelectShelter={sinon.spy()}
       onUnselectShelter={sinon.spy()}
+      {...defaultProps}
     />);
 
     context.render(<Shelters
-      fetchShelters={fetchShelters}
       onUnselectShelter={sinon.spy()}
+      {...defaultProps}
     />);
 
-    expect(fetchShelters).to.have.been.calledWith();
+    expect(defaultProps.fetchShelters).to.have.been.calledWith();
   });
 
   it('should display ShelterDetail when a new selectedShelter is received', () => {
     const shelter = { shelterId: '1337', position: {} };
     const context = shallow(<Shelters
       shelters={[shelter]}
-      fetchShelters={fetchShelters}
+      {...defaultProps}
     />);
     context.setState({ hideShelterDetail: true });
 
@@ -260,6 +284,7 @@ describe('containers/shelters', () => {
     context.render(<Shelters
       shelters={[shelter]}
       selectedShelter={shelter}
+      {...defaultProps}
     />);
 
     expect(context.find(<ShelterDetail open={true} shelter={shelter} />).length).to.equal(1);
@@ -269,8 +294,8 @@ describe('containers/shelters', () => {
     const shelter = { shelterId: '1337', position: {} };
     const context = shallow(<Shelters
       shelters={[shelter]}
-      fetchShelters={fetchShelters}
       selectedShelter={shelter}
+      {...defaultProps}
     />);
     context.setState({ hideShelterDetail: false });
 
@@ -279,6 +304,7 @@ describe('containers/shelters', () => {
     context.render(<Shelters
       shelters={[shelter]}
       selectedShelter={false}
+      {...defaultProps}
     />);
 
     expect(context.find(<ShelterDetail open={true} />).length).to.equal(0);
@@ -288,8 +314,8 @@ describe('containers/shelters', () => {
     const selectedShelter = { shelterId: '1337', position: {} };
     const context = shallow(<Shelters
       selectedShelter={selectedShelter}
-      fetchShelters={fetchShelters}
       shelters={[]}
+      {...defaultProps}
     />);
 
     context.find(<ShelterDetail />).attr('onClose')();

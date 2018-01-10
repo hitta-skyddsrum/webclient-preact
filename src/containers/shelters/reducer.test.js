@@ -1,12 +1,14 @@
 import polyline from 'polyline';
 import { expect } from 'chai';
 
+import { SELECT_ADDRESS } from '../search-box/types';
 import * as types from './types';
 import SheltersReducer from './reducer';
 
 describe('containers/shelters/reducer', () => {
   it('should return an accurate initial state', () => {
     expect(SheltersReducer(undefined, {}).shelters).to.eql([]);
+    expect(SheltersReducer(undefined, {}).selectedAddress).to.eql({});
   });
 
   it('should return the default state per default', () => {
@@ -50,6 +52,13 @@ describe('containers/shelters/reducer', () => {
 
     expect(SheltersReducer(oldState, { type: '@@router/LOCATION_CHANGE', payload }).selectedShelterId)
       .to.equal(false);
+  });
+
+  it('should set selectedAddress upon SELECT_ADDRESS', () => {
+    const address = { name: 'the streets no 1' };
+
+    expect(SheltersReducer(undefined, { type: SELECT_ADDRESS, address }).selectedAddress)
+      .to.eql(address);
   });
 
   it('should increment loading upon FETCH_SINGLE_SHELTER', () => {
