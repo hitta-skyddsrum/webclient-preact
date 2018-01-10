@@ -121,6 +121,17 @@ describe('containers/search-box/actions/reverseGeocode', () => {
   it('calls the API with accurate query params', () => {
     const lat = 192;
     const lon = 133;
+
+    formatNominatimAddress.mockReturnValueOnce('');
+    fetchJson.mockReturnValueOnce(Promise.resolve({}));
+
+    const store = mockStore({ suggestions: [] });
+
+    return store.dispatch(require('./actions').reverseGeocode(lat, lon))
+      .then(() => expect(fetchJson.mock.calls[0][0]).to.match(new RegExp(`lat=${lat}&lon=${lon}`)));
+  });
+
+  it('creates REVERSE_GEOCODE_POSITION_SUCCESS', () => {
     const address = {
       lon: 13,
       lat: 19,
@@ -130,14 +141,35 @@ describe('containers/search-box/actions/reverseGeocode', () => {
     formatNominatimAddress.mockReturnValueOnce(formattedAddress);
     fetchJson.mockReturnValueOnce(Promise.resolve(address));
 
+    const expectedActions = [
+      { type: types.REVERSE_GEOCODE_POSITION },
+      {
+        type: types.REVERSE_GEOCODE_POSITION_SUCCESS,
+        address: {
+          ...address,
+          name: formattedAddress,
+        },
+      },
+    ];
+
     const store = mockStore({ suggestions: [] });
 
-    return store.dispatch(require('./actions').reverseGeocode(lat, lon))
-      .then(({ address }) => {
-        expect(address.name).to.equal(formattedAddress);
-        expect(address.lat).to.equal(address.lat);
-        expect(address.lon).to.equal(address.lon);
-        expect(fetchJson.mock.calls[0][0]).to.match(new RegExp(`lat=${lat}&lon=${lon}`));
-      });
+    return store.dispatch(require('./actions').reverseGeocode(1, 2))
+      .then(() => expect(store.getActions()).to.eql(expectedActions));
+  });
+
+  it('creates REVERSE_GEOCODE_POSITION_FAILED', () => {
+    const error = new Error();
+    fetchJson.mockReturnValueOnce(Promise.reject(error));
+
+    const expectedActions = [
+      { type: types.REVERSE_GEOCODE_POSITION },
+      { type: types.REVERSE_GEOCODE_POSITION_FAILED, error },
+    ];
+
+    const store = mockStore({ suggestions: [] });
+
+    return store.dispatch(require('./actions').reverseGeocode(3, 4))
+      .then(() => expect(store.getActions()).to.eql(expectedActions));
   });
 });
