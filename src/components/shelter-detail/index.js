@@ -1,6 +1,7 @@
 import { h } from 'preact';
 import { BottomSheet } from 'material-ui-bottom-sheet';
 import { List, ListItem, Subheader, FloatingActionButton } from 'material-ui';
+import Helmet from 'preact-helmet';
 import ClearIcon from 'material-ui/svg-icons/content/clear';
 
 export default ({ shelter = {}, open, onClose }) => {
@@ -13,6 +14,9 @@ export default ({ shelter = {}, open, onClose }) => {
     style={{ height: 'auto' }}
     action={closeButton}
     open={open}>
+    {shelter.shelterId && <Helmet
+      title={`Skyddsrum ${shelter.shelterId}`}
+    />}
     <Subheader><h1>Skyddsrum {shelter.shelterId}</h1></Subheader>
     <List>
       <ListItem disabled primaryText={`Fastighetsbeteckning: ${shelter.estateId}`} />
