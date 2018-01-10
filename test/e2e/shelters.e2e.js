@@ -9,7 +9,7 @@ module.exports = {
       .expect.element('.leaflet-marker-pane .youAreHere').to.be.present;
 
     browser
-      .assert.title('Skyddsrum nära Järnvägsgatan, Arvika');
+      .assert.title('Skyddsrum nära Järnvägsgatan, Arvika - Hitta skyddsrum');
 
     browser.waitForElementVisible('.leaflet-marker-pane img.shelter:nth-child(2)', 20000);
 
@@ -31,7 +31,7 @@ module.exports = {
     browser
       .url(browser.launchUrl.concat(`/skyddsrum/16114${arvikaSearchPath}`))
       .waitForElementVisible('body', 1000)
-      .assert.title('Skyddsrum 144788-5')
+      .assert.title('Skyddsrum 144788-5 - Hitta skyddsrum')
       .waitForElementVisible('.leaflet-marker-pane', 1000)
       .expect.element('.leaflet-marker-pane .youAreHere').to.be.present;
 

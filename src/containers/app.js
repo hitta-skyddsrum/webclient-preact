@@ -5,6 +5,7 @@ import { createStore, applyMiddleware, compose } from 'redux';
 import thunk from 'redux-thunk';
 import { syncHistoryWithStore } from 'preact-router-redux';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
+import Helmet from 'preact-helmet';
 
 import hittaSkyddsrumApp from '../reducer';
 import browserHistory from '../history';
@@ -24,6 +25,10 @@ export default () => {
   return (
     <Provider store={store}>
       <div id="app">
+        <Helmet
+          defaultTitle="Hitta skyddsrum"
+          titleTemplate="%s - Hitta skyddsrum"
+        />
         <MuiThemeProvider>
           <Router history={history}>
             <Home path="/" />
