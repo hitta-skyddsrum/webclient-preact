@@ -2,6 +2,7 @@ import { h } from 'preact';
 import { expect } from 'chai';
 import { shallow } from 'preact-render-spy';
 import sinon from 'sinon';
+import Helmet from 'preact-helmet';
 
 import { List } from 'material-ui';
 import { BottomSheet } from 'material-ui-bottom-sheet';
@@ -19,6 +20,12 @@ describe('components/shelter-detail', () => {
 
   it('should be able to render without provided shelter', () => {
     expect(shallow(<ShelterDetail />)).to.not.throw;
+  });
+
+  it('should set the title when a shelter.shelterId is provided', () => {
+    const context = shallow(<ShelterDetail shelter={shelter} />);
+
+    expect(context.find(<Helmet />).attr('title')).to.match(new RegExp(shelter.shelterId));
   });
 
   it('should include have a BottomSheet', () => {

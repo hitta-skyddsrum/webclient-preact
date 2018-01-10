@@ -31,7 +31,7 @@ module.exports = {
     browser
       .url(browser.launchUrl.concat(`/skyddsrum/16114${arvikaSearchPath}`))
       .waitForElementVisible('body', 1000)
-      .assert.title('Hitta skyddsrum')
+      .assert.title('Skyddsrum 144788-5')
       .waitForElementVisible('.leaflet-marker-pane', 1000)
       .expect.element('.leaflet-marker-pane .youAreHere').to.be.present;
 
