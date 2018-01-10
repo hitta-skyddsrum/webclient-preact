@@ -1,6 +1,7 @@
 import { h, Component } from 'preact';
 import { route } from 'preact-router';
 import { autobind } from 'core-decorators';
+import Helmet from 'preact-helmet';
 
 import SheltersMap from '../shelters-map';
 import ErrorDialog from '../error-dialog';
@@ -78,6 +79,9 @@ export default class Shelters extends Component {
 
   render() {
     return (<div>
+      <Helmet
+        title={`Skyddsrum nära ${this.props.selectedAddress.name}`}
+      />
       {!!this.props.loading && <LoadingIndicator />}
       {this.props.humanError && <ErrorDialog
         title={this.props.humanError.message}

@@ -1,5 +1,6 @@
 import polyline from 'polyline';
 import { getSearchParam, getValueAfterSection } from '../../lib/url-parser';
+import { SELECT_ADDRESS } from '../search-box/types';
 import {
   FETCH_SINGLE_SHELTER,
   FETCH_SINGLE_SHELTER_SUCCESS,
@@ -24,6 +25,7 @@ const initialState = {
   loading: 0,
   youAreHere: [],
   bounds: [],
+  selectedAddress: {},
 };
 
 export default (state = initialState, action) => {
@@ -37,6 +39,11 @@ export default (state = initialState, action) => {
         ].filter(pos => !!pos)
           .map(pos => parseFloat(pos)),
         selectedShelterId: getValueAfterSection(action.payload.pathname, 'skyddsrum'),
+      };
+    case SELECT_ADDRESS:
+      return {
+        ...state,
+        selectedAddress: action.address,
       };
     case FETCH_SINGLE_SHELTER:
       return {

@@ -114,6 +114,7 @@
     "polyline": "^0.2.0",
     "preact": "^8.2.6",
     "preact-compat": "^3.15.0",
+    "preact-helmet": "^4.0.0-alpha-3",
     "preact-redux": "^2.0.3",
     "preact-render-to-string": "^3.6.0",
     "preact-router": "^2.6.0",

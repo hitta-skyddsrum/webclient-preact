@@ -5,9 +5,11 @@ module.exports = {
     browser
       .url(browser.launchUrl.concat(`/skyddsrum${arvikaSearchPath}`))
       .waitForElementVisible('body', 1000)
-      .assert.title('Hitta skyddsrum')
       .waitForElementVisible('.leaflet-marker-pane', 1000)
       .expect.element('.leaflet-marker-pane .youAreHere').to.be.present;
+
+    browser
+      .assert.title('Skyddsrum nära Järnvägsgatan, Arvika');
 
     browser.waitForElementVisible('.leaflet-marker-pane img.shelter:nth-child(2)', 20000);
 
