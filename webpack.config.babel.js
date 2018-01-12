@@ -30,7 +30,7 @@ module.exports = {
 			components: path.resolve(__dirname, "src/components"),    // used for tests
 			style: path.resolve(__dirname, "src/style"),
 			'react': 'preact-compat',
-			'react-dom': 'preact-compat',
+			'react-dom': 'preact-compat'
 		}
 	},
 
