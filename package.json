@@ -37,14 +37,8 @@
     "moduleNameMapper": {
       "\\.(jpg|jpeg|png|gif|eot|otf|webp|svg|ttf|woff|woff2|mp4|webm|wav|mp3|m4a|aac|oga)$": "<rootDir>/__mocks__/fileMock.js",
       "\\.(css|scss)$": "identity-obj-proxy",
-      "^react$": "preact-compat-enzyme",
-      "^react-dom$": "preact-compat-enzyme",
-      "^react-dom/server$": "preact-render-to-string",
-      "^react-dom/test-utils$": "preact-test-utils",
-      "^react-test-renderer/shallow$": "preact-test-utils",
-      "^react-test-renderer$": "preact-test-utils",
-      "^react-addons-test-utils$": "preact-test-utils",
-      "^react-addons-transition-group$": "preact-transition-group"
+      "^react$": "preact-compat",
+      "^react-dom$": "preact-compat"
     },
     "collectCoverageFrom": [
       "src/**/*.{js,jsx}",
@@ -73,9 +67,6 @@
     "cross-env": "^5.0.1",
     "css-loader": "^0.28.0",
     "dotenv": "^4.0.0",
-    "enzyme": "^3.3.0",
-    "enzyme-adapter-react-15": "^1.0.5",
-    "enzyme-adapter-react-16": "^1.1.1",
     "eslint": "^4.1.0",
     "eslint-plugin-jest": "21.5.0",
     "eslint-plugin-react": "^7.0.0",
@@ -93,7 +84,6 @@
     "node-sass": "^4.5.3",
     "offline-plugin": "^4.7.0",
     "postcss-loader": "^2.0.3",
-    "preact-compat-enzyme": "^0.2.5",
     "preact-jsx-chai": "^2.2.1",
     "preact-render-spy": "^1.2.1",
     "preact-test-utils": "^0.1.3",
