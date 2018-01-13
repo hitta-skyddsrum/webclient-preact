@@ -17,6 +17,9 @@ cache:
   directories:
     - node_modules
 
+before_install:
+  - sudo apt-get -qq update
+  - sudo apt-get -y install libcairo2-dev libgif-dev libjpeg-dev libpango1.0-dev
 install:
   - npm install yarn -g
   # https://github.com/yarnpkg/yarn/issues/2738#issuecomment-342296820
