@@ -9,8 +9,8 @@ const server_path = server_folder
 module.exports = {
   "src_folders" : ["test/e2e"],
   "output_folder" : "reports",
-  "custom_commands_path" : "",
-  "custom_assertions_path" : "",
+  "custom_commands_path" : "test/e2e/commands",
+  "custom_assertions_path" : "test/e2e/assertions",
   "page_objects_path" : "",
   "globals_path" : "",
 
@@ -35,6 +35,12 @@ module.exports = {
       "screenshots" : {
         "enabled" : false,
         "path" : "",
+      },
+      "globals": {
+        "visual_regression": {
+          "baselinePath": "test/e2e/baseline",
+          "resultPath": "reports/visual-regression",
+        },
       },
       "desiredCapabilities": {
         "browserName": "chrome",
