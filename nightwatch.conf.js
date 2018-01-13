@@ -12,7 +12,7 @@ module.exports = {
   "custom_commands_path" : "test/e2e/commands",
   "custom_assertions_path" : "test/e2e/assertions",
   "page_objects_path" : "",
-  "globals_path" : "",
+  "globals_path" : "test/e2e/globals.js",
 
   "selenium" : {
     "start_process" : true,

@@ -29,7 +29,6 @@ exports.assertion = function(resultPath, expected) {
       ensureDirectoryExistence(resultPath);
       fs.writeFileSync(baselinePath, fs.readFileSync(resultPath));
     }
-    console.log('ensured existed', baselinePath, resultPath);
 
     resemble
       .resemble(baselinePath)
@@ -53,6 +52,11 @@ exports.assertion = function(resultPath, expected) {
       this.message = 'Screenshots Matched for ' + filename +
                 ' with a tolerance of ' + this.expected + '%.';
     } else {
+      this.screenshots = [resultPath, diffPath].map(path => {
+        const relativeReportsDir = this.globals.reportsDirectory.replace(`${process.cwd()}/`, '');
+
+        return path.replace(`${relativeReportsDir}/`, '');
+      });
       this.message = 'Screenshots Match Failed for ' + filename +
                 ' with a tolerance of ' + this.expected + '%.\n' +
                 '   Screenshots at:\n' +
