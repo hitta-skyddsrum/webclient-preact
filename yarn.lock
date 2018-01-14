@@ -5181,9 +5181,9 @@ nightwatch-html-reporter@^2.0.4:
     readdirp "^2.0.0"
     xml2js "^0.4.6"
 
-"nightwatch@git+ssh://git@github.com:kontrollanten/nightwatch-visual-regression.git#releases/v0.9":
+nightwatch@kontrollanten/nightwatch-visual-regression.git#dd59e4eeb9668f1da33916dc44c72e4dec84f07d:
   version "0.9.19"
-  resolved "git+ssh://git@github.com:kontrollanten/nightwatch-visual-regression.git#dd59e4eeb9668f1da33916dc44c72e4dec84f07d"
+  resolved "https://codeload.github.com/kontrollanten/nightwatch-visual-regression/tar.gz/dd59e4eeb9668f1da33916dc44c72e4dec84f07d"
   dependencies:
     chai-nightwatch "~0.1.x"
     ejs "2.5.7"

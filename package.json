@@ -81,7 +81,7 @@
     "json-loader": "^0.5.4",
     "mkdirp": "^0.5.1",
     "ncp": "^2.0.0",
-    "nightwatch": "git+ssh://git@github.com:kontrollanten/nightwatch-visual-regression.git#releases/v0.9",
+    "nightwatch": "kontrollanten/nightwatch-visual-regression.git#dd59e4eeb9668f1da33916dc44c72e4dec84f07d",
     "nightwatch-html-reporter": "^2.0.4",
     "node-sass": "^4.5.3",
     "offline-plugin": "^4.7.0",
