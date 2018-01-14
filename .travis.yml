@@ -25,6 +25,8 @@ install:
   # https://github.com/yarnpkg/yarn/issues/2738#issuecomment-342296820
   - yarn config set registry https://registry.npmjs.org
   - yarn
+on_failure:
+    - errorshots push s3
 
 jobs:
   include:
