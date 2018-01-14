@@ -29,6 +29,11 @@ module.exports = {
   "test_settings" : {
     "default" : {
       "launch_url" : process.env.SITE_URL || "http://localhost:8080",
+      "exclude": [
+        "test/e2e/commands",
+        "test/e2e/assertions",
+        "test/e2e/globals.js",
+      ],
       "selenium_port"  : 4444,
       "selenium_host"  : "localhost",
       "silent": true,
