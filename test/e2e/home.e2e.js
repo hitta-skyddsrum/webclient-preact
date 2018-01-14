@@ -5,7 +5,7 @@ module.exports = {
       .waitForElementVisible('body', 1000)
       .assert.title('Hitta skyddsrum')
       .waitForElementVisible('input[type=text]', 3000)
-      .compareScreenshot('home-step-1.png')
+      .compareScreenshot('home-step-2.png')
       .setValue('input[type=text]', 'Stockholmsvägen')
       .waitForElementVisible('ul li:first-child', 1000)
       .compareScreenshot('home-step-2.png')
