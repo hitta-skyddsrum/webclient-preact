@@ -36,7 +36,7 @@ jobs:
       script: yarn test && codecov
     - stage: e2e
       if: type = api
-      script: yarn install-selenium && yarn e2e || errorshots push s3
+      script: yarn install-selenium && yarn e2e || (errorshots push s3 && false)
 
 notifications:
   webhooks:
