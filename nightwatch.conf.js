@@ -51,7 +51,10 @@ module.exports = {
         "browserName": "chrome",
         "marionette": true,
         "chromeOptions": {
-          "args" : ["--no-sandbox"],
+          "args" : [
+            "--no-sandbox",
+            "window-size=1280,800",
+          ],
         },
       },
     },
