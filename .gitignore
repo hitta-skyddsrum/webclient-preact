@@ -7,3 +7,4 @@
 /.vscode
 .env
 /reports
+/selenium-debug.log
