@@ -13,7 +13,8 @@ function ensureDirectoryExistence(filePath) {
   fs.mkdirSync(dirname);
 }
 
-exports.assertion = function(resultPath, expected) {
+exports.assertion = function(resultData, expected) {
+  const { resultPath, actionName } = resultData;
   const outputPath = path.dirname(resultPath),
     filename = path.basename(resultPath),
     baselinePath = `${this.client.options.globals.visual_regression.baselinePath}/${filename}`,
@@ -49,7 +50,7 @@ exports.assertion = function(resultPath, expected) {
   this.pass = function(value) {
     let pass = value <= this.expected;
     if (pass) {
-      this.message = 'Screenshots Matched for ' + filename +
+      this.message = 'Visual area displayed ' + actionName +
                 ' with a tolerance of ' + this.expected + '%.';
     } else {
       this.screenshots = [resultPath, diffPath].map(path => {

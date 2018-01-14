@@ -19,7 +19,10 @@ exports.command = function(actionName, expected, callback) {
       console.error('compareScreenshot: Error while saving screenshot:', error);
     }
 
-    self.assert.compareScreenshot(resultPath, expected, (result) => {
+    self.assert.compareScreenshot({
+      resultPath,
+      actionName,
+    }, expected, (result) => {
       if (typeof callback === 'function') {
         callback.call(self, result);
       }
