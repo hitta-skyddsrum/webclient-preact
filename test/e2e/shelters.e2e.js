@@ -41,6 +41,9 @@ module.exports = {
       .waitForElementVisible('.leaflet-overlay-pane svg path', 1000);
 
     browser
+      .waitForElementVisible('h1', 1000);
+
+    browser
       .expect.element('h1').text.to.contain('Skyddsrum');
 
     browser
