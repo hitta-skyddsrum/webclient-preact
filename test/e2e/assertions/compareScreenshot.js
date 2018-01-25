@@ -50,8 +50,8 @@ exports.assertion = function(resultData, expected = 0.05) {
   this.pass = function(value) {
     let pass = value <= this.expected;
     if (pass) {
-      this.message = 'Visual area displayed ' + actionName +
-                ' with a tolerance of ' + this.expected + '%.';
+      this.message = `Visual area displayed ${actionName}
+        with a tolerance of ${this.expected}% (${value})`;
     } else {
       this.screenshots = [resultPath, diffPath].map(path => {
         const relativeReportsDir = this.globals.reportsDirectory.replace(`${process.cwd()}/`, '');
