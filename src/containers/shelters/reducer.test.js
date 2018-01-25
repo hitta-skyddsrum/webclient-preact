@@ -51,7 +51,7 @@ describe('containers/shelters/reducer', () => {
     const payload = { search: '', pathname };
 
     expect(SheltersReducer(oldState, { type: '@@router/LOCATION_CHANGE', payload }).selectedShelterId)
-      .to.equal(false);
+      .to.equal(0);
   });
 
   it('should set selectedAddress upon SELECT_ADDRESS', () => {
