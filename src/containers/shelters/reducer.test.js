@@ -37,7 +37,7 @@ describe('containers/shelters/reducer', () => {
   });
 
   it('should set selectedShelterId upon @@router/LOCATION_CHANGE', () => {
-    const selectedShelterId = '1455';
+    const selectedShelterId = 1455;
     const pathname = `/skyddsrum/${selectedShelterId}`;
     const payload = { search: '', pathname };
 

@@ -3,6 +3,7 @@ import { expect } from 'chai';
 import { deep } from 'preact-render-spy';
 import sinon from 'sinon';
 import { Map, Marker, Polyline } from 'react-leaflet';
+import L from 'leaflet';
 
 import SheltersMap from './';
 
@@ -11,8 +12,8 @@ describe('components/SheltersMap', () => {
   const center = [1, 2];
   const youAreHere = [123123, 87495];
   const shelters = [
-    { position: { lat: 12, long: 13 } },
-    { position: { lat: 14, long: 15 } },
+    { id: 1, position: { lat: 12, long: 13 } },
+    { id: 2, position: { lat: 14, long: 15 } },
   ];
   const routes = [
     { coordinates: [[1, 2], [3, 4], [5, 6]] },
@@ -21,6 +22,10 @@ describe('components/SheltersMap', () => {
   const bottomPadding = 1337;
   const onSelectShelter = sinon.spy();
   let mapContext;
+
+  beforeAll(() => {
+    sinon.spy(L, 'icon');
+  });
 
   beforeEach(() => {
     mapContext = deep(<SheltersMap
@@ -32,6 +37,10 @@ describe('components/SheltersMap', () => {
       youAreHere={youAreHere}
       bottomPadding={bottomPadding}
     />, { depth: 1 });
+  });
+
+  afterEach(() => {
+    L.icon.reset();
   });
 
   it('should render a map', () => {
@@ -60,6 +69,14 @@ describe('components/SheltersMap', () => {
 
     shelters.forEach(shelter =>
       expect(mapContext.find(<Marker position={[shelter.position.lat, shelter.position.long]} />).length).to.equal(1));
+
+    const shelterIconCalls = L.icon.getCalls()
+      .filter(call => call.args[0].className === 'shelter');
+
+    expect(shelterIconCalls.length).to.equal(shelters.length);
+
+    shelterIconCalls
+      .forEach(call => expect(call.args[0].iconSize).to.eql([50, 49]));
   });
 
   it('should call onSelectShelter handler upon shelter marker click', () => {

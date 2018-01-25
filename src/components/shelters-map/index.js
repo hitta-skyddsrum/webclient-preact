@@ -13,6 +13,7 @@ export default ({
   bounds = [],
   youAreHere = [],
   bottomPadding = 0,
+  selectedShelterId,
 }) => {
   const mapCenter = center.filter(pos => pos).length ? center : false;
 
@@ -40,17 +41,24 @@ export default ({
             })
           }
         />}
-        {shelters.map(shelter => (<Marker
-          position={[shelter.position.lat, shelter.position.long]}
-          onClick={() => onSelectShelter(shelter)}
-          icon={
-            L.icon({
-              iconUrl: '/assets/images/icon-shelter.png',
-              iconSize: [50, 49],
-              className: 'shelter',
-            })
-          }
-        />))}
+        {shelters
+          .map(shelter => ({
+            shelter,
+            iconSize: [50, 49].map(size => selectedShelterId === shelter.id ? size * 1.5 : size),
+          }))
+          .map(({ shelter, iconSize }) => (
+            <Marker
+              position={[shelter.position.lat, shelter.position.long]}
+              onClick={() => onSelectShelter(shelter)}
+              icon={
+                L.icon({
+                  iconUrl: '/assets/images/icon-shelter.png',
+                  iconSize,
+                  className: 'shelter',
+                })
+              }
+            />
+          ))}
         {routes.map(route => <Polyline positions={route.coordinates} />)}
       </Map>
     </div>
