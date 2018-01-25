@@ -88,11 +88,14 @@ describe('containers/shelters', () => {
     const routes = 'route 69';
     const youAreHere = [5, 8];
     const bounds = [15, 1];
+    const selectedShelterId = 1355;
     const context = shallow(<Shelters
       routes={routes}
       bounds={bounds}
       shelters={shelters}
       youAreHere={youAreHere}
+      selectedShelterId={selectedShelterId}
+      onSelectShelter={sinon.spy()}
       {...defaultProps}
     />);
 
@@ -102,6 +105,7 @@ describe('containers/shelters', () => {
       center={youAreHere}
       youAreHere={youAreHere}
       bounds={bounds}
+      selectedShelterId={selectedShelterId}
     />).length)
       .to.equal(1, 'Expected ShelersMap component to exist');
   });

@@ -97,6 +97,7 @@ export default class Shelters extends Component {
         onSelectShelter={this.handleClickShelter}
         bounds={this.props.bounds}
         bottomPadding={this.state.mapBottomPadding}
+        selectedShelterId={this.props.selectedShelterId}
       />
       <ShelterDetail
         open={!this.state.hideShelterDetail}
