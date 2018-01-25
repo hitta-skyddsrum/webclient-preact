@@ -4,7 +4,7 @@ import { shallow } from 'preact-render-spy';
 import sinon from 'sinon';
 import Helmet from 'preact-helmet';
 
-import { List } from 'material-ui';
+import { Subheader, List } from 'material-ui';
 import { BottomSheet } from 'material-ui-bottom-sheet';
 import ShelterDetail from './';
 
@@ -20,6 +20,13 @@ describe('components/shelter-detail', () => {
 
   it('should be able to render without provided shelter', () => {
     expect(shallow(<ShelterDetail />)).to.not.throw;
+  });
+
+  it('should hide all content when no shelter is provided', () => {
+    const context = shallow(<ShelterDetail />);
+
+    expect(context.find(<Subheader />).length).to.equal(0);
+    expect(context.find(<List />).length).to.equal(0);
   });
 
   it('should set the title when a shelter.shelterId is provided', () => {
