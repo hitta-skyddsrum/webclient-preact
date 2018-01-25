@@ -13,7 +13,7 @@ function ensureDirectoryExistence(filePath) {
   fs.mkdirSync(dirname);
 }
 
-exports.assertion = function(resultData, expected = 0.05) {
+exports.assertion = function(resultData, expected = 5) {
   const { resultPath, actionName } = resultData;
   const outputPath = path.dirname(resultPath),
     filename = path.basename(resultPath),

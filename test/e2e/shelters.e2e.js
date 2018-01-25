@@ -9,28 +9,32 @@ module.exports = {
       .expect.element('.leaflet-marker-pane .youAreHere').to.be.present;
 
     browser
-      .assert.title('Skyddsrum nära Järnvägsgatan, Arvika - Hitta skyddsrum');
-
-    browser.waitForElementVisible('.leaflet-marker-pane img.shelter:nth-child(2)', 20000);
+      .assert.title('Skyddsrum nära Järnvägsgatan, Arvika - Hitta skyddsrum')
+      .waitForElementVisible('.leaflet-marker-pane img.shelter:nth-child(2)', 20000)
+      .visualAreaShouldDisplay('shelters near Arvika');
 
     browser
       .expect.element('.leaflet-overlay-pane svg').to.not.be.present;
 
     browser
       .click('.leaflet-marker-pane img.shelter:nth-child(2)')
-      .waitForElementVisible('h1', 1500)
+      .waitForElementVisible('.leaflet-overlay-pane svg', 2500)
+      .waitForElementVisible('h1', 2000)
+      .pause(500)
+      .visualAreaShouldDisplay('details for a shelter')
       .expect.element('h1').text.to.contain('Skyddsrum');
 
     browser
-      .waitForElementVisible('.leaflet-overlay-pane svg', 2000);
-
-    browser
+      .click('.close')
+      .pause(1000)
+      .visualAreaShouldDisplay('route to shelter without details')
       .end();
   },
   'Shelters: Load shelter detail page with `I am here` search params' (browser) {
     browser
       .url(browser.launchUrl.concat(`/skyddsrum/16114${arvikaSearchPath}`))
       .waitForElementVisible('body', 1000)
+      .pause(500)
       .assert.title('Skyddsrum 144788-5 - Hitta skyddsrum')
       .waitForElementVisible('.leaflet-marker-pane', 1000)
       .expect.element('.leaflet-marker-pane .youAreHere').to.be.present;
