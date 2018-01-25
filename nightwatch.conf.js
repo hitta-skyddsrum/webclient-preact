@@ -54,7 +54,7 @@ module.exports = {
           "args" : [
             "--no-sandbox",
             "window-size=1280,800",
-            "force-device-scale-factor=1",
+            "force-device-scale-factor=".concat(process.env.TRAVIS ? "1" : "2"),
           ],
         },
       },
