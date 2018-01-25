@@ -54,6 +54,7 @@ module.exports = {
           "args" : [
             "--no-sandbox",
             "window-size=1280,800",
+            "force-device-scale-factor=1",
           ],
         },
       },
