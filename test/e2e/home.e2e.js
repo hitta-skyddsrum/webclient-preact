@@ -10,8 +10,8 @@ module.exports = {
       .waitForElementVisible('ul li:first-child', 1000)
       .visualAreaShouldDisplay('address suggestions')
       .click('ul li:nth-child(2)')
-      .waitForElementVisible('.leaflet-container', 1500)
       .visualAreaShouldDisplay('a spinning loader upon the map', 0.5)
+      .waitForElementVisible('.leaflet-container', 1500)
       .assert.urlContains('lat=')
       .pause(1000)
       .end();
