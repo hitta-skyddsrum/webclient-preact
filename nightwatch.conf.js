@@ -38,8 +38,8 @@ module.exports = {
       "selenium_host"  : "localhost",
       "silent": true,
       "screenshots" : {
-        "enabled" : false,
-        "path" : "",
+        "enabled" : true,
+        "path" : "reports/errorshots",
       },
       "globals": {
         "visual_regression": {
