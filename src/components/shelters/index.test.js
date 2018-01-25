@@ -266,12 +266,31 @@ describe('containers/shelters', () => {
       {...defaultProps}
     />);
 
+    const youAreHere = [111, 222];
+
     context.render(<Shelters
       onUnselectShelter={sinon.spy()}
+      youAreHere={youAreHere}
       {...defaultProps}
     />);
 
-    expect(defaultProps.fetchShelters).to.have.been.calledWith();
+    expect(defaultProps.fetchShelters).to.have.been.calledWith(youAreHere);
+  });
+
+  it('should fetch shelters when a new youAreHere is received', () => {
+    const context = shallow(<Shelters
+      {...defaultProps}
+    />);
+
+    defaultProps.fetchShelters.reset();
+    const youAreHere = [123123, 78912, 123];
+
+    context.render(<Shelters
+      youAreHere={youAreHere}
+      {...defaultProps}
+    />);
+
+    expect(defaultProps.fetchShelters).to.have.been.calledWith(youAreHere);
   });
 
   it('should display ShelterDetail when a new selectedShelter is received', () => {
