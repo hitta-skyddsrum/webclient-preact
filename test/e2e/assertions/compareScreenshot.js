@@ -13,7 +13,7 @@ function ensureDirectoryExistence(filePath) {
   fs.mkdirSync(dirname);
 }
 
-exports.assertion = function(resultData, expected) {
+exports.assertion = function(resultData, expected = 0.05) {
   const { resultPath, actionName } = resultData;
   const outputPath = path.dirname(resultPath),
     filename = path.basename(resultPath),
@@ -21,7 +21,7 @@ exports.assertion = function(resultData, expected) {
     diffPath = outputPath + `diff-${filename}`;
 
   this.message = 'Unexpected compareScreenshot error.';
-  this.expected = expected || 0;   // misMatchPercentage tolerance default 0%
+  this.expected = expected;
 
   this.command = function(callback) {
     if (!fs.existsSync(baselinePath)) {
