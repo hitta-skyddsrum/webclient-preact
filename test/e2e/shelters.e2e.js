@@ -11,6 +11,7 @@ module.exports = {
     browser
       .assert.title('Skyddsrum nära Järnvägsgatan, Arvika - Hitta skyddsrum')
       .waitForElementVisible('.leaflet-marker-pane img.shelter:nth-child(2)', 20000)
+      .pause(500)
       .visualAreaShouldDisplay('shelters near Arvika');
 
     browser
