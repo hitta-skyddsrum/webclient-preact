@@ -28,7 +28,8 @@ export const fetchSuggestions = query => {
             lat: place.lat,
             lon: place.lon,
             name: formatNominatimAddress(place),
-          })),
+          }))
+          .filter((place, pos, arr) => arr.map(mapObj => mapObj.name).indexOf(place.name) === pos),
       }))
       .catch(error => dispatch({
         type: FETCH_ADDRESS_SUGGESTIONS_FAILED,

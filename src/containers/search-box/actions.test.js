@@ -43,6 +43,7 @@ describe('containers/search-box/actions/fetchSuggestions', () => {
 
     const suggestions = [
       { lat: 1, lon: 2, display_name: 'This play' },
+      { lat: 1, lon: 2, display_name: 'Second' },
     ];
     const query = 'Lövängsgatan 1';
 
@@ -52,7 +53,9 @@ describe('containers/search-box/actions/fetchSuggestions', () => {
       { type: types.FETCH_ADDRESS_SUGGESTIONS, query },
       {
         type: types.FETCH_ADDRESS_SUGGESTIONS_SUCCESS,
-        suggestions: suggestions.map(sugg => ({ lat: sugg.lat, lon: sugg.lon, name: formattedAddress })),
+        suggestions: suggestions
+          .slice(0, -1)
+          .map(sugg => ({ lat: sugg.lat, lon: sugg.lon, name: formattedAddress })),
       },
     ];
 
