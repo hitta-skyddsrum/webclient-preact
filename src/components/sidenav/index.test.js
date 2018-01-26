@@ -39,6 +39,15 @@ describe('component/Sidenav', () => {
     expect(context.find(<Drawer open={false} />).length).to.equal(1);
   });
 
+  it('should hide the menu upon MenuItem onClick', () => {
+    const context = shallow(<Sidenav location={{}} />);
+    context.setState({ isOpen: true });
+
+    context.find(<MenuItem />).simulate('click');
+
+    expect(context.find(<Drawer open={false} />).length).to.equal(1);
+  });
+
   it('should mark active MenuItem as selected', () => {
     const pathname = '/';
     const context = shallow(<Sidenav location={{ pathname }} />);

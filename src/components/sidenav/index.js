@@ -84,6 +84,8 @@ export default class Sidenav extends Component {
               selected={this.props.location.pathname === item.url}
               component={Link}
               href={item.url}
+              onClick={this.handleClose}
+              onKeyDown={this.handleClose}
             >
               {item.icon}
               {item.title}
