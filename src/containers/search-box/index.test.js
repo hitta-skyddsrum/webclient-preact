@@ -7,22 +7,32 @@ import { SearchBox } from './';
 import Autocomplete from '../../components/autocomplete';
 
 describe('containers/search-box', () => {
-  const onMount = sinon.spy();
+  const onSelectAddressByCoordinates = sinon.spy();
 
-  it('should contain Autocomplete component', () => {
-    expect(<SearchBox onMount={onMount} />).to.contain(<Autocomplete />);
+  afterEach(() => {
+    onSelectAddressByCoordinates.reset();
   });
 
-  it('should call onMount upon mount', () => {
+  it('should contain Autocomplete component', () => {
+    expect(<SearchBox onSelectAddressByCoordinates={onSelectAddressByCoordinates} />).to.contain(<Autocomplete />);
+  });
+
+  it('should call onSelectAddressByCoordinates when lat and lon is provided upon mount', () => {
     const lat = 1453;
     const lon = 1288;
-    shallow(<SearchBox lat={lat} lon={lon} onMount={onMount} />);
+    shallow(<SearchBox lat={lat} lon={lon} onSelectAddressByCoordinates={onSelectAddressByCoordinates} />);
 
-    expect(onMount).to.have.been.calledWith(lat, lon);
+    expect(onSelectAddressByCoordinates).to.have.been.calledWith(lat, lon);
+  });
+
+  it('should not call onSelectAddressByCoordinates when lat and lon isn\'t provided upon mount', () => {
+    shallow(<SearchBox onSelectAddressByCoordinates={onSelectAddressByCoordinates} />);
+
+    expect(onSelectAddressByCoordinates).not.to.have.been.called;
   });
 
   it('should set searchValue upon receiving first selectedAddress', () => {
-    const context = shallow(<SearchBox onMount={onMount} />);
+    const context = shallow(<SearchBox onSelectAddressByCoordinates={onSelectAddressByCoordinates} />);
     const selectedAddress = {
       name: 'Im selected',
     };
@@ -33,13 +43,13 @@ describe('containers/search-box', () => {
 
   it('should pass all props to Autocomplete component', () =>  {
     const randomProp = 5;
-    const context = shallow(<SearchBox onMount={onMount} randomProp={randomProp} />);
+    const context = shallow(<SearchBox onSelectAddressByCoordinates={onSelectAddressByCoordinates} randomProp={randomProp} />);
     expect(context.find(<Autocomplete randomProp={randomProp} />).length).to.equal(1);
   });
 
   it('should dispatch fetchsuggestions upon value change', () => {
     const fetchAddSuggSpy = sinon.spy();
-    const context = shallow(<SearchBox onMount={onMount} onSearchValueChange={fetchAddSuggSpy} />);
+    const context = shallow(<SearchBox onSelectAddressByCoordinates={onSelectAddressByCoordinates} onSearchValueChange={fetchAddSuggSpy} />);
     const autocomplete = context.find(<Autocomplete />);
     const newValue = 'Rikemansgatan 1';
 
@@ -52,7 +62,7 @@ describe('containers/search-box', () => {
 
   it('should not dispatch fetchsuggestions when the component is unmounted', () => {
     const fetchAddSuggSpy = sinon.spy();
-    const context = shallow(<SearchBox onMount={onMount} onSearchValueChange={fetchAddSuggSpy} />);
+    const context = shallow(<SearchBox onSelectAddressByCoordinates={onSelectAddressByCoordinates} onSearchValueChange={fetchAddSuggSpy} />);
     const autocomplete = context.find(<Autocomplete />);
 
     autocomplete.output().attributes.onChange('');
@@ -65,7 +75,7 @@ describe('containers/search-box', () => {
   it('should change route upon address selection', () => {
     jest.mock('preact-router');
 
-    const context = shallow(<SearchBox onMount={onMount} onSelectAddress={sinon.spy()} />);
+    const context = shallow(<SearchBox onSelectAddressByCoordinates={onSelectAddressByCoordinates} onSelectAddress={sinon.spy()} />);
     const autocomplete = context.find(<Autocomplete />);
     const lat = 14.53;
     const lon = 15.54;
@@ -85,7 +95,7 @@ describe('containers/search-box', () => {
 
   it('should call onSelectAddress cb upon address selection', () => {
     const onSelectAddress = sinon.spy();
-    const context = shallow(<SearchBox onMount={onMount} onSelectAddress={onSelectAddress} />);
+    const context = shallow(<SearchBox onSelectAddressByCoordinates={onSelectAddressByCoordinates} onSelectAddress={onSelectAddress} />);
     const autocomplete = context.find(<Autocomplete />);
     const address = { lat: 14, lon: 89 };
 
@@ -98,7 +108,7 @@ describe('containers/search-box', () => {
     const shelter = {
       name: 'The best shelter',
     };
-    const context = shallow(<SearchBox onMount={onMount} onSelectAddress={sinon.spy()} />);
+    const context = shallow(<SearchBox onSelectAddressByCoordinates={onSelectAddressByCoordinates} onSelectAddress={sinon.spy()} />);
     const autocomplete = context.find(<Autocomplete />);
 
     autocomplete.output().attributes.onSelection(shelter);
