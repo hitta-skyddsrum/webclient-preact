@@ -8,11 +8,17 @@ export default place => {
     place.address.road,
     place.address.farmyard,
     place.address.bus_stop,
+    place.address.city,
   ]
     .find(alt => !!alt);
 
   if (formattedAddress) {
-    return formattedAddress.concat(`, ${place.address.county}`);
+    return formattedAddress.concat(`, `, [
+      place.address.city,
+      place.address.state,
+    ].filter(seg => !!seg)
+      .join(', ')
+    );
   }
 
   return place.display_name;
