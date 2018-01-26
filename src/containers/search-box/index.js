@@ -11,7 +11,9 @@ import Autocomplete from '../../components/autocomplete';
 
 export class SearchBox extends Component {
   componentWillMount() {
-    this.props.onMount(this.props.lat, this.props.lon);
+    if (this.props.lat && this.props.lon) {
+      this.props.onSelectAddressByCoordinates(this.props.lat, this.props.lon);
+    }
 
     this.isMounted = true;
 
@@ -66,7 +68,7 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    onMount: (lat, lon) => dispatch(reverseGeocode(lat, lon))
+    onSelectAddressByCoordinates: (lat, lon) => dispatch(reverseGeocode(lat, lon))
       .then(({ address }) => dispatch(selectAddress(address))),
     onSearchValueChange: query => dispatch(fetchSuggestions(query)),
     onSelectAddress: address => {
