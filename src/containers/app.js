@@ -12,6 +12,7 @@ import browserHistory from '../history';
 import Home from '../components/home';
 import Shelters from './shelters';
 import VadArEttSkyddsrum from '../components/vad-ar-ett-skyddsrum';
+import OmTjansten from '../components/om-tjansten';
 import Redirect from './redirect/index';
 import Sidenav from '../components/sidenav';
 
@@ -50,6 +51,7 @@ export default () => {
               <Redirect path="skyddsrum/koordinater/:lat/:lon" to="skyddsrum?lat=:lat&lon=:lon" />
               <Shelters path="skyddsrum/:id?" />
               <VadArEttSkyddsrum path="vad-ar-ett-skyddsrum" />
+              <OmTjansten path="om-tjansten" />
             </Router>
           </div>
         </MuiThemeProvider>

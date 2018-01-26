@@ -8,6 +8,7 @@ jest.mock('material-ui/styles');
 import App from './app';
 import Home from '../components/home';
 import VadArEttSkyddsrum from '../components/vad-ar-ett-skyddsrum';
+import OmTjansten from '../components/om-tjansten';
 import Sidenav from '../components/sidenav';
 import Redirect from './redirect';
 import Shelters from './shelters';
@@ -39,6 +40,11 @@ describe('App', () => {
 
   it('should route /vad-ar-ett-skyddsrum to VadArEttSkyddsrum componetn', () => {
     expect(shallow(<App />).find(<VadArEttSkyddsrum path='vad-ar-ett-skyddsrum' />).length)
+      .to.equal(1);
+  });
+
+  it('should route /om-tjansten to OmTjansten component', () => {
+    expect(shallow(<App />).find(<OmTjansten path='om-tjansten' />).length)
       .to.equal(1);
   });
 

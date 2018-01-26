@@ -46,7 +46,7 @@ export default class Sidenav extends Component {
       },
       {
         title: 'Om Hitta skyddsrum',
-        url: '/om-hitta-skyddsrum',
+        url: '/om-tjansten',
         icon: <InfoIcon classes={iconClasses} />,
       },
     ];
