@@ -3,12 +3,17 @@ import { expect } from 'chai';
 import { shallow } from 'preact-render-spy';
 import Helmet from 'preact-helmet';
 
+jest.mock('material-ui/styles');
+
 import App from './app';
 import Home from '../components/home';
 import Redirect from './redirect';
 import Shelters from './shelters';
 
 describe('App', () => {
+  beforeAll(() => {
+  });
+
   it('should provide a title template', () => {
     const titleTemplate = shallow(<App />)
       .find(<Helmet />).attr('titleTemplate');

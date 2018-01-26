@@ -2,15 +2,14 @@ import { h } from 'preact';
 import { expect } from 'chai';
 import { shallow } from 'preact-render-spy';
 
-import CircularProgress from 'material-ui/CircularProgress';
+import { CircularProgress } from 'material-ui/Progress';
 import LoadingIndicator from './';
-import styles from './style.scss';
 
 describe('components/loading-indicator', () => {
   it('should display a CircularProgress', () => {
     const context = shallow(<LoadingIndicator />);
 
-    expect(context.find('div').find('div').find(<CircularProgress color={styles.orange} />).length)
+    expect(context.find('div').find('div').find(<CircularProgress />).length)
       .to.equal(1);
   });
 
