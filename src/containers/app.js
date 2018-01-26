@@ -11,6 +11,7 @@ import hittaSkyddsrumApp from '../reducer';
 import browserHistory from '../history';
 import Home from '../components/home';
 import Shelters from './shelters';
+import VadArEttSkyddsrum from '../components/vad-ar-ett-skyddsrum';
 import Redirect from './redirect/index';
 import Sidenav from '../components/sidenav';
 
@@ -48,6 +49,7 @@ export default () => {
               <Home path="/" />
               <Redirect path="skyddsrum/koordinater/:lat/:lon" to="skyddsrum?lat=:lat&lon=:lon" />
               <Shelters path="skyddsrum/:id?" />
+              <VadArEttSkyddsrum path="vad-ar-ett-skyddsrum" />
             </Router>
           </div>
         </MuiThemeProvider>

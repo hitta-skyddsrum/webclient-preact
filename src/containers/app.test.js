@@ -7,14 +7,12 @@ jest.mock('material-ui/styles');
 
 import App from './app';
 import Home from '../components/home';
+import VadArEttSkyddsrum from '../components/vad-ar-ett-skyddsrum';
 import Sidenav from '../components/sidenav';
 import Redirect from './redirect';
 import Shelters from './shelters';
 
 describe('App', () => {
-  beforeAll(() => {
-  });
-
   it('should provide a title template', () => {
     const titleTemplate = shallow(<App />)
       .find(<Helmet />).attr('titleTemplate');
@@ -37,6 +35,11 @@ describe('App', () => {
 
   it('should route / to Home component', () => {
     expect(shallow(<App />).find(<Home path='/' />).length).to.equal(1);
+  });
+
+  it('should route /vad-ar-ett-skyddsrum to VadArEttSkyddsrum componetn', () => {
+    expect(shallow(<App />).find(<VadArEttSkyddsrum path='vad-ar-ett-skyddsrum' />).length)
+      .to.equal(1);
   });
 
   it('should redirect skyddsrum/koordinater/:lat/:lon to skyddsrum?lat=:lat&lon=:lon', () => {

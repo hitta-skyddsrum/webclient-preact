@@ -12,7 +12,7 @@ export default ({ children, align }) => {
 
   return (
     <div class={className}>
-      <div class="window">
+      <div class={style.window}>
         { children }
       </div>
     </div>

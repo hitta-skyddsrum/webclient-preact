@@ -12,11 +12,11 @@
   font-size: 1.1em;
 
   .window {
-    width: 450px;
+    width: 600px;
     max-width: 100%;
 
-    &.wide {
-      width: 600px;
+    a {
+      text-decoration: underline;
     }
 
     p {
