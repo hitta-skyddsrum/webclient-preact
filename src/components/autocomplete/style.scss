@@ -25,26 +25,27 @@ $searchBoxInputHeight: 60px;
     height: $searchBoxInputHeight;
     outline-color: $orange;
   }
-}
 
-.suggestions {
-  background: #fff;
-  list-style: none;
-  margin: 0;
-  padding: 0;
-  position: absolute;
-  text-align: left;
+  .suggestions {
+    background: #fff;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    position: absolute;
+    text-align: left;
 
-  li a {
-    display: block;
-    padding: 10px 20px;
-    border-bottom: 1px solid $gray;
-    color: $dark_gray;
+    li a {
+      display: block;
+      padding: 10px 20px;
+      border-bottom: 1px solid $gray;
+      color: $dark_gray;
+      text-decoration: none;
 
-    &:hover,
-    .selected {
-      background-color: $orange;
-      color: #fff;
+      &:hover,
+      .selected {
+        background-color: $orange;
+        color: #fff;
+      }
     }
   }
 }
