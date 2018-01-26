@@ -12,6 +12,7 @@ import browserHistory from '../history';
 import Home from '../components/home';
 import Shelters from './shelters';
 import Redirect from './redirect/index';
+import Sidenav from '../components/sidenav';
 
 import '../style/index.scss';
 import style from './style.scss';
@@ -41,11 +42,14 @@ export default () => {
           titleTemplate="%s - Hitta skyddsrum"
         />
         <MuiThemeProvider theme={theme}>
-          <Router history={history}>
-            <Home path="/" />
-            <Redirect path="skyddsrum/koordinater/:lat/:lon" to="skyddsrum?lat=:lat&lon=:lon" />
-            <Shelters path="skyddsrum/:id?" />
-          </Router>
+          <div>
+            <Sidenav location={history.location} />
+            <Router history={history}>
+              <Home path="/" />
+              <Redirect path="skyddsrum/koordinater/:lat/:lon" to="skyddsrum?lat=:lat&lon=:lon" />
+              <Shelters path="skyddsrum/:id?" />
+            </Router>
+          </div>
         </MuiThemeProvider>
       </div>
     </Provider>

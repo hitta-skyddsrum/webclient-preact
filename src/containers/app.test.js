@@ -7,6 +7,7 @@ jest.mock('material-ui/styles');
 
 import App from './app';
 import Home from '../components/home';
+import Sidenav from '../components/sidenav';
 import Redirect from './redirect';
 import Shelters from './shelters';
 
@@ -26,6 +27,12 @@ describe('App', () => {
       .find(<Helmet />).attr('defaultTitle');
 
     expect(defaultTitle).to.equal('Hitta skyddsrum');
+  });
+
+  it('should display a Sidenav', () => {
+    const context = shallow(<App />);
+
+    expect(context.find(<Sidenav />).length).to.equal(1);
   });
 
   it('should route / to Home component', () => {
