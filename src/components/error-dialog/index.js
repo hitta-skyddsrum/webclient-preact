@@ -1,26 +1,36 @@
 import { h, Component } from 'preact';
-import Dialog from 'material-ui/Dialog';
-import FlatButton from 'material-ui/FlatButton';
+import Dialog, {
+  DialogActions,
+  DialogContent,
+  DialogContentText,
+  DialogTitle,
+} from 'material-ui/Dialog';
+import Button from 'material-ui/Button';
 
 export default class Notifier extends Component {
   render() {
-    const actions = [
-      <FlatButton
-        label="Okej"
-        primary={true}
-        onClick={this.props.handleClose}
-      />,
-    ];
-
     return (
       <Dialog
-        title={this.props.title}
-        actions={actions}
         modal={false}
         open={true}
-        onRequestClose={this.props.handleClose}
+        onClose={this.props.handleClose}
+        aria-labelledby="alert-dialog-title"
+        aria-describedby="alert-dialog-description"
       >
-        {this.props.desc}
+        <DialogTitle>{this.props.title}</DialogTitle>
+
+        <DialogContent>
+          <DialogContentText>
+            {this.props.desc}
+          </DialogContentText>
+        </DialogContent>
+
+        <DialogActions>
+          <Button
+            color="primary"
+            onClick={this.props.handleClose}
+          >Okej</Button>
+        </DialogActions>
       </Dialog>
     );
   }
