@@ -6,9 +6,6 @@ import {
   FETCH_ADDRESS_SUGGESTIONS_FAILED,
   FETCH_ADDRESS_SUGGESTIONS_SUCCESS,
   SELECT_ADDRESS,
-  REVERSE_GEOCODE_POSITION,
-  REVERSE_GEOCODE_POSITION_FAILED,
-  REVERSE_GEOCODE_POSITION_SUCCESS,
 } from './types';
 
 export const fetchSuggestions = query => {
@@ -42,25 +39,5 @@ export const selectAddress = address => {
   return {
     type: SELECT_ADDRESS,
     address,
-  };
-};
-
-export const reverseGeocode = (lat, lon) => {
-  return dispatch => {
-    dispatch({ type: REVERSE_GEOCODE_POSITION });
-
-    return fetchJson(`https://nominatim.openstreetmap.org/reverse?lat=${lat}&lon=${lon}&format=json`)
-      .then(address => dispatch({
-        type: REVERSE_GEOCODE_POSITION_SUCCESS,
-        address: {
-          lon: address.lon,
-          lat: address.lat,
-          name: formatNominatimAddress(address),
-        },
-      }))
-      .catch(error => dispatch({
-        type: REVERSE_GEOCODE_POSITION_FAILED,
-        error,
-      }));
   };
 };

@@ -1,0 +1,20 @@
+.algolia {
+  max-width: 100%;
+
+  :global {
+    .algolia-places {
+      text-align: left;
+
+      input {
+        box-sizing: border-box;
+      }
+      .ap-dropdown-menu {
+        color: #000;
+
+        .ap-name {
+          color: #000;
+        }
+      }
+    }
+  }
+}
