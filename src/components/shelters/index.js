@@ -81,9 +81,11 @@ export default class Shelters extends Component {
 
   render() {
     return (<div>
-      <Helmet
-        title={`Skyddsrum nära ${this.props.selectedAddress.name}`}
-      />
+      {!!this.props.selectedAddress.name && (
+        <Helmet
+          title={`Skyddsrum nära ${this.props.selectedAddress.name}`}
+        />
+      )}
       {!!this.props.loading && <LoadingIndicator />}
       {this.props.humanError && <ErrorDialog
         title={this.props.humanError.message}

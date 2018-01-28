@@ -29,6 +29,13 @@ describe('containers/shelters', () => {
     };
     const context = shallow(<Shelters
       fetchShelters={sinon.spy()}
+      selectedAddress={{}}
+    />);
+
+    expect(context.find(<Helmet />).length).to.equal(0);
+
+    context.render(<Shelters
+      fetchShelters={sinon.spy()}
       selectedAddress={selectedAddress}
     />);
 
