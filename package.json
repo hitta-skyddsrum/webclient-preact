@@ -109,6 +109,7 @@
     "webpack-dev-server": "^2.9.7"
   },
   "dependencies": {
+    "algolia-places-react": "^1.0.11",
     "classnames": "^2.2.5",
     "core-decorators": "^0.20.0",
     "debounce": "^1.1.0",
