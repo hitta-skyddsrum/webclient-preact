@@ -107,7 +107,7 @@ describe('containers/shelters/actions/fetchShelters', () => {
         type: types.SET_BOUNDS,
         bounds: [
           [shelter.position.lat, shelter.position.long],
-          [shelter.position.lat, shelter.position.long],
+          [query.lat, query.lon],
         ],
       },
     ];
