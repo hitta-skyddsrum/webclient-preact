@@ -8,9 +8,11 @@ import ClearIcon from 'material-ui-icons/Clear';
 import style from './style.scss';
 
 export default ({ shelter = {}, open, onClose }) => {
-  const closeButton = <Button fab onClick={onClose}>
-    <ClearIcon />
-  </Button>;
+  const closeButton = (
+    <Button fab onClick={onClose} className="close">
+      <ClearIcon />
+    </Button>
+  );
 
   return (<BottomSheet
     onRequestClose={onClose}

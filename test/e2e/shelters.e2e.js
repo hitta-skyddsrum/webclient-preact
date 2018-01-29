@@ -9,6 +9,7 @@ module.exports = {
       .expect.element('.leaflet-marker-pane .youAreHere').to.be.present;
 
     browser
+      .pause(500)
       .assert.title('Skyddsrum nära Järnvägsgatan, Arvika - Hitta skyddsrum')
       .waitForElementVisible('.leaflet-marker-pane img.shelter:nth-child(2)', 20000)
       .pause(1000)
