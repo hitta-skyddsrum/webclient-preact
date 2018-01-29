@@ -1,3 +1,5 @@
+@import "../../style/variables";
+
 .searchBox {
   position: absolute;
   left: 50%;
@@ -5,4 +7,14 @@
   z-index: 401;
   width: 50%;
   top: 20px;
+}
+
+.shadowHeader {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 100px;
+  background: linear-gradient($dark_gray, 70%, transparent);
+  z-index: 401;
 }
