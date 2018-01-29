@@ -92,6 +92,7 @@ export default class Shelters extends Component {
         desc={this.props.humanError.desc}
         handleClose={this.props.onCloseErrorDialog}
       />}
+      <div class={style.shadowHeader} />
       <SearchBox styles={style.searchBox} />
       <SheltersMap
         center={this.state.center}
