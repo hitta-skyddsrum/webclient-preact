@@ -47,8 +47,11 @@ export const fetchShelters = (lat, lon) => {
         shelters,
       }))
       .then(({ shelters }) => dispatch(
-        setBoundsForPositions(shelters.map(({ position: { lat, long } }) => [lat, long])))
-      )
+        setBoundsForPositions(shelters
+          .map(({ position: { lat: shelterLat, long: shelterLong } }) => [shelterLat, shelterLong])
+          .concat([[lat, lon]])
+        )
+      ))
       .catch(error => dispatch({
         type: FETCH_SHELTERS_FAILED,
         error,
