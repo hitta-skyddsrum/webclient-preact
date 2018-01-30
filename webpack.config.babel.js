@@ -37,10 +37,9 @@ module.exports = {
 	module: {
 		rules: [
 			{
-				test: /\.jsx?$/,
-				exclude: path.resolve(__dirname, 'src'),
+				test: /\.js$/,
 				enforce: 'pre',
-				use: 'source-map-loader'
+				use: ['source-map-loader']
 			},
 			{
 				test: /\.jsx?$/,
@@ -141,6 +140,7 @@ module.exports = {
 			output: {
 				comments: false
 			},
+      sourceMap: true,
 			compress: {
 				unsafe_comps: true,
 				properties: true,
