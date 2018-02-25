@@ -93,7 +93,10 @@ export default class Shelters extends Component {
         handleClose={this.props.onCloseErrorDialog}
       />}
       <div class={style.shadowHeader} />
-      <SearchBox styles={style.searchBox} />
+      <SearchBox
+        styles={style.searchBox}
+        onSelectAddress={this.props.onSelectAddress}
+      />
       <SheltersMap
         center={this.state.center}
         youAreHere={this.props.youAreHere}

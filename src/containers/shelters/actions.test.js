@@ -299,6 +299,14 @@ describe('containers/shelters/actions/selectShelter', () => {
   });
 });
 
+describe('containers/shelters/actions/selectAddress', () => {
+  it('creates SELECT_ADDRESS', () => {
+    const address = { add: 'res' };
+    expect(require('./actions').selectAddress(address))
+      .to.eql({ type: types.SELECT_ADDRESS, address });
+  });
+});
+
 describe('containers/shelters/actions/unselectShelter', () => {
   it('creates UNSELECT_SHELTER', () => {
     expect(require('./actions').unselectShelter())

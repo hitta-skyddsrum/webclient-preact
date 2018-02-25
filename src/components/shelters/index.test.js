@@ -83,11 +83,13 @@ describe('containers/shelters', () => {
   });
 
   it('should contain a SearchBox container', () => {
+    const onSelectAddress = sinon.spy();
     const context = shallow(<Shelters
+      onSelectAddress={onSelectAddress}
       {...defaultProps}
     />);
 
-    expect(context.find(<SearchBox />).length).to.equal(1);
+    expect(context.find(<SearchBox onSelectAddress={onSelectAddress} />).length).to.equal(1);
   });
 
   it('should contain SheltersMap component', () => {

@@ -9,6 +9,7 @@ export default class SearchBox extends Component {
   @autobind
   handleAddressSelection({ suggestion }) {
     route(`/skyddsrum?lat=${suggestion.latlng.lat}&lon=${suggestion.latlng.lng}`, false);
+    this.props.onSelectAddress(suggestion);
   }
 
   render() {

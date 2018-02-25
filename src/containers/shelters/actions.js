@@ -12,6 +12,7 @@ import {
   FETCH_ROUTE_TO_SHELTER_SUCCESS,
   FETCH_ROUTE_TO_SHELTER_FAILED,
   SELECT_SHELTER,
+  SELECT_ADDRESS,
   UNSELECT_SHELTER,
   CLEAR_ERROR,
   SET_BOUNDS,
@@ -102,6 +103,13 @@ export const selectShelter = id => {
           dispatch(setBoundsForPositions([shelterPos, state.youAreHere]));
         }
       });
+  };
+};
+
+export const selectAddress = suggestion => {
+  return {
+    type: SELECT_ADDRESS,
+    address: suggestion,
   };
 };
 
