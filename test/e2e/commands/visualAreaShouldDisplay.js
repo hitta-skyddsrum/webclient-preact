@@ -6,7 +6,7 @@ exports.command = function(actionName, expected, callback) {
     .map(arg => arg.replace('window-size=', ''))
     .map(size => size.replace(',', 'x'))
     .pop();
-  const filename = `${this.currentTest.module}-${this.currentTest.name}-`
+  const filename = `${this.options.desiredCapabilities.browserName}-${this.currentTest.module}-${this.currentTest.name}-`
     .concat(actionName.replace(/ /g, '_'))
     .concat(`-${windowSize}.png`);
 
