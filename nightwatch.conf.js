@@ -21,7 +21,7 @@ module.exports = {
     "port" : 4444,
     "cli_args" : {
       "webdriver.chrome.driver" : "",
-      "webdriver.gecko.driver" : "",
+      "webdriver.gecko.driver" : "./node_modules/.bin/geckodriver",
       "webdriver.edge.driver" : "",
     },
   },
@@ -47,9 +47,23 @@ module.exports = {
           "resultPath": "reports/visual-regression",
         },
       },
+    },
+
+    "firefox": {
+      "desiredCapabilities": {
+        "browserName": "firefox",
+        "marionette": true,
+        "moz:firefoxOptions": {
+          "args": [
+            "-headless",
+          ],
+        },
+      },
+    },
+
+    "chrome" : {
       "desiredCapabilities": {
         "browserName": "chrome",
-        "marionette": true,
         "chromeOptions": {
           "args" : [
             "--no-sandbox",
@@ -61,12 +75,6 @@ module.exports = {
             "headless",
           ],
         },
-      },
-    },
-
-    "chrome" : {
-      "desiredCapabilities": {
-        "browserName": "chrome",
       },
     },
 
