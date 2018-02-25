@@ -1,4 +1,5 @@
 import fetchJson from '../../lib/fetch-json';
+import formatNominatimAddress from '../../lib/format-nominatim-address';
 import { getBoundsAroundPositions, isPositionWithinBounds } from '../../lib/geo-utils';
 
 import {
@@ -13,6 +14,9 @@ import {
   FETCH_ROUTE_TO_SHELTER_FAILED,
   SELECT_SHELTER,
   SELECT_ADDRESS,
+  REVERSE_GEOCODE,
+  REVERSE_GEOCODE_FAILED,
+  REVERSE_GEOCODE_SUCCESS,
   UNSELECT_SHELTER,
   CLEAR_ERROR,
   SET_BOUNDS,
@@ -116,6 +120,29 @@ export const selectAddress = suggestion => {
 export const unselectShelter = () => {
   return {
     type: UNSELECT_SHELTER,
+  };
+};
+
+export const reverseGeocode = (lat, lon) => {
+  return dispatch => {
+    dispatch({
+      type: REVERSE_GEOCODE,
+    });
+
+    return fetchJson(`https://eu1.locationiq.org/v1/reverse.php?lat=${lat}&lon=${lon}&format=json&key=${process.env.LOCATION_IQ_API_KEY}`)
+      .then(response => dispatch({
+        type: REVERSE_GEOCODE_SUCCESS,
+        response: {
+          ...response,
+          name: formatNominatimAddress(response),
+        },
+      }))
+      .catch(error =>
+        dispatch({
+          type: REVERSE_GEOCODE_FAILED,
+          error,
+        })
+      );
   };
 };
 

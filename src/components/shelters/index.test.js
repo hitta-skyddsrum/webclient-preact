@@ -13,12 +13,13 @@ import LoadingIndicator from '../loading-indicator';
 import ShelterDetail from '../shelter-detail';
 import SearchBox from '../../containers/search-box';
 
-describe('containers/shelters', () => {
+describe('components/shelters', () => {
   let defaultProps;
 
   beforeEach(() => {
     defaultProps = {
       fetchShelters: sinon.spy(),
+      reverseGeocode: sinon.spy(),
       selectedAddress: {},
     };
   });
@@ -30,6 +31,7 @@ describe('containers/shelters', () => {
     const context = shallow(<Shelters
       fetchShelters={sinon.spy()}
       selectedAddress={{}}
+      reverseGeocode={sinon.spy()}
     />);
 
     expect(context.find(<Helmet />).length).to.equal(0);
@@ -37,6 +39,7 @@ describe('containers/shelters', () => {
     context.render(<Shelters
       fetchShelters={sinon.spy()}
       selectedAddress={selectedAddress}
+      reverseGeocode={sinon.spy()}
     />);
 
     expect(context.find(<Helmet />).attr('title')).to.match(new RegExp(selectedAddress.name));
@@ -192,6 +195,18 @@ describe('containers/shelters', () => {
     />);
 
     expect(defaultProps.fetchShelters).to.have.been.calledWith([lat, lon]);
+  });
+
+  it('should reverse geocode coordinates upon load', () => {
+    const lat = 10.11;
+    const lon = 12.13;
+
+    shallow(<Shelters
+      youAreHere={[lat, lon]}
+      {...defaultProps}
+    />);
+
+    expect(defaultProps.reverseGeocode).to.have.been.calledWith([lat, lon]);
   });
 
   it('should select accurate shelter when an selectedShelterId prop is set', () => {

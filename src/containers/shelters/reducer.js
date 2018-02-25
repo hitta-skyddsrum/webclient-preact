@@ -13,6 +13,8 @@ import {
   FETCH_ROUTE_TO_SHELTER_FAILED,
   SELECT_SHELTER,
   UNSELECT_SHELTER,
+  REVERSE_GEOCODE_SUCCESS,
+  REVERSE_GEOCODE_FAILED,
   CLEAR_ERROR,
   SET_BOUNDS,
 } from './types';
@@ -130,6 +132,16 @@ export default (state = initialState, action) => {
         ...state,
         selectedShelter: undefined,
         routes: [],
+      };
+    case REVERSE_GEOCODE_FAILED:
+      return {
+        ...state,
+        error: action.error,
+      };
+    case REVERSE_GEOCODE_SUCCESS:
+      return {
+        ...state,
+        selectedAddress: action.response,
       };
     case CLEAR_ERROR:
       return {

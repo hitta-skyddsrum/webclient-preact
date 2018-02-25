@@ -314,6 +314,81 @@ describe('containers/shelters/actions/unselectShelter', () => {
   });
 });
 
+describe('containers/shelters/actions/reverseGeocode', () => {
+  let fetchJson;
+  let formatNominatimAddress;
+
+  beforeAll(() => {
+    jest.resetModules();
+    jest.mock('../../lib/format-nominatim-address');
+    jest.mock('../../lib/fetch-json');
+    fetchJson = require('../../lib/fetch-json').default;
+    formatNominatimAddress = require('../../lib/format-nominatim-address').default;
+  });
+
+  afterAll(() => {
+    jest.unmock('../../lib/fetch-json');
+    jest.unmock('../../lib/format-nominatim-address');
+  });
+
+  afterEach(() => {
+    fetchJson.mockReset();
+  });
+
+  it('creates REVERSE_GEOCODE', () => {
+    const store = mockStore({ Shelters: {} });
+    fetchJson.mockReturnValueOnce(Promise.resolve());
+
+    return store.dispatch(require('./actions').reverseGeocode())
+      .then(() => expect(store.getActions()[0]).to.eql({ type: types.REVERSE_GEOCODE }));
+  });
+
+  it('calls the API with accurate parameters', () => {
+    const lat = 181818.19;
+    const lon = 191191.1;
+    const apiKey = 'secret-keys';
+    process.env.LOCATION_IQ_API_KEY = apiKey;
+
+    const store = mockStore({ shelters: [] });
+    fetchJson.mockReturnValueOnce(Promise.resolve());
+
+    return store.dispatch(require('./actions').reverseGeocode(lat, lon))
+      .then(() => expect(fetchJson.mock.calls[0][0]).to.equal(`https://eu1.locationiq.org/v1/reverse.php?lat=${lat}&lon=${lon}&format=json&key=${apiKey}`));
+  });
+
+  it('creates REVERSE_GEOCODE_FAILED', () => {
+    const error = new Error();
+    fetchJson.mockReturnValueOnce(Promise.reject(error));
+
+    const store = mockStore({});
+
+    return store.dispatch(require('./actions').reverseGeocode())
+      .then(() => expect(store.getActions()[1]).to.eql({
+        type: types.REVERSE_GEOCODE_FAILED,
+        error,
+      }));
+  });
+
+  it('create REVERSE_GEOCODE_SUCCESS', () => {
+    const formattedAddress = 'form4773d 4ddre5';
+    formatNominatimAddress.mockReturnValueOnce(formattedAddress);
+    const response = { succ: 'es', address: {} };
+    fetchJson.mockReturnValueOnce(Promise.resolve(response));
+
+    const store = mockStore({});
+
+    return store.dispatch(require('./actions').reverseGeocode())
+      .then(() =>
+        expect(store.getActions()[1]).to.eql({
+          type: types.REVERSE_GEOCODE_SUCCESS,
+          response: {
+            ...response,
+            name: formattedAddress,
+          },
+        }));
+  });
+});
+
 describe('containers/shelters/actions/clearError', () => {
   it('creates CLEAR_ERROR', () => {
     expect(require('./actions').clearError()).to.eql({
