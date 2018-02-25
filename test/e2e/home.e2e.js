@@ -10,7 +10,6 @@ module.exports = {
       .waitForElementVisible('.ap-suggestions .ap-suggestion', 1000)
       .visualAreaShouldDisplay('address suggestions')
       .click('.ap-suggestions .ap-suggestion')
-      .visualAreaShouldDisplay('a spinning loader upon the map', 0.5)
       .waitForElementVisible('.leaflet-container', 1500)
       .assert.urlContains('lat=')
       .pause(1000)
