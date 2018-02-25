@@ -213,6 +213,19 @@ describe('containers/shelters/reducer', () => {
       .to.eql([]);
   });
 
+  it('should add error to state upon REVERSE_GEOCODEO_FAILED', () => {
+    const error = new Error('Bad');
+
+    expect(SheltersReducer({}, { type: types.REVERSE_GEOCODE_FAILED, error }).error)
+      .to.eql(error);
+  });
+  
+  it('should add response to selectedAddress upon REVERSE_GEOCODE_SUCCESS', () => {
+    const response = { address: 'is here' };
+
+    expect(SheltersReducer({}, { type: types.REVERSE_GEOCODE_SUCCESS, response }).selectedAddress).to.eql(response);
+  });
+
   it('should remove error from state upon CLEAR_ERROR', () => {
     expect(SheltersReducer({ error: true }, { type: types.CLEAR_ERROR }).error)
       .to.eql(null);

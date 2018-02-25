@@ -2,6 +2,7 @@ import { connect } from 'preact-redux';
 import {
   fetchShelters,
   fetchRouteToShelter,
+  reverseGeocode,
   selectAddress,
   selectShelter,
   unselectShelter,
@@ -22,6 +23,7 @@ const mapDispatchToProps = dispatch => {
     onSelectShelter: shelter => dispatch(selectShelter(shelter)),
     onUnselectShelter: () => dispatch(unselectShelter()),
     onCloseErrorDialog: () => dispatch(clearError()),
+    reverseGeocode: position => dispatch(reverseGeocode(position[0], position[1])),
   };
 };
 

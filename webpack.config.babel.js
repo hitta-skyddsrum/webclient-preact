@@ -125,6 +125,7 @@ module.exports = {
 			'process.env.NODE_ENV': JSON.stringify(ENV),
       'process.env.ORS_API_KEY': JSON.stringify(process.env.ORS_API_KEY),
       'process.env.OSM_EMAIL': JSON.stringify(process.env.OSM_EMAIL),
+      'process.env.LOCATION_IQ_API_KEY': JSON.stringify(process.env.LOCATION_IQ_API_KEY),
 		}),
 		new HtmlWebpackPlugin({
 			template: './index.ejs',

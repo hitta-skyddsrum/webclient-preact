@@ -32,6 +32,7 @@ export default class Shelters extends Component {
       this.props.onSelectShelter(this.props.selectedShelterId);
     } else {
       this.props.fetchShelters(this.props.youAreHere);
+      this.props.reverseGeocode(this.props.youAreHere);
     }
   }
 
