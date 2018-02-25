@@ -21,11 +21,11 @@ describe('lib/formatNominatimAddress', () => {
     expect(formatNominatimAddress(place)).to.equal(place.display_name);
   });
 
-  it('should append city and state at the end of name', () => {
+  it('should append city at the end of name', () => {
     const place = {
       address: {
         county: 'Stockholms kommun',
-        city: 'Stockholm',
+        city: 'Stockholm City',
         state: 'Stockholms län',
         pedestrian: 'Centralstationen',
         road: 'Vasagatan',
@@ -34,7 +34,7 @@ describe('lib/formatNominatimAddress', () => {
       },
     };
 
-    expect(formatNominatimAddress(place)).to.contain(`${place.address.city}, ${place.address.state}`);
+    expect(formatNominatimAddress(place)).to.contain(`${place.address.city}`);
   });
 
   it('should return place.address.pedestrian if it exists', () => {

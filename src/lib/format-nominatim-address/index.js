@@ -3,22 +3,24 @@ export default place => {
     return place.display_name;
   }
 
-  const formattedAddress = [
+  const lowGranular = [
     place.address.pedestrian,
     place.address.road,
     place.address.farmyard,
     place.address.bus_stop,
-    place.address.city,
   ]
     .find(alt => !!alt);
 
-  if (formattedAddress) {
-    return formattedAddress.concat(`, `, [
-      place.address.city,
-      place.address.state,
-    ].filter(seg => !!seg)
-      .join(', ')
-    );
+  const highGranular = [
+    place.address.town,
+    place.address.city,
+    place.address.county,
+    place.address.state,
+  ]
+    .find(alt => !!alt);
+
+  if (lowGranular) {
+    return lowGranular.concat(highGranular && `, ${highGranular}`);
   }
 
   return place.display_name;
