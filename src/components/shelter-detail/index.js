@@ -15,6 +15,7 @@ export default ({ shelter = {}, open, onClose }) => {
   return (<BottomSheet
     onRequestClose={onClose}
     style={{ height: 'auto' }}
+    bodyStyle={{ transform: 'unset' }}
     action={closeButton}
     open={open}>
     {shelter.shelterId && (
