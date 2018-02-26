@@ -19,6 +19,15 @@ export default ({ shelter = {}, open, onClose }) => {
     style={{ height: 'auto' }}
     bodyStyle={{ transform: 'unset' }}
     action={closeButton}
+    actionStyle={{
+      position: 'absolute',
+      top: '-28px',
+      right: '16px',
+      float: 'none',
+      marginTop: 0,
+      marginRight: 0,
+      zIndex: 2,
+    }}
     open={open}>
     {shelter.shelterId && (
       <div>
