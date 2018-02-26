@@ -50,6 +50,10 @@ module.exports = {
     },
 
     "firefox": {
+      "windowSize": {
+        "width": 1280,
+        "height": 800,
+      },
       "desiredCapabilities": {
         "browserName": "firefox",
         "marionette": true,
@@ -62,12 +66,15 @@ module.exports = {
     },
 
     "chrome" : {
+      "windowSize": {
+        "width": 1280,
+        "height": 800,
+      },
       "desiredCapabilities": {
         "browserName": "chrome",
         "chromeOptions": {
           "args" : [
             "--no-sandbox",
-            "window-size=1280,800",
             "force-device-scale-factor=1",
             "user-dir=/tmp/foo",
             "disable-infobars",
