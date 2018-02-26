@@ -52,7 +52,7 @@ module.exports = {
     "firefox": {
       "windowSize": {
         "width": 1024,
-        "height": 700,
+        "height": 627,
       },
       "desiredCapabilities": {
         "browserName": "firefox",
