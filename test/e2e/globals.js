@@ -6,6 +6,7 @@ const reporter = new HtmlReporter({
   reportsDirectory,
   themeName: 'outlook',
   reportFilename: 'index.html',
+  uniqueFilename: true,
 });
 
 module.exports = {
