@@ -51,8 +51,8 @@ module.exports = {
 
     "firefox": {
       "windowSize": {
-        "width": 1280,
-        "height": 800,
+        "width": 1024,
+        "height": 700,
       },
       "desiredCapabilities": {
         "browserName": "firefox",
@@ -67,8 +67,8 @@ module.exports = {
 
     "chrome" : {
       "windowSize": {
-        "width": 1280,
-        "height": 800,
+        "width": 1024,
+        "height": 700,
       },
       "desiredCapabilities": {
         "browserName": "chrome",
