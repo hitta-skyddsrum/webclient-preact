@@ -1,6 +1,6 @@
 // Based on https://gist.github.com/richard-flosi/8a5d2e10b6609ab9d06a
 
-const resemble = require('resemble'),
+const resemble = require('node-resemble-js'),
   fs = require('fs'),
   path = require('path');
 
@@ -31,18 +31,18 @@ exports.assertion = function(resultData, expected = 5) {
       fs.writeFileSync(baselinePath, fs.readFileSync(resultPath));
     }
 
-    resemble
-      .resemble(baselinePath)
+    resemble(baselinePath)
       .compareTo(resultPath)
       .ignoreAntialiasing()
-      .onComplete(callback);  // calls this.value with the result
+      .onComplete(result => {
+        result.getDiffImage().pack().pipe(fs.createWriteStream(diffPath));
+        callback(result);
+      });  // calls this.value with the result
 
     return this;
   };
 
   this.value = function(result) {
-    let diff = new Buffer(result.getImageDataUrl().replace(/data:image\/png;base64,/,''), 'base64');
-    fs.writeFileSync(diffPath, diff);
 
     return parseFloat(result.misMatchPercentage, 10);  // value this.pass is called with
   };
