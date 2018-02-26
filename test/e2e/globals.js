@@ -11,4 +11,8 @@ const reporter = new HtmlReporter({
 module.exports = {
   reporter: reporter.fn,
   reportsDirectory,
+  beforeEach: (browser, done) => {
+    const { windowSize } = browser.globals.test_settings;
+    browser.resizeWindow(windowSize.width, windowSize.height, done);
+  },
 };

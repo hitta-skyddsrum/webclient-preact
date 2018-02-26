@@ -1,14 +1,10 @@
 // Based on https://gist.github.com/richard-flosi/8a5d2e10b6609ab9d06a
 
 exports.command = function(actionName, expected, callback) {
-  const windowSize = this.options.desiredCapabilities.chromeOptions.args
-    .filter(arg => arg.indexOf('window-size') !== -1)
-    .map(arg => arg.replace('window-size=', ''))
-    .map(size => size.replace(',', 'x'))
-    .pop();
+  const { windowSize } = this.globals.test_settings;
   const filename = `${this.options.desiredCapabilities.browserName}-${this.currentTest.module}-${this.currentTest.name}-`
     .concat(actionName.replace(/ /g, '_'))
-    .concat(`-${windowSize}.png`);
+    .concat(`-${windowSize.width}x${windowSize.height}.png`);
 
   const self = this,
     screenshotPath = this.globals.visual_regression.resultPath,
