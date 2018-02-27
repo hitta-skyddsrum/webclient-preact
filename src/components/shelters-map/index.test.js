@@ -40,7 +40,7 @@ describe('components/SheltersMap', () => {
   });
 
   afterEach(() => {
-    L.icon.reset();
+    L.icon.resetHistory();
   });
 
   it('should render a map', () => {
