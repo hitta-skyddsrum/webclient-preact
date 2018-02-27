@@ -306,7 +306,7 @@ describe('components/shelters', () => {
       {...defaultProps}
     />);
 
-    defaultProps.fetchShelters.reset();
+    defaultProps.fetchShelters.resetHistory();
     const youAreHere = [123123, 78912, 123];
 
     context.render(<Shelters
