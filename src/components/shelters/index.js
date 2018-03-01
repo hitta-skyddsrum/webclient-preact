@@ -36,10 +36,6 @@ export default class Shelters extends Component {
     }
   }
 
-  componentDidMount() {
-    this.shelterDetailElem.base.addEventListener('transitionend', this.setMapBottomPadding.bind(this));
-  }
-
   componentWillUpdate(nextProps) {
     if (nextProps.selectedShelterId !== this.props.selectedShelterId) {
       if (nextProps.selectedShelterId) {
@@ -57,10 +53,20 @@ export default class Shelters extends Component {
     }
   }
 
-  componeDidUnmount() {
-    this.shelterDetailElem.base.removeEventListener('transitionend', this.setMapBottomPadding.bind(this));
+  componentWillUnmount() {
+    this.shelterDetailElem.base.removeEventListener('transitionend', this.setMapBottomPadding);
   }
 
+  @autobind
+  handleDetailComponentLoaded(elem) {
+    if (!elem || !elem.base) return;
+    if (this.shelterDetailElem) return;
+    this.shelterDetailElem = elem;
+    this.setMapBottomPadding();
+    this.shelterDetailElem.base.addEventListener('transitionend', this.setMapBottomPadding);
+  }
+
+  @autobind
   setMapBottomPadding() {
     const mapBottomPadding = !this.shelterDetailElem ? 0 : this.shelterDetailElem.base.firstChild.offsetHeight;
     this.setState({
@@ -112,7 +118,7 @@ export default class Shelters extends Component {
         open={!this.state.hideShelterDetail}
         shelter={this.props.selectedShelter}
         onClose={this.handleCloseShelterDetail}
-        ref={elem => { this.shelterDetailElem = elem; }}
+        onLoadElem={this.handleDetailComponentLoaded}
       />
     </div>);
   }

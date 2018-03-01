@@ -35,7 +35,7 @@ describe('components/shelter-detail', () => {
     expect(context.find(<Helmet />).attr('title')).to.match(new RegExp(shelter.shelterId));
   });
 
-  it('should include have a BottomSheet', () => {
+  it('should have a BottomSheet', () => {
     const onClose = sinon.spy();
     const context = shallow(<ShelterDetail
       shelter={shelter}
@@ -44,6 +44,15 @@ describe('components/shelter-detail', () => {
     />);
 
     expect(context.find(<BottomSheet open onRequestClose={onClose} />).length).to.equal(1);
+  });
+
+  it('should pass onLoadElem to BottomSheet ref', () => {
+    const onLoadElem = sinon.spy();
+    shallow(<ShelterDetail
+      shelter={shelter}
+      onLoadElem={onLoadElem}
+    />);
+    expect(onLoadElem).to.have.been.called;
   });
 
   it('should have the shelterId as header', () => {

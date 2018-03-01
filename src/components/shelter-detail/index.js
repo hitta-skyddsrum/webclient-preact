@@ -7,7 +7,14 @@ import ClearIcon from 'material-ui-icons/Clear';
 
 import style from './style.scss';
 
-export default ({ shelter = {}, open, onClose }) => {
+export default ({
+  shelter = {},
+  open,
+  onClose,
+  onLoadElem,
+}) => {
+  if (!shelter.shelterId) return <div />;
+
   const closeButton = (
     <Button variant="fab" onClick={onClose} className="close">
       <ClearIcon />
@@ -28,6 +35,7 @@ export default ({ shelter = {}, open, onClose }) => {
       marginRight: 0,
       zIndex: 2,
     }}
+    ref={onLoadElem}
     open={open}>
     {shelter.shelterId && (
       <div>
