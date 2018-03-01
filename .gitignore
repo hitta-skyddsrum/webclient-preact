@@ -8,3 +8,4 @@
 .env
 /reports
 /selenium-debug.log
+*.swp
