@@ -24,7 +24,9 @@
     }
   },
   "globals": {
-    "sleep": 1
+    "sleep": 1,
+    "GA_TRACKING_ID": 1,
+    "gtag": 1,
   },
   "rules": {
     "react/jsx-no-bind": [2, { "allowArrowFunctions": true }],

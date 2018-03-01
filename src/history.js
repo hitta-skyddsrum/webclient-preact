@@ -1,3 +1,9 @@
 import browserHistory from 'history/createBrowserHistory';
 
-export default browserHistory();
+const history = browserHistory();
+
+history.listen(location => {
+  gtag('config', GA_TRACKING_ID, {'page_path': location.pathname + location.search});
+});
+
+export default history;

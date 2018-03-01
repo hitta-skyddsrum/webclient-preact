@@ -27,5 +27,14 @@
   <meta property="og:image" content="https://www.hittaskyddsrum.se/assets/images/fb-image.png" />
   <meta property="og:locale" content="sv_SE" />
   </head>
-<body></body>
+  <body>
+    <script async src="https://www.googletagmanager.com/gtag/js?id=<%= GA_TRACKING_ID %>"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', '<%= GA_TRACKING_ID %>');
+    </script>
+  </body>
 </html>
