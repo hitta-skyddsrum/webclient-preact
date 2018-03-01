@@ -16,6 +16,7 @@ export default ({
   selectedShelterId,
 }) => {
   const mapCenter = center.filter(pos => pos).length ? center : false;
+  const boundsOptions = { paddingTopLeft: [0, 100], paddingBottomRight: [0, bottomPadding] };
 
   return (
     <div className={style.mapContainer}>
@@ -23,7 +24,7 @@ export default ({
         center={mapCenter}
         zoom={10}
         style={{height: '100vh'}}
-        boundsOptions={{ paddingBottomRight: [0, bottomPadding]}}
+        boundsOptions={{...boundsOptions}}
         {...!!bounds.length && { bounds }}
       >
         <TileLayer
