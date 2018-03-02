@@ -1,6 +1,5 @@
 import polyline from 'polyline';
 import { getSearchParam, getValueAfterSection } from '../../lib/url-parser';
-import { SELECT_ADDRESS } from '../search-box/types';
 import {
   FETCH_SINGLE_SHELTER,
   FETCH_SINGLE_SHELTER_SUCCESS,
@@ -15,6 +14,7 @@ import {
   UNSELECT_SHELTER,
   REVERSE_GEOCODE_SUCCESS,
   REVERSE_GEOCODE_FAILED,
+  SELECT_ADDRESS,
   CLEAR_ERROR,
   SET_BOUNDS,
 } from './types';
