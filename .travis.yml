@@ -17,6 +17,10 @@ cache:
   directories:
     - node_modules
 
+env:
+  # Use light theme to avoid dark input fields in Firefox
+  - GTK_THEME=Adwaita:light
+
 before_install:
   - sudo apt-get -qq update
   - sudo apt-get -y install libcairo2-dev libgif-dev libjpeg-dev libpango1.0-dev
