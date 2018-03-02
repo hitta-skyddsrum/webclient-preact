@@ -1,7 +1,6 @@
 import polyline from 'polyline';
 import { expect } from 'chai';
 
-import { SELECT_ADDRESS } from '../search-box/types';
 import * as types from './types';
 import SheltersReducer from './reducer';
 
@@ -57,7 +56,7 @@ describe('containers/shelters/reducer', () => {
   it('should set selectedAddress upon SELECT_ADDRESS', () => {
     const address = { name: 'the streets no 1' };
 
-    expect(SheltersReducer(undefined, { type: SELECT_ADDRESS, address }).selectedAddress)
+    expect(SheltersReducer(undefined, { type: types.SELECT_ADDRESS, address }).selectedAddress)
       .to.eql(address);
   });
 

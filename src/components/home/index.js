@@ -1,6 +1,6 @@
 import { h } from 'preact';
 import ContentContainer from '../content-wrapper';
-import SearchBox from '../../containers/search-box';
+import SearchBox from '../search-box';
 
 export default () => {
   return (

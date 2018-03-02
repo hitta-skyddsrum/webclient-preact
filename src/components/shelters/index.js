@@ -7,7 +7,7 @@ import SheltersMap from '../shelters-map';
 import ErrorDialog from '../error-dialog';
 import LoadingIndicator from '../loading-indicator';
 import ShelterDetail from '../shelter-detail';
-import SearchBox from '../../containers/search-box';
+import SearchBox from '../search-box';
 
 import style from './style.scss';
 

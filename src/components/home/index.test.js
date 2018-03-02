@@ -3,7 +3,7 @@ import { expect } from 'chai';
 import { shallow } from 'preact-render-spy';
 
 import Home from './';
-import SearchBox from '../../containers/search-box';
+import SearchBox from '../search-box';
 
 describe('components/home', () => {
   it('should show the home text', () => {
