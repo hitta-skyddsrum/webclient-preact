@@ -6,6 +6,7 @@ import CopyWebpackPlugin from 'copy-webpack-plugin';
 import path from 'path';
 const ENV = process.env.NODE_ENV || 'development';
 const UglifyJSPlugin = require('uglifyjs-webpack-plugin')
+const GitRevisionPlugin = require('git-revision-webpack-plugin');
 require('dotenv').config();
 
 const CSS_MAPS = ENV !== 'production';
@@ -163,6 +164,8 @@ module.exports = {
       'process.env.OSM_EMAIL': JSON.stringify(process.env.OSM_EMAIL),
       'process.env.LOCATION_IQ_API_KEY': JSON.stringify(process.env.LOCATION_IQ_API_KEY),
       'GA_TRACKING_ID': JSON.stringify(process.env.GA_TRACKING_ID),
+      'process.env.SENTRY_DSN': JSON.stringify(process.env.SENTRY_DSN),
+      'process.env.COMMITHASH': JSON.stringify(new GitRevisionPlugin().commithash()),
 		}),
 		new HtmlWebpackPlugin({
 			template: './index.ejs',

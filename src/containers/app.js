@@ -20,10 +20,27 @@ import '../style/index.scss';
 import style from './style.scss';
 
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
+let middlewares = [thunk];
+
+if (process.env.NODE_ENV !== 'development') {
+  const createRavenMiddleware = require('raven-for-redux');
+  const Raven = require('raven-js');
+
+  Raven.config(process.env.SENTRY_DSN, {
+    environment: process.env.NODE_ENV,
+    tags: {
+      git_commit: process.env.COMMITHASH,
+    },
+  });
+
+  middlewares.push(createRavenMiddleware(Raven));
+}
+
 const store = createStore(hittaSkyddsrumApp, composeEnhancers(
-  applyMiddleware(thunk)
+  applyMiddleware(...middlewares)
 ));
 const history = syncHistoryWithStore(browserHistory, store);
+
 const theme = createMuiTheme({
   palette: {
     primary: {
