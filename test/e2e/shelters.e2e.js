@@ -13,7 +13,7 @@ module.exports = {
       .assert.title('Skyddsrum nära Järnvägsgatan, Arvika - Hitta skyddsrum')
       .waitForElementVisible('.leaflet-marker-pane img.shelter:nth-child(2)', 20000)
       .pause(1000)
-      .visualAreaShouldDisplay('shelters near Arvika', 10)
+      .visualAreaShouldDisplay('shelters near Arvika', 15)
       .expect.element('.leaflet-overlay-pane svg').to.not.be.present;
 
     browser
@@ -27,7 +27,7 @@ module.exports = {
     browser
       .click('.close')
       .pause(1000)
-      .visualAreaShouldDisplay('route to shelter without details', 10)
+      .visualAreaShouldDisplay('route to shelter without details', 15)
       .end();
   },
   'Shelters: Load shelter detail page with `I am here` search params' (browser) {
