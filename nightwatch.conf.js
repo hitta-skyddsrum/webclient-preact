@@ -9,8 +9,14 @@ const server_path = server_folder
 module.exports = {
   "src_folders" : ["test/e2e"],
   "output_folder" : "reports",
-  "custom_commands_path" : "test/e2e/commands",
-  "custom_assertions_path" : "test/e2e/assertions",
+  "custom_commands_path" : [
+    "test/e2e/commands",
+    "./node_modules/nightwatch-accessibility/commands",
+  ],
+  "custom_assertions_path" : [
+    "test/e2e/assertions",
+    "./node_modules/nightwatch-accessibility/assertions",
+  ],
   "page_objects_path" : "",
   "globals_path" : "test/e2e/globals.js",
 

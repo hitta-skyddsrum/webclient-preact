@@ -4,9 +4,13 @@ module.exports = {
   'Shelters: Basic page load and select a shelter' (browser) {
     browser
       .url(browser.launchUrl.concat(`/skyddsrum${arvikaSearchPath}`))
+      .initAccessibility()
       .waitForElementVisible('body', 1000)
       .waitForElementVisible('.leaflet-marker-pane', 1000)
       .expect.element('.leaflet-marker-pane .youAreHere').to.be.present;
+
+    browser
+      .assert.accessibility('body', {});
 
     browser
       .pause(500)
