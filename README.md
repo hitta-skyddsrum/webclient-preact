@@ -26,3 +26,6 @@ npm test
 npm run install-selenium
 npm run e2e
 ```
+
+## Open source sponsors
+<a href="http://giscience.uni-hd.de"><img src="https://avatars1.githubusercontent.com/u/4661504?s=200&v=4" height="60" /></a> <a href="https://sentry.io"><img src="https://avatars3.githubusercontent.com/u/1396951?s=200&v=4" height="60" /></a> <a href="https://www.algolia.com/"><img src="https://avatars1.githubusercontent.com/u/2034458?s=200&v=4" height="60" /></a> <a href="https://locationiq.org/"><img src="https://avatars2.githubusercontent.com/u/5090515?s=200&v=4" height="60" /></a> <a href="https://browserstack.com/"><img src="https://avatars2.githubusercontent.com/u/1119453?s=200&v=4" alt="" data-canonical-src="https://p14.zdusercontent.com/attachment/1015988/vSUZBRxSuen0Vcbd4w3i2YMsq?token=eyJhbGciOiJkaXIiLCJlbmMiOiJBMTI4Q0JDLUhTMjU2In0..374mColbaPIErZul7TM8Sg.1oZJOINlQJ_pD-Ckw1Q9MB0P2tEDrcNRU988WnXLAfr5UqFyJYf9YjJImY3lJev8neoEdz-weVBZJQzcbdwUEI6O3LRMwi3x5X8NYmQ0jboWiKmH5XqhdPbCwl6uxyWnOa4lFP7-3ipXCW3sfPelJdkg5m1FOZEGcAgefFq237gkKoUKVdzL6LlEhY-Ssvkgi_L5nsk6y9jS5sOoHtXuVk8S1EWoINTYyCdEgQcMO6TeXkyzsY9mCN1xSgkAQq54JLtR0DJ4kl_y90J0nmk6btNBDgSEON48XiWb02sbrMI.vCHC7sfcW0ntt7iWxDRZmw" height="60"></a> 
