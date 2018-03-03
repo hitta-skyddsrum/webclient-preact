@@ -9,7 +9,7 @@ import Helmet from 'preact-helmet';
 
 import hittaSkyddsrumApp from '../reducer';
 import browserHistory from '../history';
-import Home from '../components/home';
+import Home from './home';
 import Shelters from './shelters';
 import VadArEttSkyddsrum from '../components/vad-ar-ett-skyddsrum';
 import OmTjansten from '../components/om-tjansten';
