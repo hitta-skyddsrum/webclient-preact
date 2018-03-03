@@ -27,6 +27,8 @@
     "sleep": 1,
     "GA_TRACKING_ID": 1,
     "gtag": 1,
+    "SENTRY_DSN": 1,
+    "COMMITHASH": 1,
   },
   "rules": {
     "react/jsx-no-bind": [2, { "allowArrowFunctions": true }],
