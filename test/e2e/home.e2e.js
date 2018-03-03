@@ -2,9 +2,11 @@ module.exports = {
   'Home' (browser) {
     browser
       .url(browser.launchUrl)
+      .initAccessibility()
       .waitForElementVisible('body', 1000)
       .assert.title('Hitta skyddsrum')
       .waitForElementVisible('input[type=text]', 3000)
+      .assert.accessibility('body', {})
       .visualAreaShouldDisplay('an input field')
       .setValue('input[type=text]', 'Stockholmsvägen')
       .waitForElementVisible('.ap-suggestions .ap-suggestion', 1000)
