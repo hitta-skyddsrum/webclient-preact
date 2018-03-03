@@ -6,7 +6,7 @@ import Helmet from 'preact-helmet';
 jest.mock('material-ui/styles');
 
 import App from './app';
-import Home from '../components/home';
+import Home from './home';
 import VadArEttSkyddsrum from '../components/vad-ar-ett-skyddsrum';
 import OmTjansten from '../components/om-tjansten';
 import Sidenav from '../components/sidenav';
