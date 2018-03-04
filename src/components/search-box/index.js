@@ -17,6 +17,8 @@ export default class SearchBox extends Component {
       <div className={classNames(styles.algolia, this.props.styles)}>
         <AlgoliacePlaces
           options={{
+            apiKey: process.env.ALGOLIA_API_KEY,
+            appId: process.env.ALGOLIA_APP_ID,
             language: 'sv',
             countries: ['se'],
           }}
