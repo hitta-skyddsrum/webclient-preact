@@ -8,11 +8,19 @@ import SearchBox from './';
 
 describe('components/search-box', () => {
   it('should contain AlgoliaPlaces component', () => {
+    const apiKey = 'api-123';
+    const appId = 'app-no-1';
+
+    process.env.ALGOLIA_API_KEY = apiKey;
+    process.env.ALGOLIA_APP_ID = appId;
+
     expect(<SearchBox />).to.contain(<AlgoliaPlaces
       placeholder="Var vill du söka från?"
       options={{
         language: 'sv',
         countries: ['se'],
+        apiKey,
+        appId,
       }}
     />);
   });

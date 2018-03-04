@@ -166,6 +166,8 @@ module.exports = {
       'GA_TRACKING_ID': JSON.stringify(process.env.GA_TRACKING_ID),
       'process.env.SENTRY_DSN': JSON.stringify(process.env.SENTRY_DSN),
       'process.env.COMMITHASH': JSON.stringify(new GitRevisionPlugin().commithash()),
+      'process.env.ALGOLIA_APP_ID': JSON.stringify(process.env.ALGOLIA_APP_ID),
+      'process.env.ALGOLIA_API_KEY': JSON.stringify(process.env.ALGOLIA_API_KEY),
 		}),
 		new HtmlWebpackPlugin({
 			template: './index.ejs',
