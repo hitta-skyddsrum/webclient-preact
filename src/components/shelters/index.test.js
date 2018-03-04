@@ -414,4 +414,22 @@ describe('components/shelters', () => {
 
     expect(component.shelterDetailElem.base.removeEventListener).to.have.been.calledWith('transitionend', component.setMapBottomPadding);
   });
+
+  it('should not throw an error if shelterDetailElem or it\'s base property is falsy', () => {
+    let context = shallow(<Shelters
+      {...defaultProps}
+    />);
+
+    expect(() => context.render(null)).to.not.throw();
+
+    context = shallow(<Shelters
+      {...defaultProps}
+    />);
+    const component = context.component();
+    component.shelterDetailElem = {
+      base: null,
+    };
+
+    expect(() => context.render(null)).to.not.throw();
+  });
 });

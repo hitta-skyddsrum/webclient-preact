@@ -54,7 +54,9 @@ export default class Shelters extends Component {
   }
 
   componentWillUnmount() {
-    this.shelterDetailElem.base.removeEventListener('transitionend', this.setMapBottomPadding);
+    if (this.shelterDetailElem && this.shelterDetailElem.base) {
+      this.shelterDetailElem.base.removeEventListener('transitionend', this.setMapBottomPadding);
+    }
   }
 
   @autobind
