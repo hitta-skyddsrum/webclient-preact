@@ -13,13 +13,18 @@ const CSS_MAPS = ENV !== 'production';
 /* eslint-disable */
 module.exports = {
 	context: path.resolve(__dirname, "src"),
-	entry: './index.js',
+	entry: {
+    index: './index.js',
+    shelters: './containers/shelters/index.js',
+    searchBox: './components/search-box/index.js', 
+  },
   mode: ENV,
 
 	output: {
 		path: path.resolve(__dirname, "build"),
 		publicPath: '/',
-		filename: 'bundle.js'
+		filename: '[name].[hash].js',
+    chunkFilename: '[name].[chunkhash].js',
 	},
 
 	resolve: {
@@ -38,6 +43,9 @@ module.exports = {
 	},
 
   optimization: {
+    splitChunks: {
+      chunks: 'all',
+    },
     minimizer: [
       new UglifyJSPlugin({
         uglifyOptions: {
