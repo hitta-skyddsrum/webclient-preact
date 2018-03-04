@@ -1,5 +1,6 @@
 import { h } from 'preact';
 import { Router } from 'preact-router';
+import AsyncRoute from 'preact-async-route';
 import { Provider } from 'preact-redux';
 import { createStore, applyMiddleware, compose } from 'redux';
 import thunk from 'redux-thunk';
@@ -9,9 +10,6 @@ import Helmet from 'preact-helmet';
 
 import hittaSkyddsrumApp from '../reducer';
 import browserHistory from '../history';
-import Home from './home';
-import Shelters from './shelters';
-import VadArEttSkyddsrum from '../components/vad-ar-ett-skyddsrum';
 import OmTjansten from '../components/om-tjansten';
 import NotFound from '../components/not-found';
 import Redirect from './redirect/index';
@@ -53,6 +51,18 @@ const theme = createMuiTheme({
   },
 });
 
+const loadHome = () =>
+  import('./home')
+    .then(module => module.default);
+
+const loadShelters = () =>
+  import('./shelters')
+    .then(module => module.default);
+
+const loadVadArEttSkyddsrum = () =>
+  import ('../components/vad-ar-ett-skyddsrum')
+    .then(module => module.default);
+
 export default () => {
   return (
     <Provider store={store}>
@@ -65,10 +75,10 @@ export default () => {
           <div className={style.maximize}>
             <Sidenav location={history.location} />
             <Router history={history}>
-              <Home path="/" />
+              <AsyncRoute path="/" getComponent={loadHome} />
               <Redirect path="skyddsrum/koordinater/:lat/:lon" to="skyddsrum?lat=:lat&lon=:lon" />
-              <Shelters path="skyddsrum/:id?" />
-              <VadArEttSkyddsrum path="vad-ar-ett-skyddsrum" />
+              <AsyncRoute path="skyddsrum/:id?" getComponent={loadShelters} />
+              <AsyncRoute path="vad-ar-ett-skyddsrum" getComponent={loadVadArEttSkyddsrum} />
               <OmTjansten path="om-tjansten" />
               <NotFound default />
             </Router>
