@@ -24,7 +24,7 @@ export default ({
   return (<BottomSheet
     onRequestClose={onClose}
     style={{ height: 'auto' }}
-    bodyStyle={{ transform: 'unset' }}
+    bodyStyle={{ transform: 'none' }}
     action={closeButton}
     actionStyle={{
       position: 'absolute',
