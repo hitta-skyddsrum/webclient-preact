@@ -198,7 +198,7 @@ module.exports = {
 		host: '0.0.0.0',
 		publicPath: '/',
 		contentBase: './src',
-		open: true,
+		open: false,
 		openPage: '',
     hot: true,
     historyApiFallback: {
