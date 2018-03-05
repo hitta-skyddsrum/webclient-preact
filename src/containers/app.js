@@ -1,5 +1,6 @@
 import { h } from 'preact';
 import { Router } from 'preact-router';
+import AsyncRoute from 'preact-async-route';
 import { Provider } from 'preact-redux';
 import { createStore, applyMiddleware, compose } from 'redux';
 import thunk from 'redux-thunk';
@@ -66,7 +67,7 @@ export default () => {
             <Router history={history}>
               <Home path="/" />
               <Redirect path="skyddsrum/koordinater/:lat/:lon" to="skyddsrum?lat=:lat&lon=:lon" />
-              <Shelters path="skyddsrum/:id?" />
+              <AsyncRoute component={Shelters} path="skyddsrum/:id?" />
               <VadArEttSkyddsrum path="vad-ar-ett-skyddsrum" />
               <OmTjansten path="om-tjansten" />
             </Router>
