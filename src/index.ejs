@@ -3,10 +3,12 @@
 <head>
 	<% for (var chunk in htmlWebpackPlugin.files.css) { %>
 		<link rel="preload" href="<%= htmlWebpackPlugin.files.css[chunk] %>"  as="style">
+		<link rel="stylesheet" href="<%= htmlWebpackPlugin.files.css[chunk] %>">
 	<% } %>
-	<% for (var chunk in htmlWebpackPlugin.files.chunks) { %>
-		<link rel="preload" href="<%= htmlWebpackPlugin.files.chunks[chunk].entry %>" as="script">
-	<% } %>
+  <!--[if gt IE 8]><!-->
+    <script src="<%= htmlWebpackPlugin.files.chunks.polyfill.entry %>"></script>
+  <!--<![endif]-->
+  <link rel="preload" href="<%= htmlWebpackPlugin.files.chunks.main.entry %>" as="script">
 	<meta charset="utf-8">
 	<title>Hitta skyddsrum</title>
 	<meta name="viewport" content="width=device-width, initial-scale=1.0, minimal-ui">
@@ -28,6 +30,7 @@
   <meta property="og:locale" content="sv_SE" />
   </head>
   <body>
+    <script src="<%= htmlWebpackPlugin.files.chunks.main.entry %>"></script>
     <script async src="https://www.googletagmanager.com/gtag/js?id=<%= GA_TRACKING_ID %>"></script>
     <script>
       window.dataLayer = window.dataLayer || [];

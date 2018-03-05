@@ -13,13 +13,20 @@ const CSS_MAPS = ENV !== 'production';
 /* eslint-disable */
 module.exports = {
 	context: path.resolve(__dirname, "src"),
-	entry: './index.js',
+	entry: {
+    main: './index.js',
+    polyfill: [
+      'core-js/fn/object/assign',
+      'core-js/fn/array/filter',
+      'core-js/fn/promise',
+    ],
+  },
   mode: ENV,
 
 	output: {
 		path: path.resolve(__dirname, "build"),
 		publicPath: '/',
-		filename: 'bundle.js'
+		filename: '[name].js'
 	},
 
 	resolve: {
@@ -171,7 +178,8 @@ module.exports = {
 		}),
 		new HtmlWebpackPlugin({
 			template: './index.ejs',
-			minify: { collapseWhitespace: true }
+			minify: { collapseWhitespace: true },
+      inject: false,
 		}),
 		new CopyWebpackPlugin([
       { from: './manifest.json', to: './' },
