@@ -1,6 +1,6 @@
 {
-  "name": "Preact PWA",
-  "short_name": "Preact PWA",
+  "name": "Hitta skyddsrum",
+  "short_name": "Hitta skyddsrum",
   "start_url": "./",
   "display": "standalone",
   "orientation": "portrait",
