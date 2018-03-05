@@ -89,7 +89,7 @@ export default class Shelters extends Component {
   }
 
   render() {
-    return (<div>
+    return (<div className={style.maximize}>
       {!!this.props.selectedAddress.name && (
         <Helmet
           title={`Skyddsrum nära ${this.props.selectedAddress.name}`}
