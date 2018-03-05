@@ -61,7 +61,7 @@ export default () => {
           titleTemplate="%s - Hitta skyddsrum"
         />
         <MuiThemeProvider theme={theme}>
-          <div>
+          <div className={style.maximize}>
             <Sidenav location={history.location} />
             <Router history={history}>
               <Home path="/" />

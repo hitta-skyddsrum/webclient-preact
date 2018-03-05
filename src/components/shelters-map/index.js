@@ -23,7 +23,7 @@ export default ({
       <Map
         center={mapCenter}
         zoom={10}
-        style={{height: '100vh'}}
+        style={{height: '100%'}}
         boundsOptions={{...boundsOptions}}
         {...!!bounds.length && { bounds }}
       >
