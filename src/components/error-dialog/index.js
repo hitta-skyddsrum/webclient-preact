@@ -7,7 +7,7 @@ import Dialog, {
 } from 'material-ui/Dialog';
 import Button from 'material-ui/Button';
 
-export default class Notifier extends Component {
+export default class ErrorDialog extends Component {
   render() {
     return (
       <Dialog
