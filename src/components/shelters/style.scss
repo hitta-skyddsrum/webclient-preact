@@ -5,7 +5,7 @@
 }
 
 .searchBox {
-  position: absolute;
+  position: fixed;
   left: 50%;
   transform: translateX(-50%);
   z-index: 401;
@@ -14,7 +14,7 @@
 }
 
 .shadowHeader {
-  position: absolute;
+  position: fixed;
   top: 0;
   left: 0;
   right: 0;
