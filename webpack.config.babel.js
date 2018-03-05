@@ -12,8 +12,8 @@ require('dotenv').config();
 const CSS_MAPS = ENV !== 'production';
 /* eslint-disable */
 module.exports = {
-	context: path.resolve(__dirname, "src"),
-	entry: {
+  context: path.resolve(__dirname, "src"),
+  entry: {
     main: './index.js',
     polyfill: [
       'core-js/fn/object/assign',
@@ -23,26 +23,26 @@ module.exports = {
   },
   mode: ENV,
 
-	output: {
-		path: path.resolve(__dirname, "build"),
-		publicPath: '/',
-		filename: '[name].js'
-	},
+  output: {
+    path: path.resolve(__dirname, "build"),
+    publicPath: '/',
+    filename: '[name].js'
+  },
 
-	resolve: {
-		extensions: ['.jsx', '.js', '.json', '.scss'],
-		modules: [
-			path.resolve(__dirname, "src/lib"),
-			path.resolve(__dirname, "node_modules"),
-			'node_modules'
-		],
-		alias: {
-			components: path.resolve(__dirname, "src/components"),    // used for tests
-			style: path.resolve(__dirname, "src/style"),
-			'react': 'preact-compat',
-			'react-dom': 'preact-compat'
-		}
-	},
+  resolve: {
+    extensions: ['.jsx', '.js', '.json', '.scss'],
+    modules: [
+      path.resolve(__dirname, "src/lib"),
+      path.resolve(__dirname, "node_modules"),
+      'node_modules'
+    ],
+    alias: {
+      components: path.resolve(__dirname, "src/components"),    // used for tests
+      style: path.resolve(__dirname, "src/style"),
+      'react': 'preact-compat',
+      'react-dom': 'preact-compat'
+    }
+  },
 
   optimization: {
     minimizer: [
@@ -79,94 +79,94 @@ module.exports = {
     ]
   },
 
-	module: {
-		rules: [
-			{
-				test: /\.js$/,
-				enforce: 'pre',
-				use: ['source-map-loader']
-			},
-			{
-				test: /\.jsx?$/,
-				exclude: /node_modules/,
-				use: 'babel-loader'
-			},
-			{
-				// Transform our own .(scss|css) files with PostCSS and CSS-modules
-				test: /\.(scss|css)$/,
-				include: [path.resolve(__dirname, 'src/components')],
-				use: ExtractTextPlugin.extract({
-					fallback: 'style-loader',
-					use: [
-						{
-							loader: 'css-loader',
-							options: { modules: true, sourceMap: CSS_MAPS, importLoaders: 1 }
-						},
-						{
-							loader: `postcss-loader`,
-							options: {
-								sourceMap: CSS_MAPS,
-								plugins: () => {
-									autoprefixer({ browsers: [ 'last 2 versions' ] });
-								}
-							}
-						},
-						{
-							loader: 'sass-loader',
-							options: { sourceMap: CSS_MAPS }
-						}
-					]
-				})
-			},
-			{
-				test: /\.(scss|css)$/,
-				exclude: [path.resolve(__dirname, 'src/components')],
-				use: ExtractTextPlugin.extract({
-					fallback: 'style-loader',
-					use: [
-						{
-							loader: 'css-loader',
-							options: { sourceMap: CSS_MAPS, importLoaders: 1 }
-						},
-						{
-							loader: `postcss-loader`,
-							options: {
-								sourceMap: CSS_MAPS,
-								plugins: () => {
-									autoprefixer({ browsers: [ 'last 2 versions' ] });
-								}
-							}
-						},
-						{
-							loader: 'sass-loader',
-							options: { sourceMap: CSS_MAPS }
-						}
-					]
-				})
-			},
-			{
-				test: /\.json$/,
-				use: 'json-loader'
-			},
-			{
-				test: /\.(xml|html|txt|md)$/,
-				use: 'raw-loader'
-			},
-			{
-				test: /\.(svg|woff2?|ttf|eot|jpe?g|png|gif)(\?.*)?$/i,
-				use: ENV==='production' ? 'file-loader' : 'url-loader'
-			}
-		]
-	},
-	plugins: ([
-		new webpack.NoEmitOnErrorsPlugin(),
-		new ExtractTextPlugin({
-			filename: 'style.css',
-			allChunks: true,
-			disable: ENV !== 'production'
-		}),
-		new webpack.DefinePlugin({
-			'process.env.NODE_ENV': JSON.stringify(ENV),
+  module: {
+    rules: [
+      {
+        test: /\.js$/,
+        enforce: 'pre',
+        use: ['source-map-loader']
+      },
+      {
+        test: /\.jsx?$/,
+        exclude: /node_modules/,
+        use: 'babel-loader'
+      },
+      {
+        // Transform our own .(scss|css) files with PostCSS and CSS-modules
+        test: /\.(scss|css)$/,
+        include: [path.resolve(__dirname, 'src/components')],
+        use: ExtractTextPlugin.extract({
+          fallback: 'style-loader',
+          use: [
+            {
+              loader: 'css-loader',
+              options: { modules: true, sourceMap: CSS_MAPS, importLoaders: 1 }
+            },
+            {
+              loader: `postcss-loader`,
+              options: {
+                sourceMap: CSS_MAPS,
+                plugins: () => {
+                  autoprefixer({ browsers: [ 'last 2 versions' ] });
+                }
+              }
+            },
+            {
+              loader: 'sass-loader',
+              options: { sourceMap: CSS_MAPS }
+            }
+          ]
+        })
+      },
+      {
+        test: /\.(scss|css)$/,
+        exclude: [path.resolve(__dirname, 'src/components')],
+        use: ExtractTextPlugin.extract({
+          fallback: 'style-loader',
+          use: [
+            {
+              loader: 'css-loader',
+              options: { sourceMap: CSS_MAPS, importLoaders: 1 }
+            },
+            {
+              loader: `postcss-loader`,
+              options: {
+                sourceMap: CSS_MAPS,
+                plugins: () => {
+                  autoprefixer({ browsers: [ 'last 2 versions' ] });
+                }
+              }
+            },
+            {
+              loader: 'sass-loader',
+              options: { sourceMap: CSS_MAPS }
+            }
+          ]
+        })
+      },
+      {
+        test: /\.json$/,
+        use: 'json-loader'
+      },
+      {
+        test: /\.(xml|html|txt|md)$/,
+        use: 'raw-loader'
+      },
+      {
+        test: /\.(svg|woff2?|ttf|eot|jpe?g|png|gif)(\?.*)?$/i,
+        use: ENV==='production' ? 'file-loader' : 'url-loader'
+      }
+    ]
+  },
+  plugins: ([
+    new webpack.NoEmitOnErrorsPlugin(),
+    new ExtractTextPlugin({
+      filename: 'style.css',
+      allChunks: true,
+      disable: ENV !== 'production'
+    }),
+    new webpack.DefinePlugin({
+      'process.env.NODE_ENV': JSON.stringify(ENV),
       'process.env.ORS_API_KEY': JSON.stringify(process.env.ORS_API_KEY),
       'process.env.OSM_EMAIL': JSON.stringify(process.env.OSM_EMAIL),
       'process.env.LOCATION_IQ_API_KEY': JSON.stringify(process.env.LOCATION_IQ_API_KEY),
@@ -175,42 +175,42 @@ module.exports = {
       'process.env.COMMITHASH': JSON.stringify(new GitRevisionPlugin().commithash()),
       'process.env.ALGOLIA_APP_ID': JSON.stringify(process.env.ALGOLIA_APP_ID),
       'process.env.ALGOLIA_API_KEY': JSON.stringify(process.env.ALGOLIA_API_KEY),
-		}),
-		new HtmlWebpackPlugin({
-			template: './index.ejs',
-			minify: { collapseWhitespace: true },
+    }),
+    new HtmlWebpackPlugin({
+      template: './index.ejs',
+      minify: { collapseWhitespace: true },
       inject: false,
-		}),
-		new CopyWebpackPlugin([
+    }),
+    new CopyWebpackPlugin([
       { from: './manifest.json', to: './' },
       { from: './_redirects', to: './' },
-			{ from: './favicon.ico', to: './' }
-		])
-	]),
+      { from: './favicon.ico', to: './' }
+    ])
+  ]),
 
-	stats: { colors: true },
+  stats: { colors: true },
 
-	node: {
-		global: true,
-		process: false,
-		Buffer: false,
-		__filename: false,
-		__dirname: false,
-		setImmediate: false
-	},
+  node: {
+    global: true,
+    process: false,
+    Buffer: false,
+    __filename: false,
+    __dirname: false,
+    setImmediate: false
+  },
 
-	devtool: ENV==='production' ? 'source-map' : 'cheap-module-eval-source-map',
+  devtool: ENV==='production' ? 'source-map' : 'cheap-module-eval-source-map',
 
-	devServer: {
-		port: process.env.PORT || 8080,
-		host: '0.0.0.0',
-		publicPath: '/',
-		contentBase: './src',
-		open: false,
-		openPage: '',
+  devServer: {
+    port: process.env.PORT || 8080,
+    host: '0.0.0.0',
+    publicPath: '/',
+    contentBase: './src',
+    open: false,
+    openPage: '',
     hot: true,
     historyApiFallback: {
       index: '/index.html',
     },
-	}
+  }
 };
