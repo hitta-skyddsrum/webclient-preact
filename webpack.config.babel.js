@@ -94,7 +94,10 @@ module.exports = {
       {
         // Transform our own .(scss|css) files with PostCSS and CSS-modules
         test: /\.(scss|css)$/,
-        include: [path.resolve(__dirname, 'src/components')],
+        include: [
+          path.resolve(__dirname, 'src/components'),
+          path.resolve(__dirname, 'src/containers'),
+        ],
         use: ExtractTextPlugin.extract({
           fallback: 'style-loader',
           use: [
@@ -120,7 +123,10 @@ module.exports = {
       },
       {
         test: /\.(scss|css)$/,
-        exclude: [path.resolve(__dirname, 'src/components')],
+        exclude: [
+          path.resolve(__dirname, 'src/components'),
+          path.resolve(__dirname, 'src/containers'),
+        ],
         use: ExtractTextPlugin.extract({
           fallback: 'style-loader',
           use: [
