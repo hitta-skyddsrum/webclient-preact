@@ -31,7 +31,7 @@ if (process.env.NODE_ENV !== 'development') {
     tags: {
       git_commit: process.env.COMMITHASH,
     },
-  });
+  }).install();
 
   middlewares.push(createRavenMiddleware(Raven));
 }
