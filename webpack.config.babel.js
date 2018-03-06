@@ -15,11 +15,6 @@ module.exports = {
   context: path.resolve(__dirname, "src"),
   entry: {
     main: './index.js',
-    polyfill: [
-      'core-js/fn/object/assign',
-      'core-js/fn/array/filter',
-      'core-js/fn/promise',
-    ],
   },
   mode: ENV,
 

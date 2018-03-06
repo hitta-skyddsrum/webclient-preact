@@ -1,4 +1,5 @@
 import { h, render } from 'preact';
+import polyfill from 'dynamic-polyfill';
 
 let root;
 
@@ -14,4 +15,18 @@ if (module.hot) {
   module.hot.accept('./containers/app', () => requestAnimationFrame(init));
 }
 
-init();
+polyfill({
+  fills: [
+    'fetch',
+    'Array.prototype.filter',
+    'Object.assign',
+    'Promise',
+    'Element.prototype.classList',
+  ],
+  options: ['gated', 'always'],
+  minify: false,
+  rum: false,
+  afterFill() {
+    init();
+  },
+});
