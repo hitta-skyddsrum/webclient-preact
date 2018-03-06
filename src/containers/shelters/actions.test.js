@@ -181,9 +181,17 @@ describe('containers/shelters/actions/fetchRouteToShelter', () => {
       });
   });
 
+  it('create FETCH_ROUTE_TO_SHELTER_SKIPPED when from array includes falsy values', () => {
+    const shelter = { position: { lat: 14, long: 18 } };
+    const store = mockStore();
+
+    store.dispatch(require('./actions').fetchRouteToShelter([16.18, 0], shelter));
+    expect(store.getActions()[0]).to.eql({ type: types.FETCH_ROUTE_TO_SHELTER_SKIPPED });
+  });
+
   it('creates FETCH_ROUTE_TO_SHELTER_SUCCESS when fetching shelters is finished', () => {
     const route = { route: '66' };
-    const from = { lat: 3, lon: 4 };
+    const from = [13, 12];
     const shelter = { position: { lat: 14, long: 18 } };
     fetchJson.mockReturnValueOnce(Promise.resolve(route));
 
@@ -197,13 +205,13 @@ describe('containers/shelters/actions/fetchRouteToShelter', () => {
 
     const store = mockStore({ shelters: [] });
 
-    return store.dispatch(require('./actions').fetchRouteToShelter(from, shelter))
+    store.dispatch(require('./actions').fetchRouteToShelter(from, shelter))
       .then(() => expect(store.getActions()).to.eql(expectedActions));
   });
 
   it('creates FETCH_ROUTE_TO_SHELTER_FAILED when fetching shelters failed', () => {
     const error = new Error();
-    const from = { lat: 13, lon: 40 };
+    const from = [13, 40];
     const shelter = { position: { lat: 114, long: 18 } };
     fetchJson.mockReturnValueOnce(Promise.reject(error));
 
@@ -232,7 +240,7 @@ describe('containers/shelters/actions/fetchRouteToShelter', () => {
     };
 
     fetchJson.mockReturnValueOnce(Promise.reject(error));
-    const from = { lat: 13, lon: 40 };
+    const from = [13, 40];
     const shelter = { position: { lat: 114, long: 18 } };
 
     const expectedActions = [
@@ -286,7 +294,7 @@ describe('containers/shelters/actions/selectShelter', () => {
       { type: types.FETCH_ROUTE_TO_SHELTER },
     ];
 
-    const store = mockStore({ Shelters: { youAreHere: [], bounds: [] } });
+    const store = mockStore({ Shelters: { youAreHere: [1, 2], bounds: [] } });
 
     return store.dispatch(require('./actions').selectShelter(shelter.id))
       .then(() => expect(store.getActions().slice(3, 4)).to.eql(expectedActions));
