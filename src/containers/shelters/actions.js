@@ -10,6 +10,7 @@ import {
   FETCH_SHELTERS_SUCCESS,
   FETCH_SHELTERS_FAILED,
   FETCH_ROUTE_TO_SHELTER,
+  FETCH_ROUTE_TO_SHELTER_SKIPPED,
   FETCH_ROUTE_TO_SHELTER_SUCCESS,
   FETCH_ROUTE_TO_SHELTER_FAILED,
   FETCH_ROUTE_TO_SHELTER_FAILED_NOT_FOUND,
@@ -73,6 +74,12 @@ export const setBoundsForPositions = positions => {
 };
 
 export const fetchRouteToShelter = (from, shelter) => {
+  if (from.filter(val => !!val).length !== 2) {
+    return {
+      type: FETCH_ROUTE_TO_SHELTER_SKIPPED,
+    };
+  }
+
   return dispatch => {
     dispatch({
       type: FETCH_ROUTE_TO_SHELTER,
