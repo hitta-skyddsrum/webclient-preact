@@ -6,7 +6,12 @@ export default url => fetch(url)
       return response.json();
     }
 
-    const error = new Error(response.statusText);
-    error.response = response;
-    throw error;
+    return response.json()
+      .then(jsonResponse => {
+        const error = new Error(response.statusText);
+        error.response = response;
+        error.jsonResponse = jsonResponse;
+        error.status = response.status;
+        throw error;
+      });
   });

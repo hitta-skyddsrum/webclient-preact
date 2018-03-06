@@ -220,6 +220,31 @@ describe('containers/shelters/actions/fetchRouteToShelter', () => {
     return store.dispatch(require('./actions').fetchRouteToShelter(from, shelter))
       .then(() => expect(store.getActions()).to.eql(expectedActions));
   });
+
+  it('create FETCH_ROUTE_TO_SHELTER_FAILED_NOT_FOUND upon 2099', () => {
+    const error = new Error();
+    error.status = 500;
+    error.jsonResponse = {
+      error: {
+        code: 2099,
+        message: 'Connection between locations not found',
+      },
+    };
+
+    fetchJson.mockReturnValueOnce(Promise.reject(error));
+    const from = { lat: 13, lon: 40 };
+    const shelter = { position: { lat: 114, long: 18 } };
+
+    const expectedActions = [
+      { type: types.FETCH_ROUTE_TO_SHELTER },
+      { type: types.FETCH_ROUTE_TO_SHELTER_FAILED_NOT_FOUND, error },
+    ];
+
+    const store = mockStore();
+
+    return store.dispatch(require('./actions').fetchRouteToShelter(from, shelter))
+      .then(() => expect(store.getActions()).to.eql(expectedActions));
+  });
 });
 
 describe('containers/shelters/actions/selectShelter', () => {

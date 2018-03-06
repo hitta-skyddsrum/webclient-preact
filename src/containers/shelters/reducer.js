@@ -10,6 +10,7 @@ import {
   FETCH_ROUTE_TO_SHELTER,
   FETCH_ROUTE_TO_SHELTER_SUCCESS,
   FETCH_ROUTE_TO_SHELTER_FAILED,
+  FETCH_ROUTE_TO_SHELTER_FAILED_NOT_FOUND,
   SELECT_SHELTER,
   UNSELECT_SHELTER,
   REVERSE_GEOCODE_SUCCESS,
@@ -120,6 +121,19 @@ export default (state = initialState, action) => {
           desc: `Hämtningen av vägbeskrivning för ditt valda
             skyddsrum misslyckades. Felet kan bero på att
             tjänsten är överbelastad.`,
+        },
+      };
+    case FETCH_ROUTE_TO_SHELTER_FAILED_NOT_FOUND:
+      return {
+        ...state,
+        loading: state.loading - 1,
+        error: action.error,
+        humanError: {
+          message: 'Kunde inte hitta vägbeskrivning',
+          desc: `En vägbeskrivning mellan den plats du angett
+            och det skyddsrum du valt kunde inte hittas. Detta
+            kan bero på att bilvägar mellan platserna saknas eller
+            att vår data-källa saknar kunskap om denna väg.`,
         },
       };
     case SELECT_SHELTER:
