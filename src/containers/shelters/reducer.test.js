@@ -170,6 +170,13 @@ describe('containers/shelters/reducer', () => {
       .to.equal(loading - 1);
   });
 
+  it('should decrement loading upon FETCH_ROUTE_TO_SHELTER_FAILED_NOT_FOUND', () => {
+    const loading = 3321;
+
+    expect(SheltersReducer({ loading }, { type: types.FETCH_ROUTE_TO_SHELTER_FAILED_NOT_FOUND }).loading)
+      .to.equal(loading - 1);
+  });
+
   it('should add routes to state upon FETCH_ROUTE_TO_SHELTER_SUCCESS', () => {
     const decodedRoutes = [
       {
@@ -191,6 +198,16 @@ describe('containers/shelters/reducer', () => {
       .to.equal('Fel vid hämtning av vägbeskrivning');
     expect(SheltersReducer(undefined, { type: types.FETCH_ROUTE_TO_SHELTER_FAILED, error}).humanError.desc)
       .to.match(new RegExp('misslyckades'));
+  });
+
+  it('should add error to state upon FETCH_ROUTE_TO_SHELTER_FAILED_NOT_FOUND', () => {
+    const error = new Error();
+    expect(SheltersReducer(undefined, { type: types.FETCH_ROUTE_TO_SHELTER_FAILED_NOT_FOUND, error}).error)
+      .to.equal(error);
+    expect(SheltersReducer(undefined, { type: types.FETCH_ROUTE_TO_SHELTER_FAILED_NOT_FOUND, error}).humanError.message)
+      .to.equal('Kunde inte hitta vägbeskrivning');
+    expect(SheltersReducer(undefined, { type: types.FETCH_ROUTE_TO_SHELTER_FAILED_NOT_FOUND, error}).humanError.desc)
+      .to.match(new RegExp('kunde inte hittas'));
   });
 
   it('should add selected shelter to state upon SELECT_SHELTER', () => {

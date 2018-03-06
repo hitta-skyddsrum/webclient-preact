@@ -12,6 +12,7 @@ import {
   FETCH_ROUTE_TO_SHELTER,
   FETCH_ROUTE_TO_SHELTER_SUCCESS,
   FETCH_ROUTE_TO_SHELTER_FAILED,
+  FETCH_ROUTE_TO_SHELTER_FAILED_NOT_FOUND,
   SELECT_SHELTER,
   SELECT_ADDRESS,
   REVERSE_GEOCODE,
@@ -82,10 +83,23 @@ export const fetchRouteToShelter = (from, shelter) => {
         type: FETCH_ROUTE_TO_SHELTER_SUCCESS,
         route,
       }))
-      .catch(error => dispatch({
-        type: FETCH_ROUTE_TO_SHELTER_FAILED,
-        error,
-      }));
+      .catch(error => {
+        try {
+          /// https://github.com/GIScience/openrouteservice/issues/144
+          const responseError = error.jsonResponse.error;
+          if (responseError.code === 2099 && responseError.message === 'Connection between locations not found') {
+            return dispatch({
+              type: FETCH_ROUTE_TO_SHELTER_FAILED_NOT_FOUND,
+              error,
+            });
+          }
+        } catch (e) {}
+
+        dispatch({
+          type: FETCH_ROUTE_TO_SHELTER_FAILED,
+          error,
+        });
+      });
   };
 };
 
