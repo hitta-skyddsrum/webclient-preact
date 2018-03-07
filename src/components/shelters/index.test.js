@@ -168,29 +168,14 @@ describe('components/shelters', () => {
     expect(context.find(<ShelterDetail open={true} shelter={shelter} />).length).to.equal(1);
   });
 
-  it('should trigger setMapBottomPadding upon first ShelterDetail onLoadElem is called', () => {
-    const spyCb = sinon.spy(Shelters.prototype, 'setMapBottomPadding', ['get']);
+  it('should update state upon ShelterDetail onHeightChange is called', () => {
     const context = shallow(<Shelters
       {...defaultProps}
     />);
-    const offsetHeight = 120;
-    const fakeElem = {
-      base: {
-        addEventListener: sinon.spy(),
-        firstChild: {
-          offsetHeight,
-        },
-      },
-    };
-    const onLoadElemCb = context.find(<ShelterDetail />).attr('onLoadElem');
-    onLoadElemCb(fakeElem);
+    const height = 120;
+    context.find('ShelterDetail').attr('onHeightChange')(height);
 
-    expect(spyCb.get.callCount).to.equal(2);
-    expect(fakeElem.base.addEventListener).to.have.been.calledOnce;
-    expect(fakeElem.base.addEventListener).to.have.been.calledWith('transitionend', sinon.match.func);
-
-    onLoadElemCb(fakeElem);
-    expect(spyCb.get.callCount).to.equal(2);
+    expect(context.state('mapBottomPadding')).to.equal(height);
   });
 
   it('should change route when no center is given upon clicking on a shelter', () => {
@@ -394,25 +379,6 @@ describe('components/shelters', () => {
     context.rerender();
 
     expect(context.find(<ShelterDetail open={false} />).length).to.equal(1);
-  });
-
-  it('should remove event listener `transitionended` upon unmount', () => {
-    const context = shallow(<Shelters
-      selectedShelter={{}}
-      shelters={[]}
-      {...defaultProps}
-    />);
-
-    const component = context.component();
-    component.shelterDetailElem = {
-      base: {
-        removeEventListener: sinon.spy(),
-      },
-    };
-
-    context.render(null);
-
-    expect(component.shelterDetailElem.base.removeEventListener).to.have.been.calledWith('transitionend', component.setMapBottomPadding);
   });
 
   it('should not throw an error if shelterDetailElem or it\'s base property is falsy', () => {
