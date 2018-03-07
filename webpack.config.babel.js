@@ -185,7 +185,8 @@ module.exports = {
     new CopyWebpackPlugin([
       { from: './manifest.json', to: './' },
       { from: './_redirects', to: './' },
-      { from: './favicon.ico', to: './' }
+      { from: './favicon.ico', to: './' },
+      { from: './sitemap*.xml', to: './' },
     ])
   ]),
 
