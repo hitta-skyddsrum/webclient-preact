@@ -82,8 +82,8 @@ export default class Shelters extends Component {
   }
 
   @autobind
-  handleClickShelter({ id }) {
-    const url = `/skyddsrum/${id}${location.search}`;
+  handleClickShelter({ shelterId }) {
+    const url = `/skyddsrum/${shelterId}${location.search}`;
     route(url, false);
     this.setState({ hideShelterDetail: false });
   }

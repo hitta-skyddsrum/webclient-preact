@@ -281,7 +281,7 @@ describe('containers/shelters/actions/selectShelter', () => {
 
     const store = mockStore({ Shelters: { youAreHere: [], bounds: [] } });
 
-    return store.dispatch(require('./actions').selectShelter(shelter.id))
+    return store.dispatch(require('./actions').selectShelter(shelter.shelterId))
       .then(() => expect(store.getActions().slice(0, 3)).to.eql(expectedActions));
   });
 
@@ -296,7 +296,7 @@ describe('containers/shelters/actions/selectShelter', () => {
 
     const store = mockStore({ Shelters: { youAreHere: [1, 2], bounds: [] } });
 
-    return store.dispatch(require('./actions').selectShelter(shelter.id))
+    return store.dispatch(require('./actions').selectShelter(shelter.shelterId))
       .then(() => expect(store.getActions().slice(3, 4)).to.eql(expectedActions));
   });
 
