@@ -42,6 +42,7 @@ module.exports = {
   optimization: {
     minimizer: [
       new UglifyJSPlugin({
+        sourceMap: true,
         uglifyOptions: {
           output: {
             comments: false
