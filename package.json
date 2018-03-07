@@ -115,7 +115,6 @@
     "algolia-places-react": "^1.0.13",
     "classlist-polyfill": "^1.2.0",
     "classnames": "^2.2.5",
-    "core-decorators": "^0.20.0",
     "debounce": "^1.1.0",
     "dynamic-polyfill": "^1.0.1",
     "history": "^4.7.2",

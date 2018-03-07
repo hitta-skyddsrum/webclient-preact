@@ -1,5 +1,4 @@
 import { h, Component } from 'preact';
-import { autobind } from 'core-decorators';
 import { BottomSheet } from 'material-ui-bottom-sheet';
 import Button from 'material-ui/Button';
 import List, { ListItem, ListItemText } from 'material-ui/List';
@@ -11,7 +10,13 @@ import style from './style.scss';
 export default class ShelterDetail extends Component {
   bottomSheetRef = null;
 
-  @autobind
+  constructor() {
+    super();
+
+    this.handleBottomSheetRefChange = this.handleBottomSheetRefChange.bind(this);
+    this.handleBottomSheetTransitionEnd = this.handleBottomSheetTransitionEnd.bind(this);
+  }
+
   handleBottomSheetRefChange(ref) {
     if (!ref || !ref.base || !ref.base.firstChild) {
       // this.bottomSheetRef = null;
@@ -31,7 +36,6 @@ export default class ShelterDetail extends Component {
     this.bottomSheetRef.base.addEventListener('transitionend', this.handleBottomSheetTransitionEnd);
   }
 
-  @autobind
   handleBottomSheetTransitionEnd({ target }) {
     if (!target.firstChild) return;
     if (target.firstChild.className.indexOf('MuiPaper') === -1) return;
