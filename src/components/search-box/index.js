@@ -1,5 +1,4 @@
 import { h, Component } from 'preact';
-import { autobind } from 'core-decorators';
 import { route } from 'preact-router';
 import classNames from 'classnames';
 import AlgoliacePlaces from 'algolia-places-react';
@@ -11,13 +10,20 @@ export default class SearchBox extends Component {
     error: null,
   };
 
-  @autobind
+  constructor() {
+    super();
+
+    this.handleAddressSelection = this.handleAddressSelection.bind(this);
+    this.handleAlgoliaLimit = this.handleAlgoliaLimit.bind(this);
+    this.handleAlgoliaError = this.handleAlgoliaError.bind(this);
+    this.handleCloseErrorDialog = this.handleCloseErrorDialog.bind(this);
+  }
+
   handleAddressSelection({ suggestion }) {
     route(`/skyddsrum?lat=${suggestion.latlng.lat}&lon=${suggestion.latlng.lng}`, false);
     this.props.onSelectAddress(suggestion);
   }
 
-  @autobind
   handleAlgoliaLimit() {
     this.setState({
       error: {
@@ -29,7 +35,6 @@ export default class SearchBox extends Component {
     throw new Error('AlgoliaPlaces: Rate limit');
   }
 
-  @autobind
   handleAlgoliaError(error) {
     this.setState({
       error: {
@@ -41,7 +46,6 @@ export default class SearchBox extends Component {
     throw new Error(error);
   }
 
-  @autobind
   handleCloseErrorDialog() {
     this.setState({ error: null });
   }

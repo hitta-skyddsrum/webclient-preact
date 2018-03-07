@@ -1,6 +1,5 @@
 import { h, Component } from 'preact';
 import { route } from 'preact-router';
-import { autobind } from 'core-decorators';
 import Helmet from 'preact-helmet';
 
 import SheltersMap from '../shelters-map';
@@ -20,6 +19,14 @@ export default class Shelters extends Component {
   state = {
     hideShelterDetail: true,
   };
+
+  constructor() {
+    super();
+
+    this.setMapBottomPadding = this.setMapBottomPadding.bind(this);
+    this.handleCloseShelterDetail = this.handleCloseShelterDetail.bind(this);
+    this.handleClickShelter = this.handleClickShelter.bind(this);
+  }
 
   componentWillMount() {
     if (!this.props.youAreHere.length) {
@@ -53,22 +60,16 @@ export default class Shelters extends Component {
     }
   }
 
-  componentWillUnmount() {
-  }
-
-  @autobind
   setMapBottomPadding(height) {
     this.setState({
       mapBottomPadding: height,
     });
   }
 
-  @autobind
   handleCloseShelterDetail() {
     this.setState({ hideShelterDetail: true });
   }
 
-  @autobind
   handleClickShelter({ shelterId }) {
     const url = `/skyddsrum/${shelterId}${location.search}`;
     route(url, false);

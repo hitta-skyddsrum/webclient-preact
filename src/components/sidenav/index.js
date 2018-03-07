@@ -8,7 +8,6 @@ import Button from 'material-ui/Button';
 import Drawer from 'material-ui/Drawer';
 import { MenuItem } from 'material-ui/Menu';
 import Subheader from 'material-ui/List/ListSubheader';
-import { autobind } from 'core-decorators';
 
 import style from './style.scss';
 
@@ -17,14 +16,19 @@ export default class Sidenav extends Component {
     isOpen: false,
   };
 
-  @autobind
+  constructor() {
+    super();
+
+    this.handleOpen = this.handleOpen.bind(this);
+    this.handleClose = this.handleClose.bind(this);
+  }
+
   handleOpen() {
     this.setState({
       isOpen: true,
     });
   }
 
-  @autobind
   handleClose() {
     this.setState({
       isOpen: false,
