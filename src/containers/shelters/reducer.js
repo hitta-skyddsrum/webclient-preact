@@ -41,7 +41,7 @@ export default (state = initialState, action) => {
           getSearchParam(action.payload.search, 'lon'),
         ].filter(pos => !!pos)
           .map(pos => parseFloat(pos)),
-        selectedShelterId: parseInt(getValueAfterSection(action.payload.pathname, 'skyddsrum') || 0, 10),
+        selectedShelterId: getValueAfterSection(action.payload.pathname, 'skyddsrum') || 0,
       };
     case SELECT_ADDRESS:
       return {

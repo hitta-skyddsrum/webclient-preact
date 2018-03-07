@@ -32,7 +32,7 @@ module.exports = {
   },
   'Shelters: Load shelter detail page with `I am here` search params' (browser) {
     browser
-      .url(browser.launchUrl.concat(`/skyddsrum/16114${arvikaSearchPath}`))
+      .url(browser.launchUrl.concat(`/skyddsrum/144788-5${arvikaSearchPath}`))
       .waitForElementVisible('body', 1000)
       .pause(500)
       .assert.title('Skyddsrum 144788-5 - Hitta skyddsrum')

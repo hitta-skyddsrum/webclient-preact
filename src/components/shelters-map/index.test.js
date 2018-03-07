@@ -12,8 +12,8 @@ describe('components/SheltersMap', () => {
   const center = [1, 2];
   const youAreHere = [123123, 87495];
   const shelters = [
-    { id: 1, position: { lat: 12, long: 13 } },
-    { id: 2, position: { lat: 14, long: 15 } },
+    { shelterId: 1, position: { lat: 12, long: 13 } },
+    { shelterId: 2, position: { lat: 14, long: 15 } },
   ];
   const routes = [
     { coordinates: [[1, 2], [3, 4], [5, 6]] },

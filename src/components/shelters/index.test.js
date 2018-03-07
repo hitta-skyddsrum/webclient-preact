@@ -207,7 +207,7 @@ describe('components/shelters', () => {
     context.find(<SheltersMap />).attr('onSelectShelter')(shelter);
 
     expect(route).to.have.been
-      .calledWith(`/skyddsrum/${shelter.id}`);
+      .calledWith(`/skyddsrum/${shelter.shelterId}`);
   });
 
   it('should fetch shelters upon load', () => {
@@ -248,7 +248,7 @@ describe('components/shelters', () => {
   });
 
   it('should select already fetched shelter upon new selectedShelterId received', () => {
-    const shelter = { id: 56 };
+    const shelter = { shelterId: 56 };
     const onSelectShelter = sinon.spy();
     const context = shallow(<Shelters
       shelters={[shelter]}
@@ -258,11 +258,11 @@ describe('components/shelters', () => {
 
     context.render(<Shelters
       shelters={[shelter]}
-      selectedShelterId={shelter.id}
+      selectedShelterId={shelter.shelterId}
       {...defaultProps}
     />);
 
-    expect(onSelectShelter).to.have.been.calledWith(shelter.id);
+    expect(onSelectShelter).to.have.been.calledWith(shelter.shelterId);
   });
 
   it('should select shelter when a new selectedShelterId is received', () => {

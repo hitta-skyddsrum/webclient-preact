@@ -45,7 +45,7 @@ export default ({
         {shelters
           .map(shelter => ({
             shelter,
-            iconSize: [50, 49].map(size => selectedShelterId === shelter.id ? size * 1.5 : size),
+            iconSize: [50, 49].map(size => selectedShelterId === shelter.shelterId ? size * 1.5 : size),
           }))
           .map(({ shelter, iconSize }) => (
             <Marker
