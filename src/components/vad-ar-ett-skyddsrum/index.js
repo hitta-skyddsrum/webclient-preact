@@ -1,9 +1,14 @@
 import { h } from 'preact';
+import Helmet from 'preact-helmet';
 import ContentWrapper from '../content-wrapper';
 
 export default () => {
   return (
     <ContentWrapper>
+      <Helmet
+        title="Vad är ett skyddsrum?"
+      />
+
       <h1>Vad är ett skyddsrum?</h1>
       <p>Ett skyddsrum är i korta ordalag ett utrymme som byggts för att skydda de som befinner sig i lokalen mot stridsmedel. Man skulle kunna säga att det är en slags bunker för civila, och de finns utspridda i fastigheter över hela vårt land. Bara för att en lokal är skyddad betyder det inte nödvändigtvis att den är ett skyddsrum i juridisk mening - detta regleras i lagen om skyddsrum (SFS 2006:545). Lagen definierar i princip vad den svenska staten anser vara ett skyddsrum och fastställer
         vilka kriterier som måste uppfyllas, samt en rad andra bestämmelser och ansvarsförhållanden.</p>
