@@ -1,10 +1,14 @@
 import { h } from 'preact';
+import Helmet from 'preact-helmet';
 
 import ContentWrapper from '../content-wrapper';
 
 export default () => {
   return (
     <ContentWrapper>
+      <Helmet
+        title="Om tjänsten"
+      />
       <h1>Om tjänsten</h1>
 
       <p>Hitta skyddsrum är en inofficiell webbtjänst baserad på <a href="https://www.msb.se/sv/Produkter--tjanster/Karttjanster/Inspiredirektivet/MSBs-Inspiretjanster/" target="_blank">data från MSB</a> . Databasen innehåller samtliga Sveriges skyddsrum.</p>
