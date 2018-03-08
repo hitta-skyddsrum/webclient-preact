@@ -13,6 +13,7 @@ import Home from './home';
 import Shelters from './shelters';
 import VadArEttSkyddsrum from '../components/vad-ar-ett-skyddsrum';
 import OmTjansten from '../components/om-tjansten';
+import NotFound from '../components/not-found';
 import Redirect from './redirect/index';
 import Sidenav from '../components/sidenav';
 
@@ -69,6 +70,7 @@ export default () => {
               <Shelters path="skyddsrum/:id?" />
               <VadArEttSkyddsrum path="vad-ar-ett-skyddsrum" />
               <OmTjansten path="om-tjansten" />
+              <NotFound default />
             </Router>
           </div>
         </MuiThemeProvider>
