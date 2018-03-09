@@ -23,8 +23,8 @@ polyfill({
     'Promise',
     'Element.prototype.classList',
   ],
-  options: ['gated', 'always'],
-  minify: false,
+  options: ['gated'],
+  minify: true,
   rum: false,
   afterFill() {
     init();
