@@ -55,6 +55,7 @@ export const fetchShelters = (lat, lon) => {
       }))
       .then(({ shelters }) => dispatch(
         setBoundsForPositions(shelters
+          .slice(0, 10)
           .map(({ position: { lat: shelterLat, long: shelterLong } }) => [shelterLat, shelterLong])
           .concat([[lat, lon]])
         )
