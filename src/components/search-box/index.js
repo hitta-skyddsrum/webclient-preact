@@ -2,6 +2,7 @@ import { h, Component } from 'preact';
 import { route } from 'preact-router';
 import classNames from 'classnames';
 import AlgoliacePlaces from 'algolia-places-react';
+import { loadShelters as preloadShelters } from '../../containers/routes';
 import ErrorDialog from '../error-dialog';
 import styles from './style.scss';
 
@@ -13,10 +14,13 @@ export default class SearchBox extends Component {
   constructor() {
     super();
 
+    this.preloadedShelters = false;
+
     this.handleAddressSelection = this.handleAddressSelection.bind(this);
     this.handleAlgoliaLimit = this.handleAlgoliaLimit.bind(this);
     this.handleAlgoliaError = this.handleAlgoliaError.bind(this);
     this.handleCloseErrorDialog = this.handleCloseErrorDialog.bind(this);
+    this.handlePreloadShelters = this.handlePreloadShelters.bind(this);
   }
 
   handleAddressSelection({ suggestion }) {
@@ -50,6 +54,13 @@ export default class SearchBox extends Component {
     this.setState({ error: null });
   }
 
+  handlePreloadShelters() {
+    if (this.preloadedShelters) return;
+
+    preloadShelters();
+    this.preloadedShelters = true;
+  }
+
   render(props, { error }) {
     return (
       <div>
@@ -68,6 +79,7 @@ export default class SearchBox extends Component {
               language: 'sv',
               countries: ['se'],
             }}
+            onSuggestions={this.handlePreloadShelters}
             onChange={this.handleAddressSelection}
             onLimit={this.handleAlgoliaLimit}
             onError={this.handleAlgoliaError}
