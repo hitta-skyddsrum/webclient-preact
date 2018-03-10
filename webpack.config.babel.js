@@ -183,6 +183,8 @@ module.exports = {
       template: './index.ejs',
       minify: { collapseWhitespace: true },
       inject: false,
+      // https://github.com/jantimon/html-webpack-plugin/issues/870#issuecomment-370004105
+      chunksSortMode: 'none',
     }),
     new CopyWebpackPlugin([
       { from: './manifest.json', to: './' },
