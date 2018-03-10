@@ -30,7 +30,7 @@ export const fetchSingleShelter = (id) => {
       type: FETCH_SINGLE_SHELTER,
     });
 
-    return fetchJson(`https://stageapi.hittaskyddsrum.se/api/v2/shelters/${id}`)
+    return fetchJson(`https://api.hittaskyddsrum.se/api/v2/shelters/${id}`)
       .then(shelter => dispatch({
         type: FETCH_SINGLE_SHELTER_SUCCESS,
         shelter,
@@ -48,7 +48,7 @@ export const fetchShelters = (lat, lon) => {
       type: FETCH_SHELTERS,
     });
 
-    return fetchJson(`https://stageapi.hittaskyddsrum.se/api/v2/shelters/?lat=${lat}&long=${lon}`)
+    return fetchJson(`https://api.hittaskyddsrum.se/api/v2/shelters/?lat=${lat}&long=${lon}`)
       .then(shelters => dispatch({
         type: FETCH_SHELTERS_SUCCESS,
         shelters,
