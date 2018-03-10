@@ -7,5 +7,12 @@
   "plugins": [
     ["transform-decorators-legacy"],
     ["transform-react-jsx", { "pragma": "h" }]
-  ]
+  ],
+  "env": {
+    "test": {
+      "plugins": [
+        ["dynamic-import-node"],
+      ],
+    }
+  }
 }
