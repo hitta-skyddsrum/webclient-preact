@@ -1,19 +1,15 @@
 import { h } from 'preact';
-import { Router } from 'preact-router';
-import AsyncRoute from 'preact-async-route';
 import { Provider } from 'preact-redux';
 import { createStore, applyMiddleware, compose } from 'redux';
 import thunk from 'redux-thunk';
-import { syncHistoryWithStore } from 'preact-router-redux';
 import { MuiThemeProvider, createMuiTheme } from 'material-ui/styles';
 import Helmet from 'preact-helmet';
+import { syncHistoryWithStore } from 'preact-router-redux';
 
 import hittaSkyddsrumApp from '../reducer';
 import browserHistory from '../history';
-import OmTjansten from '../components/om-tjansten';
-import NotFound from '../components/not-found';
-import Redirect from './redirect/index';
 import Sidenav from '../components/sidenav';
+import Routes from './routes';
 
 import '../style/index.scss';
 import style from './style.scss';
@@ -51,18 +47,6 @@ const theme = createMuiTheme({
   },
 });
 
-const loadHome = () =>
-  import('./home')
-    .then(module => module.default);
-
-const loadShelters = () =>
-  import('./shelters')
-    .then(module => module.default);
-
-const loadVadArEttSkyddsrum = () =>
-  import ('../components/vad-ar-ett-skyddsrum')
-    .then(module => module.default);
-
 export default () => {
   return (
     <Provider store={store}>
@@ -74,14 +58,7 @@ export default () => {
         <MuiThemeProvider theme={theme}>
           <div className={style.maximize}>
             <Sidenav location={history.location} />
-            <Router history={history}>
-              <AsyncRoute path="/" getComponent={loadHome} />
-              <Redirect path="skyddsrum/koordinater/:lat/:lon" to="skyddsrum?lat=:lat&lon=:lon" />
-              <AsyncRoute path="skyddsrum/:id?" getComponent={loadShelters} />
-              <AsyncRoute path="vad-ar-ett-skyddsrum" getComponent={loadVadArEttSkyddsrum} />
-              <OmTjansten path="om-tjansten" />
-              <NotFound default />
-            </Router>
+            <Routes history={history} />
           </div>
         </MuiThemeProvider>
       </div>
