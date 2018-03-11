@@ -157,12 +157,6 @@ describe('components/shelter-detail', () => {
     expect(context.find(<List />)).match(new RegExp(`${shelter.address}, ${shelter.municipality}`));
   });
 
-  it('should display amount of air cleaners', () => {
-    const context = shallow(<ShelterDetail onHeightChange={sinon.spy()} open shelter={shelter} />);
-
-    expect(context.find(<List />)).match(new RegExp(shelter.airCleaners));
-  });
-
   it('should display amount of slots', () => {
     const context = shallow(<ShelterDetail open onHeightChange={sinon.spy()} shelter={shelter} />);
 
