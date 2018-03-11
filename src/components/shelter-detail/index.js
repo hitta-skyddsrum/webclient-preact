@@ -83,9 +83,11 @@ export default class ShelterDetail extends Component {
             <ListItem disabled>
               <ListItemText primary={`Adress: ${this.props.shelter.address}, ${this.props.shelter.municipality}`} />
             </ListItem>
-            <ListItem disabled>
-              <ListItemText primary={`Antal luftrenare: ${this.props.shelter.airCleaners}`} />
-            </ListItem>
+            {this.props.shelter.airCleaners &&
+              <ListItem disabled>
+                <ListItemText primary={`Antal luftrenare: ${this.props.shelter.airCleaners}`} />
+              </ListItem>
+            }
             <ListItem disabled>
               <ListItemText primary={`Antal platser: ${this.props.shelter.slots}`} />
             </ListItem>
