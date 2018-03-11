@@ -16,6 +16,10 @@ describe('components/shelter-detail', () => {
     slots: 300303,
     address: 'Abiskovägen 3',
     municipality: 'Jukkasjärvi',
+    position: {
+      lat: 11111111,
+      long: 22222222,
+    },
   };
 
   it('should be able to render without provided shelter', () => {
@@ -161,5 +165,11 @@ describe('components/shelter-detail', () => {
     const context = shallow(<ShelterDetail open onHeightChange={sinon.spy()} shelter={shelter} />);
 
     expect(context.find(<List />)).match(new RegExp(shelter.slots));
+  });
+
+  it('should display coordinates with geo URI link', () => {
+    const context = shallow(<ShelterDetail open onHeightChange={sinon.spy()} shelter={shelter} />);
+
+    expect(context.find(<List />)).match(new RegExp(`${shelter.position.lat}, ${shelter.position.long}`));
   });
 });
