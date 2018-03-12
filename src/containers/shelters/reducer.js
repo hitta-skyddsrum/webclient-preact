@@ -4,6 +4,7 @@ import {
   FETCH_SINGLE_SHELTER,
   FETCH_SINGLE_SHELTER_SUCCESS,
   FETCH_SINGLE_SHELTER_FAILED,
+  FETCH_SINGLE_SHELTER_FAILED_NOT_FOUND,
   FETCH_SHELTERS,
   FETCH_SHELTERS_SUCCESS,
   FETCH_SHELTERS_FAILED,
@@ -64,11 +65,24 @@ export default (state = initialState, action) => {
         ...state,
         loading: state.loading - 1,
         error: action.error,
+        selectedShelterId: 0,
         humanError: {
           message: 'Fel vid hämtning av skyddsrumsdata',
           desc: `Hämtningen av skyddsrumsdata för det skyddsrum du söker misslyckades.
             Felet kan bero på att länken är gammal eller på grund av ett tillfälligt fel.
             Vi rekommenderar att du besöker msb.se för att hämta data om skyddsrum.`,
+        },
+      };
+    case FETCH_SINGLE_SHELTER_FAILED_NOT_FOUND:
+      return {
+        ...state,
+        loading: state.loading - 1,
+        error: action.error,
+        selectedShelterId: 0,
+        humanError: {
+          message: 'Skyddsrummet kunde inte hittas',
+          desc: `Skyddsrummet du sökte finns inte i vår databas. Detta kan bero på
+            att skyddsrummet inte finns längre.`,
         },
       };
     case FETCH_SHELTERS:

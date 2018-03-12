@@ -53,4 +53,21 @@ module.exports = {
     browser
       .end();
   },
+  'Shelters: Display a 404 upon shelter not found' (browser) {
+    browser
+      .url(browser.launchUrl.concat('/skyddsrum/11-not-found'))
+      .waitForElementVisible('body', 1000)
+      .pause(500)
+      .waitForElementVisible('.error-dialog', 1000)
+      .visualAreaShouldDisplay('error dialog')
+      .click('.error-dialog button')
+      .pause(500)
+      .visualAreaShouldDisplay('map')
+      .setValue('input[type=text]', 'Vikingstad')
+      .waitForElementVisible('.ap-suggestions .ap-suggestion', 1000)
+      .click('.ap-suggestions .ap-suggestion')
+      .pause(1500)
+      .visualAreaShouldDisplay('shelters on the map')
+      .end();
+  },
 };

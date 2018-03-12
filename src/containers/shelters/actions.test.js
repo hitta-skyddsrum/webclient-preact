@@ -64,6 +64,18 @@ describe('containers/shelters/actions/fetchSingleShelter', () => {
         error,
       }));
   });
+
+  it('creates FETCH_SINGLE_SHELTER_FAILED_NOT_FOUND when API returns 404', () => {
+    const store = mockStore();
+    const error = { error: '123213-asd12132-675', status: 404 };
+    fetchJson.mockReturnValueOnce(Promise.reject(error));
+
+    return store.dispatch(require('./actions').fetchSingleShelter(1))
+      .then(() => expect(store.getActions().pop()).to.eql({
+        type: types.FETCH_SINGLE_SHELTER_FAILED_NOT_FOUND,
+        error,
+      }));
+  });
 });
 
 describe('containers/shelters/actions/fetchShelters', () => {
@@ -266,6 +278,21 @@ describe('containers/shelters/actions/selectShelter', () => {
   afterEach(() => {
     fetchJson.mockReset();
     jest.unmock('../../lib/fetch-json');
+  });
+
+  it('doesnt create SELECT_SHELTER if fetchSingleShelter doesnt return any shelter', () => {
+    const error = {};
+    fetchJson.mockReturnValueOnce(Promise.reject(error));
+
+    const expectedActions = [
+      { type: types.FETCH_SINGLE_SHELTER },
+      { type: types.FETCH_SINGLE_SHELTER_FAILED, error },
+    ];
+
+    const store = mockStore();
+
+    return store.dispatch(require('./actions').selectShelter(1))
+      .then(() => expect(store.getActions()).to.eql(expectedActions));
   });
 
   it('fetches the shelter and then creates SELECT_SHELTER', () => {

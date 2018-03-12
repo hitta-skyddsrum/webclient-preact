@@ -49,7 +49,10 @@ export default class Shelters extends Component {
         this.props.onSelectShelter(nextProps.selectedShelterId);
       } else {
         this.props.onUnselectShelter();
-        this.props.fetchShelters(nextProps.youAreHere);
+
+        if (nextProps.youAreHere.length === 2) {
+          this.props.fetchShelters(nextProps.youAreHere);
+        }
       }
     } else if (nextProps.youAreHere.join(',') !== this.props.youAreHere.join(',')) {
       this.props.fetchShelters(nextProps.youAreHere);

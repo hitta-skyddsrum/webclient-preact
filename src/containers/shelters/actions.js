@@ -6,6 +6,7 @@ import {
   FETCH_SINGLE_SHELTER,
   FETCH_SINGLE_SHELTER_SUCCESS,
   FETCH_SINGLE_SHELTER_FAILED,
+  FETCH_SINGLE_SHELTER_FAILED_NOT_FOUND,
   FETCH_SHELTERS,
   FETCH_SHELTERS_SUCCESS,
   FETCH_SHELTERS_FAILED,
@@ -35,10 +36,19 @@ export const fetchSingleShelter = (id) => {
         type: FETCH_SINGLE_SHELTER_SUCCESS,
         shelter,
       }))
-      .catch(error => dispatch({
-        type: FETCH_SINGLE_SHELTER_FAILED,
-        error,
-      }));
+      .catch(error => {
+        if (error.status === 404) {
+          dispatch({
+            type: FETCH_SINGLE_SHELTER_FAILED_NOT_FOUND,
+            error,
+          });
+        } else {
+          dispatch({
+            type: FETCH_SINGLE_SHELTER_FAILED,
+            error,
+          });
+        }
+      });
   };
 };
 
@@ -117,17 +127,20 @@ export const selectShelter = id => {
     let selectedShelter;
 
     return dispatch(fetchSingleShelter(id))
-      .then(({ shelter }) => {
+      .then(({ shelter } = {}) => {
+        if (!shelter) return;
+
         selectedShelter = shelter;
         dispatch({ type: SELECT_SHELTER, shelter });
-      })
-      .then(() => dispatch(fetchRouteToShelter(state.youAreHere, selectedShelter)))
-      .then(() => {
-        const shelterPos = [selectedShelter.position.lat, selectedShelter.position.long];
 
-        if (!state.bounds.length || !isPositionWithinBounds(shelterPos, state.bounds)) {
-          dispatch(setBoundsForPositions([shelterPos, state.youAreHere]));
-        }
+        return Promise.resolve(dispatch(fetchRouteToShelter(state.youAreHere, selectedShelter)))
+          .then(() => {
+            const shelterPos = [selectedShelter.position.lat, selectedShelter.position.long];
+
+            if (!state.bounds.length || !isPositionWithinBounds(shelterPos, state.bounds)) {
+              dispatch(setBoundsForPositions([shelterPos, state.youAreHere]));
+            }
+          });
       });
   };
 };
