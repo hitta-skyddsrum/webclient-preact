@@ -95,6 +95,17 @@ describe('containers/shelters/reducer', () => {
       .to.match(new RegExp('misslyckades'));
   });
 
+  it('should set error state upon FETCH_SINGLE_SHELTER_FAILED_NOT_FOUND', () => {
+    const error = new Error();
+
+    expect(SheltersReducer(undefined, { type: types.FETCH_SINGLE_SHELTER_FAILED_NOT_FOUND, error }).error)
+      .to.eql(error);
+    expect(SheltersReducer(undefined, { type: types.FETCH_SINGLE_SHELTER_FAILED_NOT_FOUND, error }).humanError.message)
+      .to.match(new RegExp(/kunde inte hittas/i));
+    expect(SheltersReducer(undefined, { type: types.FETCH_SINGLE_SHELTER_FAILED_NOT_FOUND, error }).humanError.desc)
+      .to.match(new RegExp(/inte finns/i));
+  });
+
   it('should decrement loading upon FETCH_SINGLE_SHELTER_FAILED', () => {
     const loading = 2;
 

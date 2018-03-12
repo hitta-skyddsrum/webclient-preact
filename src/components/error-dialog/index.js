@@ -16,6 +16,7 @@ export default class ErrorDialog extends Component {
         onClose={this.props.handleClose}
         aria-labelledby="alert-dialog-title"
         aria-describedby="alert-dialog-description"
+        className="error-dialog"
       >
         <DialogTitle>{this.props.title}</DialogTitle>
 
