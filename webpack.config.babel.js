@@ -3,7 +3,9 @@ import ExtractTextPlugin from 'extract-text-webpack-plugin';
 import HtmlWebpackPlugin from 'html-webpack-plugin';
 import autoprefixer from 'autoprefixer';
 import CopyWebpackPlugin from 'copy-webpack-plugin';
+import OfflinePlugin from 'offline-plugin';
 import path from 'path';
+
 const ENV = process.env.NODE_ENV || 'development';
 const UglifyJSPlugin = require('uglifyjs-webpack-plugin')
 const GitRevisionPlugin = require('git-revision-webpack-plugin');
@@ -204,12 +206,30 @@ module.exports = {
       { from: './favicon.ico', to: './' },
       { from: './sitemap*.xml', to: './' },
     ]),
-  ].concat(process.env.ENV !== 'production' ? [] : [
+  ]).concat(process.env.ENV !== 'production' ? [] : [
     new SentryCliPlugin({
       include: './build',
       release: new GitRevisionPlugin().commithash(),
     }),
-  ])),
+  ]).concat(ENV !== 'production' ? [] : [
+    new OfflinePlugin({
+      caches: 'all',
+      relativePaths: false,
+      AppCache: false,
+      excludes: ['_redirects'],
+      ServiceWorker: {
+        events: true
+      },
+      cacheMaps: [
+        {
+          match: /.*/,
+          to: '/',
+          requestTypes: ['navigate']
+        }
+      ],
+      publicPath: '/'
+    })
+  ]),
 
   stats: { colors: true },
 
