@@ -102,8 +102,15 @@ export const fetchRouteToShelter = (from, shelter) => {
         route,
       }))
       .catch(error => {
+        if (error.status === 404) {
+          return dispatch({
+            type: FETCH_ROUTE_TO_SHELTER_FAILED_NOT_FOUND,
+            error,
+          });
+        }
+
+        /// https://github.com/GIScience/openrouteservice/issues/144
         try {
-          /// https://github.com/GIScience/openrouteservice/issues/144
           const responseError = error.jsonResponse.error;
           if (responseError.code === 2099 && responseError.message === 'Connection between locations not found') {
             return dispatch({

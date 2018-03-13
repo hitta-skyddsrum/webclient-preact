@@ -241,6 +241,25 @@ describe('containers/shelters/actions/fetchRouteToShelter', () => {
       .then(() => expect(store.getActions()).to.eql(expectedActions));
   });
 
+  it('create FETCH_ROUTE_TO_SHELTER_FAILED_NOT_FOUND upon 404', () => {
+    const error = new Error();
+    error.status = 404;
+
+    fetchJson.mockReturnValueOnce(Promise.reject(error));
+    const from = [13, 40];
+    const shelter = { position: { lat: 114, long: 18 } };
+
+    const expectedActions = [
+      { type: types.FETCH_ROUTE_TO_SHELTER },
+      { type: types.FETCH_ROUTE_TO_SHELTER_FAILED_NOT_FOUND, error },
+    ];
+
+    const store = mockStore();
+
+    return store.dispatch(require('./actions').fetchRouteToShelter(from, shelter))
+      .then(() => expect(store.getActions()).to.eql(expectedActions));
+  });
+
   it('create FETCH_ROUTE_TO_SHELTER_FAILED_NOT_FOUND upon 2099', () => {
     const error = new Error();
     error.status = 500;
