@@ -3,7 +3,7 @@ import ExtractTextPlugin from 'extract-text-webpack-plugin';
 import HtmlWebpackPlugin from 'html-webpack-plugin';
 import autoprefixer from 'autoprefixer';
 import CopyWebpackPlugin from 'copy-webpack-plugin';
-import OfflinePlugin from 'offline-plugin';
+import ServiceWorkerWebpackPlugin from 'serviceworker-webpack-plugin';
 import path from 'path';
 const ENV = process.env.NODE_ENV || 'development';
 const UglifyJSPlugin = require('uglifyjs-webpack-plugin')
@@ -44,39 +44,7 @@ module.exports = {
   },
 
   optimization: {
-    minimizer: [
-      new UglifyJSPlugin({
-        sourceMap: true,
-        uglifyOptions: {
-          output: {
-            comments: false
-          },
-          compress: {
-            unsafe_comps: true,
-            properties: true,
-            keep_fargs: false,
-            pure_getters: true,
-            collapse_vars: true,
-            unsafe: true,
-            ie8: false,
-            warnings: false,
-            sequences: true,
-            dead_code: true,
-            drop_debugger: true,
-            comparisons: true,
-            conditionals: true,
-            evaluate: true,
-            booleans: true,
-            loops: true,
-            unused: false,
-            hoist_funs: true,
-            if_return: true,
-            join_vars: true,
-            drop_console: true
-          }
-        }
-      }),
-    ]
+    minimize: false,
   },
 
   module: {
@@ -211,23 +179,9 @@ module.exports = {
       release: new GitRevisionPlugin().commithash(),
     }),
   ]).concat(ENV !== 'production' ? [] : [
-    new OfflinePlugin({
-      caches: 'all',
-      relativePaths: false,
-      AppCache: false,
-      excludes: ['_redirects'],
-      ServiceWorker: {
-        events: true
-      },
-      cacheMaps: [
-        {
-          match: /.*/,
-          to: '/',
-          requestTypes: ['navigate']
-        }
-      ],
-      publicPath: '/'
-    })
+    new ServiceWorkerWebpackPlugin({
+      entry: path.join(__dirname, 'src/sw.js'),
+    }),
   ]),
 
   stats: { colors: true },
