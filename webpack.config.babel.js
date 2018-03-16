@@ -5,7 +5,6 @@ import autoprefixer from 'autoprefixer';
 import CopyWebpackPlugin from 'copy-webpack-plugin';
 import OfflinePlugin from 'offline-plugin';
 import path from 'path';
-
 const ENV = process.env.NODE_ENV || 'development';
 const UglifyJSPlugin = require('uglifyjs-webpack-plugin')
 const GitRevisionPlugin = require('git-revision-webpack-plugin');
