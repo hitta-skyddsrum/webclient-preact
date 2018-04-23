@@ -4,7 +4,6 @@ import sinon from 'sinon';
 import { shallow } from 'preact-render-spy';
 import { route } from 'preact-router';
 import AlgoliaPlaces from 'algolia-places-react';
-import * as Routes from '../../containers/routes';
 import ErrorDialog from '../error-dialog';
 import SearchBox from './';
 
@@ -116,21 +115,6 @@ describe('components/search-box', () => {
       expect(args).to.match(new RegExp(`lon=${lon}`));
 
       jest.unmock('preact-router');
-    });
-
-    it('should preload Shelters route upon receiving suggestion', () => {
-      sinon.spy(Routes, 'loadShelters');
-      const context = shallow(<SearchBox onSelectAddress={sinon.spy()} />);
-
-      const onSuggCb = context.find('AlgoliaPlaces').output().attributes.onSuggestions;
-
-      onSuggCb();
-
-      expect(Routes.loadShelters).to.have.been.called;
-
-      onSuggCb();
-
-      expect(Routes.loadShelters).to.have.been.calledOnce;
     });
   });
 });
