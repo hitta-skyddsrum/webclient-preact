@@ -9,3 +9,5 @@
 /reports
 /selenium-debug.log
 *.swp
+yarn.lock
+yarn-error.log
