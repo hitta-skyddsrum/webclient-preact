@@ -89,11 +89,11 @@ export default class ShelterDetail extends Component {
             <ListItem disabled>
               <ListItemText primary={
                 <span>Koordinater:
-                <a
-                  href={`https://www.google.com/maps/place/${this.props.shelter.position.lat},${this.props.shelter.position.long}`}
-                >
-                  {this.props.shelter.position.lat}, {this.props.shelter.position.long}
-                </a>
+                  <a
+                    href={`https://www.google.com/maps/place/${this.props.shelter.position.lat},${this.props.shelter.position.long}`}
+                  >
+                    {this.props.shelter.position.lat}, {this.props.shelter.position.long}
+                  </a>
                 </span>}
               />
             </ListItem>
