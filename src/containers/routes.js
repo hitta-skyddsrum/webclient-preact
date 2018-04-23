@@ -8,12 +8,15 @@ import VadArEttSkyddsrum from '../components/vad-ar-ett-skyddsrum';
 import NotFound from '../components/not-found';
 import Redirect from './redirect/index';
 
+const home = import(/* webpackPrefetch: true */ './home');
+const shelters = import(/* webpackPrefetch: true */ './shelters');
+
 export const loadHome = () =>
-  import('./home')
+  home
     .then(module => module.default);
 
 export const loadShelters = () =>
-  import('./shelters')
+  shelters
     .then(module => module.default);
 
 export default class Routes extends Component {
