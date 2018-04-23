@@ -26,13 +26,13 @@ jobs:
   include:
     - stage: lint
       if: type != api
-      script: npm runt lint
+      script: npm run lint
     - stage: test
       if: type != api
-      script: npm runt test && codecov
+      script: npm run test && codecov
     - stage: e2e
       if: type = api
-      script: npm runt install-selenium && xvfb-run --server-args="-screen 0 1200x800x24" npm runt e2e || (errorshots push s3 && false)
+      script: npm run install-selenium && xvfb-run --server-args="-screen 0 1200x800x24" npm run e2e || (errorshots push s3 && false)
 
 notifications:
   webhooks:
