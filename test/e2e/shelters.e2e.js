@@ -66,7 +66,7 @@ module.exports = {
       .setValue('input[type=text]', 'Vikingstad')
       .waitForElementVisible('.ap-suggestions .ap-suggestion', 1000)
       .click('.ap-suggestions .ap-suggestion')
-      .pause(1500)
+      .pause(2500)
       .visualAreaShouldDisplay('shelters on the map')
       .end();
   },
