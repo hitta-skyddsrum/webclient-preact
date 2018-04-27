@@ -4,9 +4,9 @@ import HtmlWebpackPlugin from 'html-webpack-plugin';
 import autoprefixer from 'autoprefixer';
 import CopyWebpackPlugin from 'copy-webpack-plugin';
 import ServiceWorkerWebpackPlugin from 'serviceworker-webpack-plugin';
+import UglifyJSPlugin from 'uglifyjs-webpack-plugin';
 import path from 'path';
 const ENV = process.env.NODE_ENV || 'development';
-const UglifyJSPlugin = require('uglifyjs-webpack-plugin')
 const GitRevisionPlugin = require('git-revision-webpack-plugin');
 const SentryCliPlugin = require('@sentry/webpack-plugin');
 
@@ -44,7 +44,39 @@ module.exports = {
   },
 
   optimization: {
-    minimize: false,
+    minimizer: [
+      new UglifyJSPlugin({
+        sourceMap: true,
+        uglifyOptions: {
+          output: {
+            comments: false
+          },
+          compress: {
+            unsafe_comps: true,
+            properties: true,
+            keep_fargs: false,
+            pure_getters: true,
+            collapse_vars: true,
+            unsafe: true,
+            ie8: false,
+            warnings: false,
+            sequences: true,
+            dead_code: true,
+            drop_debugger: true,
+            comparisons: true,
+            conditionals: true,
+            evaluate: true,
+            booleans: true,
+            loops: true,
+            unused: false,
+            hoist_funs: true,
+            if_return: true,
+            join_vars: true,
+            drop_console: true
+          },
+        },
+      }),
+    ],
   },
 
   module: {
