@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="sv">
 <head>
+  <meta charset="utf-8">
 	<% for (var chunk in htmlWebpackPlugin.files.css) { %>
 		<link rel="preload" href="<%= htmlWebpackPlugin.files.css[chunk] %>"  as="style">
 		<link rel="stylesheet" href="<%= htmlWebpackPlugin.files.css[chunk] %>">
@@ -9,7 +10,6 @@
     <link rel="preload" href="<%= htmlWebpackPlugin.files.chunks[chunk].entry %>" as="script">
   <% } %>
   <link rel="preload" href="<%= htmlWebpackPlugin.files.chunks.main.entry %>" as="script">
-  <meta charset="utf-8">
   <title>Hitta skyddsrum</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0, minimal-ui">
   <link rel="apple-touch-icon" sizes="180x180" href="/assets/icons/apple-touch-icon.png">
@@ -28,6 +28,7 @@
   <meta property="og:description" content="Förhoppningsvis kommer du aldrig att behöva använda den här tjänsten. Men vid händelse av en katastrof kan det vara livsavgörande att veta var dina närmaste skyddsrum ligger." />
   <meta property="og:image" content="https://www.hittaskyddsrum.se/assets/images/fb-image.png" />
   <meta property="og:locale" content="sv_SE" />
+  <link rel="canonical" href="https://www.hittaskyddsrum.se/">
   </head>
   <body>
     <noscript>
