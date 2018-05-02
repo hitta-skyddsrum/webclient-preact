@@ -18,6 +18,10 @@
   @include transition-property(all);
   @include transition-duration(300ms);
 
+  @media(max-width: $screen_small) {
+    font-size: 1em;
+  }
+
   &:hover {
     @include box-shadow( 0 0 10px rgba( 0, 0, 0, 0.4 ) );
   }
