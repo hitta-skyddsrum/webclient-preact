@@ -2,19 +2,14 @@
 @import "../../style/variables";
 
 .button {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-
+  padding: 0 20px;
+  border: 0;
   text-decoration: none;
-  background-color: $green;
-  width: 200px;
   height: 50px;
   @include box-sizing(border-box);
   margin: auto;
   margin-bottom: 20px;
   text-align: center;
-  color: #fff;
   font-size: 1.2em;
   cursor: pointer;
   text-transform: uppercase;
