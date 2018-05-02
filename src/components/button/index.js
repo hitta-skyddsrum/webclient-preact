@@ -10,6 +10,6 @@ export default ({
   const className = cx(['button', type]);
 
   return (
-    <div class={className}>{children}</div>
+    <button class={className}>{children}</button>
   );
 };
