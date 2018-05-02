@@ -24,7 +24,24 @@
   @include transition-duration(300ms);
 
   &:hover {
-    background-color: $green_hover;
     @include box-shadow( 0 0 10px rgba( 0, 0, 0, 0.4 ) );
+  }
+}
+
+.primary {
+  background-color: $green;
+  color: #fff;
+
+  &:hover {
+    background-color: $green_hover;
+  }
+}
+
+.secondary {
+  background-color: $blue;
+  color: #fff;
+
+  &:hover {
+    background-color: $blue_hover;
   }
 }
