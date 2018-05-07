@@ -29,7 +29,7 @@ describe('components.update-available', () => {
     const wrapper = shallow(<UpdateAvailable onClose={onClose} />);
 
     wrapper.find(<Button role="close" />).simulate('click');
-    timer.tick(300);
+    timer.tick(500);
     wrapper.rerender();
 
     expect(wrapper.output()).to.equal(null);
