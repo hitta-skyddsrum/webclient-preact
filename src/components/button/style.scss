@@ -15,7 +15,7 @@
   text-transform: uppercase;
 
   @include border-radius(2px);
-  @include transition-property(all);
+  @include transition-property("font-size, color, background-color");
   @include transition-duration(300ms);
 
   @media(max-width: $screen_small) {
