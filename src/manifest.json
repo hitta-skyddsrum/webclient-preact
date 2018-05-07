@@ -1,6 +1,6 @@
 {
   "name": "Hitta skyddsrum",
-  "short_name": "Hitta skyddsrum",
+  "short_name": "Skyddsrum",
   "start_url": "./",
   "display": "standalone",
   "orientation": "portrait",
