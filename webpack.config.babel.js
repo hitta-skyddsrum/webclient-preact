@@ -111,6 +111,7 @@ module.exports = {
               loader: `postcss-loader`,
               options: {
                 sourceMap: CSS_MAPS,
+                options: {},
                 plugins: () => {
                   autoprefixer({ browsers: [ 'last 2 versions' ] });
                 }
