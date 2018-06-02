@@ -6,11 +6,19 @@
 
 .searchBox {
   position: fixed;
-  left: 50%;
-  transform: translateX(-50%);
+  top: 26px;
   z-index: 401;
-  width: 50%;
-  top: 20px;
+
+  @media only screen and (min-width: 400px) {
+    left: 50%;
+    transform: translateX(-50%);
+    width: 50%;
+  }
+
+  @media only screen and (max-width: 400px) {
+    left: 20px;
+    width: calc(100vw - 110px);
+  }
 }
 
 .shadowHeader {

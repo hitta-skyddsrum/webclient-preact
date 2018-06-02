@@ -1,6 +1,7 @@
 import configureMockStore from 'redux-mock-store';
 import thunk from 'redux-thunk';
 import { expect } from 'chai';
+import sinon from 'sinon';
 
 import * as types from './types';
 
@@ -147,6 +148,64 @@ describe('containers/shelters/actions/fetchShelters', () => {
 
     return store.dispatch(require('./actions').fetchShelters(query.lat, query.lon))
       .then(() => expect(store.getActions()).to.eql(expectedActions));
+  });
+});
+
+describe('containers/shelters/actions/fetchSheltersWithin', () => {
+  const sandbox = sinon.createSandbox();
+  const dispatch = sandbox.spy();
+  let fetchJson;
+
+  beforeAll(() => {
+    jest.mock('../../lib/fetch-json');
+    fetchJson = require('../../lib/fetch-json').default;
+    fetchJson.mockReturnValue(Promise.resolve());
+  });
+
+  afterEach(() => {
+    sandbox.resetHistory();
+  });
+
+  afterAll(() => {
+    fetchJson.mockReset();
+    jest.unmock('../../lib/fetch-json');
+  });
+
+  it('should dispatch FETCH_SHELTERS', () => {
+    return require('./actions').fetchSheltersWithin()(dispatch)
+      .then(() => {
+        expect(dispatch).to.have.been.calledWith({
+          type: types.FETCH_SHELTERS,
+        });
+      });
+  });
+
+  it('should call fetchJson with accurate value', () => {
+    const bbox = '10,11,13,14';
+    const shelters = [{ id: 112 }, { id: 90000 }];
+    fetchJson.mockReturnValueOnce(Promise.resolve(shelters));
+
+    return require('./actions').fetchSheltersWithin(bbox)(dispatch)
+      .then(() => {
+        expect(fetchJson.mock.calls[0][0]).to.match(new RegExp(`api/v3/shelters/?`));
+        expect(dispatch).to.have.been.calledWith({
+          type: types.FETCH_SHELTERS_SUCCESS,
+          shelters,
+        });
+      });
+  });
+
+  it('should throw an accurate error upon failure', () => {
+    const error = new Error();
+    fetchJson.mockReturnValueOnce(Promise.reject(error));
+
+    return require('./actions').fetchSheltersWithin()(dispatch)
+      .then(() => {
+        expect(dispatch).to.have.been.calledWith({
+          type: types.FETCH_SHELTERS_FAILED,
+          error,
+        });
+      });
   });
 });
 

@@ -1,8 +1,8 @@
 import { h } from 'preact';
 import { expect } from 'chai';
-import { deep } from 'preact-render-spy';
+import { shallow } from 'preact-render-spy';
 import sinon from 'sinon';
-import { Map, Marker, Polyline } from 'react-leaflet';
+import { Map, Marker, Polyline, ZoomControl } from 'react-leaflet';
 import L from 'leaflet';
 
 import SheltersMap from './';
@@ -20,6 +20,7 @@ describe('components/SheltersMap', () => {
     { coordinates: [[7, 8], [9, 10], [11, 12]] },
   ];
   const bottomPadding = 1337;
+  const onBBoxChange = sinon.spy();
   const onSelectShelter = sinon.spy();
   let mapContext;
 
@@ -28,15 +29,16 @@ describe('components/SheltersMap', () => {
   });
 
   beforeEach(() => {
-    mapContext = deep(<SheltersMap
+    mapContext = shallow(<SheltersMap
       bounds={bounds}
       center={center}
       shelters={shelters}
+      onBBoxChange={onBBoxChange}
       onSelectShelter={onSelectShelter}
       routes={routes}
       youAreHere={youAreHere}
       bottomPadding={bottomPadding}
-    />, { depth: 1 });
+    />);
   });
 
   afterEach(() => {
@@ -79,6 +81,65 @@ describe('components/SheltersMap', () => {
       .forEach(call => expect(call.args[0].iconSize).to.eql([50, 49]));
   });
 
+  it('should call onBBoxChange with zoom and bbox value upon map move end', () => {
+    const bBoxString = '12,13,14,15';
+    const zoom = 200;
+    const mockEvent = {
+      target: {
+        getBounds: () => ({
+          toBBoxString: () => bBoxString,
+        }),
+        getZoom: () => zoom,
+      },
+    };
+    mapContext.find(Map).attr('onMoveend')(mockEvent);
+
+    expect(onBBoxChange).to.have.been.calledWith({
+      bbox: bBoxString,
+      oldBBox: null,
+      oldZoom: null,
+      zoom,
+    });
+
+    const secondMockEvent = {
+      target: {
+        getBounds: () => ({
+          toBBoxString: () => '16,17,18,19',
+        }),
+        getZoom: () => 300,
+      },
+    };
+    mapContext.find(Map).simulate('moveend', secondMockEvent);
+
+    expect(onBBoxChange).to.have.been.calledWith({
+      bbox: secondMockEvent.target.getBounds().toBBoxString(),
+      zoom: secondMockEvent.target.getZoom(),
+      oldBBox: mockEvent.target.getBounds().toBBoxString(),
+      oldZoom: mockEvent.target.getZoom(),
+    });
+  });
+
+  it('should call onBBoxChange with zoom and bbox value upon map zoom end', () => {
+    const bBoxString = '14, 15, 16, 16';
+    const zoom = 199;
+    const mockEvent = {
+      target: {
+        getBounds: () => ({
+          toBBoxString: () => bBoxString,
+        }),
+        getZoom: () => zoom,
+      },
+    };
+    mapContext.find(Map).attr('onZoomend')(mockEvent);
+
+    expect(onBBoxChange).to.have.been.calledWith({
+      bbox: bBoxString,
+      oldBBox: null,
+      oldZoom: null,
+      zoom,
+    });
+  });
+
   it('should call onSelectShelter handler upon shelter marker click', () => {
     expect(shelters.length).to.be.greaterThan(1);
     const shelter = shelters.pop();
@@ -93,5 +154,10 @@ describe('components/SheltersMap', () => {
 
     routes.forEach(route =>
       expect(mapContext.find(<Polyline positions={route.coordinates} />).length).to.equal(1));
+  });
+
+  it('should display a ZoomControl in the bottom right corner', () => {
+    expect(mapContext.find(<ZoomControl />).length).to.equal(1);
+    expect(mapContext.find(<ZoomControl />).attr('position')).to.equal('bottomright');
   });
 });

@@ -5,6 +5,7 @@ import Helmet from 'preact-helmet';
 import SheltersMap from '../shelters-map';
 import ErrorDialog from '../error-dialog';
 import LoadingIndicator from '../loading-indicator';
+import MapNotification from '../map-notification';
 import ShelterDetail from '../shelter-detail';
 import SearchBox from '../search-box';
 
@@ -18,6 +19,7 @@ export default class Shelters extends Component {
 
   state = {
     hideShelterDetail: true,
+    limitedView: false,
   };
 
   constructor() {
@@ -26,6 +28,7 @@ export default class Shelters extends Component {
     this.setMapBottomPadding = this.setMapBottomPadding.bind(this);
     this.handleCloseShelterDetail = this.handleCloseShelterDetail.bind(this);
     this.handleClickShelter = this.handleClickShelter.bind(this);
+    this.handleBBoxChange = this.handleBBoxChange.bind(this);
   }
 
   componentWillMount() {
@@ -44,18 +47,19 @@ export default class Shelters extends Component {
   }
 
   componentWillUpdate(nextProps) {
+    if (nextProps.youAreHere !== this.props.youAreHere) {
+      this.props.fetchShelters(nextProps.youAreHere);
+      this.setState({
+        center: nextProps.youAreHere,
+      });
+    }
+
     if (nextProps.selectedShelterId !== this.props.selectedShelterId) {
       if (nextProps.selectedShelterId) {
         this.props.onSelectShelter(nextProps.selectedShelterId);
       } else {
         this.props.onUnselectShelter();
-
-        if (nextProps.youAreHere.length === 2) {
-          this.props.fetchShelters(nextProps.youAreHere);
-        }
       }
-    } else if (nextProps.youAreHere.join(',') !== this.props.youAreHere.join(',')) {
-      this.props.fetchShelters(nextProps.youAreHere);
     }
 
     if (nextProps.selectedShelter !== this.props.selectedShelter) {
@@ -67,6 +71,48 @@ export default class Shelters extends Component {
     this.setState({
       mapBottomPadding: height,
     });
+  }
+  
+  handleBBoxChange({
+    bbox,
+    oldBBox,
+    oldZoom,
+    zoom,
+  }) {
+    if (this.props.bounds.length) {
+      this.props.onSetBounds([]);
+    }
+
+    if (zoom < 14) {
+      this.setState({
+        limitedView: true,
+      });
+
+      return;
+    }
+
+    this.setState({
+      limitedView: false,
+    });
+
+    if (zoom > oldZoom) {
+      return;
+    }
+
+    if (bbox === oldBBox) {
+      return;
+    }
+
+    if (this.bboxChangeDebounce) clearInterval(this.bboxChangeDebounce);
+
+    this.bboxChangeDebounce = setInterval(() => {
+      if (this.props.loading) {
+        return;
+      }
+
+      clearInterval(this.bboxChangeDebounce);
+      this.props.onBBoxChange(bbox);
+    }, 100);
   }
 
   handleCloseShelterDetail() {
@@ -92,6 +138,9 @@ export default class Shelters extends Component {
         desc={this.props.humanError.desc}
         handleClose={this.props.onCloseErrorDialog}
       />}
+      {this.state.limitedView && (<MapNotification>
+        Zooma in för att hämta skyddsrum.
+      </MapNotification>)}
       <div class={style.shadowHeader} />
       <SearchBox
         styles={style.searchBox}
@@ -102,6 +151,7 @@ export default class Shelters extends Component {
         youAreHere={this.props.youAreHere}
         shelters={this.props.shelters}
         routes={this.props.routes}
+        onBBoxChange={this.handleBBoxChange}
         onSelectShelter={this.handleClickShelter}
         bounds={this.props.bounds}
         bottomPadding={this.state.mapBottomPadding}

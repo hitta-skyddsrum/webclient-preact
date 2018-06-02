@@ -77,12 +77,31 @@ export const fetchShelters = (lat, lon) => {
   };
 };
 
-export const setBoundsForPositions = positions => {
-  return {
-    type: SET_BOUNDS,
-    bounds: getBoundsAroundPositions(positions),
-  };
+export const fetchSheltersWithin = bbox => dispatch => {
+  dispatch({
+    type: FETCH_SHELTERS,
+  });
+
+  return fetchJson(`https://api.hittaskyddsrum.se/api/v3/shelters/?bbox=${bbox}`)
+    .then(shelters => {
+      dispatch({
+        type: FETCH_SHELTERS_SUCCESS,
+        shelters,
+      });
+    })
+    .catch(error => dispatch({
+      type: FETCH_SHELTERS_FAILED,
+      error,
+    }));
 };
+
+export const setBounds = bounds => ({
+  type: SET_BOUNDS,
+  bounds,
+});
+
+export const setBoundsForPositions = positions =>
+  setBounds(getBoundsAroundPositions(positions));
 
 export const fetchRouteToShelter = (from, shelter) => {
   if (from.filter(val => !!val).length !== 2) {
