@@ -1,0 +1,24 @@
+@import '../../style/variables';
+
+.mapNotification {
+  position: fixed;
+  top: 80px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 800;
+  background: $gray;
+  border-radius: 3px;
+
+  @media only screen and (min-width: 400px) {
+    width: 50%;
+  }
+
+  @media only screen and (max-width: 400px) {
+    width: calc(100vw - 40px);
+    font-size: 0.9em;
+  }
+
+  .inner {
+    padding: 10px 20px;
+  }
+}

@@ -1,10 +1,12 @@
 import { connect } from 'preact-redux';
 import {
   fetchShelters,
+  fetchSheltersWithin,
   fetchRouteToShelter,
   reverseGeocode,
   selectAddress,
   selectShelter,
+  setBounds,
   unselectShelter,
   clearError,
 } from './actions';
@@ -19,6 +21,8 @@ const mapDispatchToProps = dispatch => {
   return {
     fetchShelters: position => dispatch(fetchShelters(position[0], position[1])),
     fetchRouteToShelter: (from, to) => dispatch(fetchRouteToShelter(from, to)),
+    onBBoxChange: bbox => dispatch(fetchSheltersWithin(bbox)),
+    onSetBounds: bounds => dispatch(setBounds(bounds)),
     onSelectAddress: suggestion => dispatch(selectAddress(suggestion)),
     onSelectShelter: shelter => dispatch(selectShelter(shelter)),
     onUnselectShelter: () => dispatch(unselectShelter()),

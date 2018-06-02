@@ -1,3 +1,41 @@
+@import 'react-leaflet-markercluster/dist/styles.min.css';
+@import '../../style/variables.scss';
+
 .mapContainer {
   height: 100%;
+}
+
+:global .marker-cluster {
+  background: #000;
+  border-radius: 50%;
+  color: #fff;
+  text-align: center;
+  display: flex;
+
+  span {
+    position: absolute;
+    top: 50%;
+    left: 0;
+    right: 0;
+    transform: translateY(-50%);
+    font-family: ForsvarsmaktenSans;
+    font-size: 1.5em;
+  }
+
+  $box-shadow-props: 0px 0px 20px;
+
+  &.marker-cluster-small {
+    background: $green;
+    box-shadow: $box-shadow-props $green;
+  }
+
+  &.marker-cluster-medium {
+    background: $blue;
+    box-shadow: $box-shadow-props $blue;
+  }
+
+  &.marker-cluster-large {
+    background: $orange;
+    box-shadow: $box-shadow-props $orange;
+  }
 }

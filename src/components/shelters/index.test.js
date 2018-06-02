@@ -10,6 +10,7 @@ import Shelters from './';
 import SheltersMap from '../shelters-map';
 import ErrorDialog from '../error-dialog';
 import LoadingIndicator from '../loading-indicator';
+import MapNotification from '../map-notification';
 import ShelterDetail from '../shelter-detail';
 import SearchBox from '../search-box';
 
@@ -18,7 +19,9 @@ describe('components/shelters', () => {
 
   beforeEach(() => {
     defaultProps = {
+      bounds: [],
       fetchShelters: sinon.spy(),
+      onSetBounds: sinon.spy(),
       reverseGeocode: sinon.spy(),
       selectedAddress: {},
     };
@@ -29,7 +32,7 @@ describe('components/shelters', () => {
       name: 'Gatvägen 1',
     };
     const context = shallow(<Shelters
-      fetchShelters={sinon.spy()}
+      {...defaultProps}
       selectedAddress={{}}
       reverseGeocode={sinon.spy()}
     />);
@@ -37,7 +40,6 @@ describe('components/shelters', () => {
     expect(context.find(<Helmet />).length).to.equal(0);
 
     context.render(<Shelters
-      fetchShelters={sinon.spy()}
       selectedAddress={selectedAddress}
       reverseGeocode={sinon.spy()}
     />);
@@ -102,13 +104,13 @@ describe('components/shelters', () => {
     const bounds = [15, 1];
     const selectedShelterId = 1355;
     const context = shallow(<Shelters
+      {...defaultProps}
       routes={routes}
       bounds={bounds}
       shelters={shelters}
       youAreHere={youAreHere}
       selectedShelterId={selectedShelterId}
       onSelectShelter={sinon.spy()}
-      {...defaultProps}
     />);
 
     expect(context.find(<SheltersMap
@@ -120,6 +122,108 @@ describe('components/shelters', () => {
       selectedShelterId={selectedShelterId}
     />).length)
       .to.equal(1, 'Expected ShelersMap component to exist');
+  });
+
+  it('should call onSetBounds upon SheltersMap onBBoxChange and bounds is set', () => {
+    const onSetBounds = sinon.spy();
+    const wrapper = shallow(<Shelters
+      {...defaultProps}
+      bounds={[1, 2, 3, 4]}
+      onSetBounds={onSetBounds}
+    />);
+
+    wrapper.find(<SheltersMap />).simulate('BBoxChange', {});
+
+    expect(onSetBounds).to.have.been.calledWith([]);
+  });
+
+  it('should call onBBoxChange upon SheltersMap onBBoxChange', () => {
+    const onBBoxChange = sinon.spy();
+    const fakeTimer = sinon.useFakeTimers();
+    const wrapper = shallow(<Shelters
+      {...defaultProps}
+      loading
+      onBBoxChange={onBBoxChange}
+    />);
+
+    const bbox = { bb: 'ox' };
+    wrapper.find(<SheltersMap />).simulate('BBoxChange', { bbox, zoom: 20 });
+
+    fakeTimer.tick(100);
+    expect(onBBoxChange).to.not.have.been.called;
+
+    wrapper.render(<Shelters {...defaultProps} loading={false} onBBoxChange={onBBoxChange} />);
+
+    fakeTimer.tick(100);
+    expect(onBBoxChange).to.have.been.calledWith(bbox);
+  });
+
+  it('should debounce onBBoxChange upon SheltersMap onBBoxChange', () => {
+    const onBBoxChange = sinon.spy();
+    const fakeTimer = sinon.useFakeTimers();
+    sinon.spy(fakeTimer, 'clearInterval');
+    const wrapper = shallow(<Shelters
+      {...defaultProps}
+      onBBoxChange={onBBoxChange}
+    />);
+    
+    wrapper.find(<SheltersMap />).simulate('BBoxChange', { bbox: 1, zoom: 20 });
+    wrapper.find(<SheltersMap />).simulate('BBoxChange', { bbox: 2, zoom: 20 });
+
+    expect(fakeTimer.clearInterval).to.have.been.calledOnce;
+
+    fakeTimer.tick(200);
+
+    expect(fakeTimer.clearInterval).to.have.been.calledTwice;
+    expect(onBBoxChange).to.have.callCount(1);
+    fakeTimer.restore();
+  });
+
+  it('should not call onBBoxChange when receiving an onBBoxChange event with higher zoom', () => {
+    const onBBoxChange = sinon.spy();
+    const fakeTimer = sinon.useFakeTimers();
+    const wrapper = shallow(<Shelters {...defaultProps} onBBoxChange={onBBoxChange} />);
+
+    wrapper.find(<SheltersMap />).simulate('BBoxChange', {
+      bbox: 1,
+      oldBBox: 2,
+      oldZoom: 20,
+      zoom: 21,
+    });
+
+    fakeTimer.tick(100);
+
+    expect(onBBoxChange).to.not.have.been.called;
+  });
+
+  it('should not call onBBoxChange when bbox hasn\'t changed', () => {
+    const onBBoxChange = sinon.spy();
+    const fakeTimer = sinon.useFakeTimers();
+    const wrapper = shallow(<Shelters {...defaultProps} onBBoxChange={onBBoxChange} />);
+
+    wrapper.find(<SheltersMap />).simulate('BBoxChange', {
+      bbox: 22,
+      oldBBox: 22,
+      oldZoom: 16,
+      zoom: 15,
+    });
+
+    fakeTimer.tick(100);
+
+    expect(onBBoxChange).to.not.have.been.called;
+  });
+
+  it('should display a MapNotification upon onBBoxChange and zoom level is too low', () => {
+    const wrapper = shallow(<Shelters {...defaultProps} />);
+
+    wrapper.find(<SheltersMap />).simulate('BBoxChange', { bbox: 1, zoom: 13 });
+
+    expect(wrapper.find(<MapNotification />).length).to.equal(1);
+
+    wrapper.rerender();
+    wrapper.find(<SheltersMap />).simulate('BBoxChange', { bbox: 1, zoom: 14 });
+
+    expect(wrapper.find(<MapNotification />).length).to.equal(0);
   });
 
   it('should provide Ytterhogdal as center if youAreHere is empty', () => {
@@ -193,18 +297,6 @@ describe('components/shelters', () => {
 
     expect(route).to.have.been
       .calledWith(`/skyddsrum/${shelter.shelterId}`);
-  });
-
-  it('should fetch shelters upon load', () => {
-    const lat = 14.53;
-    const lon = 12.01;
-
-    shallow(<Shelters
-      youAreHere={[lat, lon]}
-      {...defaultProps}
-    />);
-
-    expect(defaultProps.fetchShelters).to.have.been.calledWith([lat, lon]);
   });
 
   it('should reverse geocode coordinates upon load', () => {
@@ -289,42 +381,6 @@ describe('components/shelters', () => {
     />);
 
     expect(onUnselectShelter).to.have.been.calledWith();
-  });
-
-  it('should fetch shelters when a falsy selectedShelterId is received', () => {
-    const oldShelter = { id: 59 };
-    const context = shallow(<Shelters
-      selectedShelterId={oldShelter.id}
-      onSelectShelter={sinon.spy()}
-      onUnselectShelter={sinon.spy()}
-      {...defaultProps}
-    />);
-
-    const youAreHere = [111, 222];
-
-    context.render(<Shelters
-      onUnselectShelter={sinon.spy()}
-      youAreHere={youAreHere}
-      {...defaultProps}
-    />);
-
-    expect(defaultProps.fetchShelters).to.have.been.calledWith(youAreHere);
-  });
-
-  it('should fetch shelters when a new youAreHere is received', () => {
-    const context = shallow(<Shelters
-      {...defaultProps}
-    />);
-
-    defaultProps.fetchShelters.resetHistory();
-    const youAreHere = [123123, 78912, 123];
-
-    context.render(<Shelters
-      youAreHere={youAreHere}
-      {...defaultProps}
-    />);
-
-    expect(defaultProps.fetchShelters).to.have.been.calledWith(youAreHere);
   });
 
   it('should display ShelterDetail when a new selectedShelter is received', () => {
