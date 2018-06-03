@@ -77,10 +77,24 @@ describe('containers/shelters/reducer', () => {
       .to.eql([...oldShelters, shelter]);
   });
 
+  it('should not append shelter if it\'s already exists upoN FETCH_SINGLE_SHELTER_SUCCESS', () => {
+    const shelter = {
+      shelterId: 1337,
+    };
+    const shelters = [shelter];
+
+    expect(SheltersReducer({ shelters },
+      {
+        type: types.FETCH_SINGLE_SHELTER_SUCCESS,
+        shelter,
+      }).shelters)
+      .to.eql(shelters);
+  });
+
   it('should decrement loading upon FETCH_SINGLE_SHELTER_SUCCESS', () => {
     const loading = 2;
 
-    expect(SheltersReducer({ loading }, { type: types.FETCH_SINGLE_SHELTER_SUCCESS }).loading)
+    expect(SheltersReducer({ loading, shelters: [] }, { type: types.FETCH_SINGLE_SHELTER_SUCCESS }).loading)
       .to.equal(loading - 1);
   });
 
