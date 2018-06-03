@@ -10,6 +10,9 @@ const mockStore = configureMockStore(middlewares);
 
 describe('containers/shelters/actions/fetchSingleShelter', () => {
   let fetchJson;
+  const sandbox = sinon.createSandbox();
+  const dispatch = sandbox.spy();
+  const getState = sandbox.stub().returns({ Shelters: { shelters: [] } });
 
   beforeAll(() => {
     jest.mock('../../lib/fetch-json');
@@ -19,60 +22,76 @@ describe('containers/shelters/actions/fetchSingleShelter', () => {
   afterEach(() => {
     fetchJson.mockReset();
     jest.unmock('../../lib/fetch-json');
+    sandbox.resetHistory();
   });
 
   it('creates FETCH_SINGLE_SHELTER', () => {
     fetchJson.mockReturnValueOnce(Promise.resolve());
+    const { fetchSingleShelter } = require('./actions');
 
-    const store = mockStore({ shelters: [] });
-
-    return store.dispatch(require('./actions').fetchSingleShelter(1))
-      .then(() => expect(store.getActions()[0]).to.eql({
+    return fetchSingleShelter(1)(dispatch, getState)
+      .then(() => expect(dispatch).to.have.been.calledWith({
         type: types.FETCH_SINGLE_SHELTER,
       }));
   });
 
+  it('dispatches shelter from state if it exists', () => {
+    const { fetchSingleShelter } = require('./actions');
+    const shelter = { shelterId: 112 };
+    getState.returns({
+      Shelters: { shelters: [shelter] },
+    });
+
+    return fetchSingleShelter(shelter.shelterId)(dispatch, getState)
+      .then(() => {
+        expect(fetchJson.mock.calls).to.eql([]);
+        expect(dispatch).to.have.been.calledWith({
+          type: types.FETCH_SINGLE_SHELTER_SUCCESS,
+          shelter,
+        });
+      });
+  });
+
   it('calls the API with accurate id', () => {
+    const { fetchSingleShelter } = require('./actions');
     const id = 892743843;
     fetchJson.mockReturnValueOnce(Promise.resolve());
 
-    const store = mockStore({ shelters: [] });
-
-    return store.dispatch(require('./actions').fetchSingleShelter(id))
+    return fetchSingleShelter(id)(dispatch, getState)
       .then(() => expect(fetchJson.mock.calls[0][0]).to.match(new RegExp(`shelters/${id}`)));
   });
 
   it('creates FETCH_SINGLE_SHELTER_SUCCESS when fetching shelter is finished', () => {
-    const store = mockStore({ shelters: [] });
+    const { fetchSingleShelter } = require('./actions');
     const shelter = { shelterId: '123213-asd12132-675' };
     fetchJson.mockReturnValueOnce(Promise.resolve(shelter));
 
-    return store.dispatch(require('./actions').fetchSingleShelter(1))
-      .then(() => expect(store.getActions().pop()).to.eql({
+    return fetchSingleShelter(1)(dispatch, getState)
+      .then(() => expect(dispatch).to.have.been.calledWith({
         type: types.FETCH_SINGLE_SHELTER_SUCCESS,
         shelter,
       }));
   });
 
   it('creates FETCH_SINGLE_SHELTER_FAILED when fetching shelter fails', () => {
-    const store = mockStore({ shelters: [] });
+    const { fetchSingleShelter } = require('./actions');
     const error = { error: '123213-asd12132-675' };
     fetchJson.mockReturnValueOnce(Promise.reject(error));
 
-    return store.dispatch(require('./actions').fetchSingleShelter(1))
-      .then(() => expect(store.getActions().pop()).to.eql({
+    return fetchSingleShelter(1)(dispatch, getState)
+      .then(() => expect(dispatch).to.have.been.calledWith({
         type: types.FETCH_SINGLE_SHELTER_FAILED,
         error,
       }));
   });
 
   it('creates FETCH_SINGLE_SHELTER_FAILED_NOT_FOUND when API returns 404', () => {
-    const store = mockStore();
+    const { fetchSingleShelter } = require('./actions');
     const error = { error: '123213-asd12132-675', status: 404 };
     fetchJson.mockReturnValueOnce(Promise.reject(error));
 
-    return store.dispatch(require('./actions').fetchSingleShelter(1))
-      .then(() => expect(store.getActions().pop()).to.eql({
+    return fetchSingleShelter(1)(dispatch, getState)
+      .then(() => expect(dispatch).to.have.been.calledWith({
         type: types.FETCH_SINGLE_SHELTER_FAILED_NOT_FOUND,
         error,
       }));
@@ -367,7 +386,7 @@ describe('containers/shelters/actions/selectShelter', () => {
       { type: types.FETCH_SINGLE_SHELTER_FAILED, error },
     ];
 
-    const store = mockStore();
+    const store = mockStore({ Shelters: { shelters: [] } });
 
     return store.dispatch(require('./actions').selectShelter(1))
       .then(() => expect(store.getActions()).to.eql(expectedActions));
@@ -384,7 +403,7 @@ describe('containers/shelters/actions/selectShelter', () => {
       { type: types.SELECT_SHELTER, shelter },
     ];
 
-    const store = mockStore({ Shelters: { youAreHere: [], bounds: [] } });
+    const store = mockStore({ Shelters: { shelters: [], youAreHere: [], bounds: [] } });
 
     return store.dispatch(require('./actions').selectShelter(shelter.shelterId))
       .then(() => expect(store.getActions().slice(0, 3)).to.eql(expectedActions));
@@ -399,7 +418,7 @@ describe('containers/shelters/actions/selectShelter', () => {
       { type: types.FETCH_ROUTE_TO_SHELTER },
     ];
 
-    const store = mockStore({ Shelters: { youAreHere: [1, 2], bounds: [] } });
+    const store = mockStore({ Shelters: { shelters: [], youAreHere: [1, 2], bounds: [] } });
 
     return store.dispatch(require('./actions').selectShelter(shelter.shelterId))
       .then(() => expect(store.getActions().slice(3, 4)).to.eql(expectedActions));
@@ -414,7 +433,7 @@ describe('containers/shelters/actions/selectShelter', () => {
     const expectedActions = [
     ];
 
-    const store = mockStore({ Shelters: { youAreHere, bounds: [youAreHere, [shelter.position.lat, shelter.position.long]] } });
+    const store = mockStore({ Shelters: { shelters: [], youAreHere, bounds: [youAreHere, [shelter.position.lat, shelter.position.long]] } });
 
     return store.dispatch(require('./actions').selectShelter(13))
       .then(() => expect(store.getActions().slice(5, 6)).to.eql(expectedActions));

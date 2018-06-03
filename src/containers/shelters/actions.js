@@ -25,31 +25,40 @@ import {
   SET_BOUNDS,
 } from './types';
 
-export const fetchSingleShelter = (id) => {
-  return dispatch => {
-    dispatch({
-      type: FETCH_SINGLE_SHELTER,
-    });
+export const fetchSingleShelter = (id) => (dispatch, getState) => {
+  dispatch({
+    type: FETCH_SINGLE_SHELTER,
+  });
 
-    return fetchJson(`https://api.hittaskyddsrum.se/api/v2/shelters/${id}`)
-      .then(shelter => dispatch({
-        type: FETCH_SINGLE_SHELTER_SUCCESS,
-        shelter,
-      }))
-      .catch(error => {
-        if (error.status === 404) {
-          dispatch({
-            type: FETCH_SINGLE_SHELTER_FAILED_NOT_FOUND,
-            error,
-          });
-        } else {
-          dispatch({
-            type: FETCH_SINGLE_SHELTER_FAILED,
-            error,
-          });
-        }
-      });
-  };
+  const { shelters } = getState().Shelters;
+  const shelter = shelters
+    .find(s => s.shelterId === id);
+
+  if (shelter) {
+    return Promise.resolve(dispatch({
+      type: FETCH_SINGLE_SHELTER_SUCCESS,
+      shelter,
+    }));
+  }
+
+  return fetchJson(`https://api.hittaskyddsrum.se/api/v2/shelters/${id}`)
+    .then(shelter => dispatch({
+      type: FETCH_SINGLE_SHELTER_SUCCESS,
+      shelter,
+    }))
+    .catch(error => {
+      if (error.status === 404) {
+        dispatch({
+          type: FETCH_SINGLE_SHELTER_FAILED_NOT_FOUND,
+          error,
+        });
+      } else {
+        dispatch({
+          type: FETCH_SINGLE_SHELTER_FAILED,
+          error,
+        });
+      }
+    });
 };
 
 export const fetchShelters = (lat, lon) => {
