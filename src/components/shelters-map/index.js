@@ -47,7 +47,7 @@ export default class SheltersMap extends Component {
       <div className={style.mapContainer}>
         <Map
           boundsOptions={boundsOptions}
-          zoom={10}
+          zoom={14}
           style={{height: '100%'}}
           onMoveend={this.handleBBoxChange}
           onZoomend={this.handleBBoxChange}
