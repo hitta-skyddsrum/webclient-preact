@@ -272,16 +272,6 @@ describe('components/shelters', () => {
     expect(context.find(<ShelterDetail open={true} shelter={shelter} />).length).to.equal(1);
   });
 
-  it('should update state upon ShelterDetail onHeightChange is called', () => {
-    const context = shallow(<Shelters
-      {...defaultProps}
-    />);
-    const height = 120;
-    context.find('ShelterDetail').attr('onHeightChange')(height);
-
-    expect(context.state('mapBottomPadding')).to.equal(height);
-  });
-
   it('should change route when no center is given upon clicking on a shelter', () => {
     jest.mock('preact-router');
 
