@@ -42,10 +42,18 @@ export const fetchSingleShelter = (id) => (dispatch, getState) => {
   }
 
   return fetchJson(`https://api.hittaskyddsrum.se/api/v2/shelters/${id}`)
-    .then(shelter => dispatch({
-      type: FETCH_SINGLE_SHELTER_SUCCESS,
-      shelter,
-    }))
+    .then(shelter => {
+      const { youAreHere } = getState().Shelters;
+      dispatch(setBoundsForPositions([
+        [shelter.position.lat, shelter.position.long],
+        youAreHere,
+      ]));
+
+      return dispatch({
+        type: FETCH_SINGLE_SHELTER_SUCCESS,
+        shelter,
+      });
+    })
     .catch(error => {
       if (error.status === 404) {
         dispatch({
