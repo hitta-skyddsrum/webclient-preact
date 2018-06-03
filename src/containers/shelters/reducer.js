@@ -58,7 +58,10 @@ export default (state = initialState, action) => {
       return {
         ...state,
         loading: state.loading - 1,
-        shelters: [...state.shelters, action.shelter],
+        shelters: state.shelters
+          .find(s => s.shelterId === action.shelter.shelterId)
+          ? state.shelters
+          : [...state.shelters, action.shelter],
       };
     case FETCH_SINGLE_SHELTER_FAILED:
       return {
