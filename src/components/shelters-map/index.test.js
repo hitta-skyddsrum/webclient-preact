@@ -48,7 +48,7 @@ describe('components/SheltersMap', () => {
   it('should render a map', () => {
     expect(mapContext.find(
       <Map
-        zoom={10}
+        zoom={14}
         bounds={bounds}
         center={center}
         boundsOptions={{ paddingBottomRight: [0, bottomPadding] }}
