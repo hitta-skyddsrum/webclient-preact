@@ -1,6 +1,6 @@
 import fetchJson from '../../lib/fetch-json';
 import formatNominatimAddress from '../../lib/format-nominatim-address';
-import { getBoundsAroundPositions, isPositionWithinBounds } from '../../lib/geo-utils';
+import { getBoundsAroundPositions } from '../../lib/geo-utils';
 
 import {
   FETCH_SINGLE_SHELTER,
@@ -147,28 +147,16 @@ export const fetchRouteToShelter = (from, shelter) => {
   };
 };
 
-export const selectShelter = id => {
-  return (dispatch, getStore) => {
-    const state = getStore().Shelters;
-    let selectedShelter;
+export const selectShelter = id => (dispatch, getStore) => {
+  return dispatch(fetchSingleShelter(id))
+    .then(({ shelter } = {}) => {
+      if (!shelter) return;
 
-    return dispatch(fetchSingleShelter(id))
-      .then(({ shelter } = {}) => {
-        if (!shelter) return;
+      dispatch({ type: SELECT_SHELTER, shelter });
 
-        selectedShelter = shelter;
-        dispatch({ type: SELECT_SHELTER, shelter });
-
-        return Promise.resolve(dispatch(fetchRouteToShelter(state.youAreHere, selectedShelter)))
-          .then(() => {
-            const shelterPos = [selectedShelter.position.lat, selectedShelter.position.long];
-
-            if (!state.bounds.length || !isPositionWithinBounds(shelterPos, state.bounds)) {
-              dispatch(setBoundsForPositions([shelterPos, state.youAreHere]));
-            }
-          });
-      });
-  };
+      const { youAreHere } = getStore().Shelters;
+      dispatch(fetchRouteToShelter(youAreHere, shelter));
+    });
 };
 
 export const selectAddress = suggestion => {

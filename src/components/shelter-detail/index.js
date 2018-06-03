@@ -8,41 +8,6 @@ import ClearIcon from 'material-ui-icons/Clear';
 import style from './style.scss';
 
 export default class ShelterDetail extends Component {
-  bottomSheetRef = null;
-
-  constructor() {
-    super();
-
-    this.handleBottomSheetRefChange = this.handleBottomSheetRefChange.bind(this);
-    this.handleBottomSheetTransitionEnd = this.handleBottomSheetTransitionEnd.bind(this);
-  }
-
-  handleBottomSheetRefChange(ref) {
-    if (!ref || !ref.base || !ref.base.firstChild) {
-      // this.bottomSheetRef = null;
-      this.props.onHeightChange(0);
-      return;
-    }
-
-    if (this.bottomSheetRef === ref) return;
-
-    this.bottomSheetRef = ref;
-
-    // When this component is rendered upon page load, transitionend wont be triggered.
-
-    this.props.onHeightChange(this.bottomSheetRef.base.firstChild.offsetHeight);
-
-    this.bottomSheetRef.base.removeEventListener('transitionend', this.handleBottomSheetTransitionEnd);
-    this.bottomSheetRef.base.addEventListener('transitionend', this.handleBottomSheetTransitionEnd);
-  }
-
-  handleBottomSheetTransitionEnd({ target }) {
-    if (!target.firstChild) return;
-    if (target.firstChild.className.indexOf('MuiPaper') === -1) return;
-
-    this.props.onHeightChange(target.firstChild.offsetHeight);
-  }
-
   render() {
     if (!this.props.shelter) return <div />;
 
@@ -66,7 +31,6 @@ export default class ShelterDetail extends Component {
         marginRight: 0,
         zIndex: 2,
       }}
-      ref={this.handleBottomSheetRefChange}
       open={this.props.open}>
       {this.props.shelter.shelterId && (
         <div>

@@ -405,22 +405,6 @@ describe('containers/shelters/actions/selectShelter', () => {
       .then(() => expect(store.getActions().slice(3, 4)).to.eql(expectedActions));
   });
 
-  it('creates SET_BOUNDS based on youAreHere and selectedShelter', () => {
-    const youAreHere = [5, 10];
-    const shelter = { position: { lat: 132, long: 8000 } };
-    fetchJson.mockReturnValueOnce(Promise.resolve(shelter));
-    fetchJson.mockReturnValueOnce(Promise.resolve());
-
-    const expectedActions = [
-      { type: types.SET_BOUNDS, bounds: [youAreHere, [shelter.position.lat, shelter.position.long]] },
-    ];
-
-    const store = mockStore({ Shelters: { youAreHere, bounds: [] } });
-
-    return store.dispatch(require('./actions').selectShelter(13))
-      .then(() => expect(store.getActions().slice(5, 6)).to.eql(expectedActions));
-  });
-
   it('doesnt creates SET_BOUNDS when bounds is already set in state', () => {
     const youAreHere = [5, 10];
     const shelter = { position: { lat: 132, long: 8000 } };

@@ -16,7 +16,6 @@ const arrayValueIsEqual = (first, second) => first.join(';;;') === second.join('
 export default class Shelters extends Component {
   static defaultProps = {
     youAreHere: [],
-    mapBottomPadding: 0,
   };
 
   state = {
@@ -27,7 +26,6 @@ export default class Shelters extends Component {
   constructor() {
     super();
 
-    this.setMapBottomPadding = this.setMapBottomPadding.bind(this);
     this.handleCloseShelterDetail = this.handleCloseShelterDetail.bind(this);
     this.handleClickShelter = this.handleClickShelter.bind(this);
     this.handleBBoxChange = this.handleBBoxChange.bind(this);
@@ -69,12 +67,6 @@ export default class Shelters extends Component {
     }
   }
 
-  setMapBottomPadding(height) {
-    this.setState({
-      mapBottomPadding: height,
-    });
-  }
-  
   handleBBoxChange({
     bbox,
     oldBBox,
@@ -156,14 +148,12 @@ export default class Shelters extends Component {
         onBBoxChange={this.handleBBoxChange}
         onSelectShelter={this.handleClickShelter}
         bounds={this.props.bounds}
-        bottomPadding={this.state.mapBottomPadding}
         selectedShelterId={this.props.selectedShelterId}
       />
       <ShelterDetail
         open={!this.state.hideShelterDetail}
         shelter={this.props.selectedShelter}
         onClose={this.handleCloseShelterDetail}
-        onHeightChange={this.setMapBottomPadding}
       />
     </div>);
   }
