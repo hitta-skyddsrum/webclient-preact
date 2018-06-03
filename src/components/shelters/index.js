@@ -11,6 +11,8 @@ import SearchBox from '../search-box';
 
 import style from './style.scss';
 
+const arrayValueIsEqual = (first, second) => first.join(';;;') === second.join(';;;');
+
 export default class Shelters extends Component {
   static defaultProps = {
     youAreHere: [],
@@ -47,7 +49,7 @@ export default class Shelters extends Component {
   }
 
   componentWillUpdate(nextProps) {
-    if (nextProps.youAreHere !== this.props.youAreHere) {
+    if (arrayValueIsEqual(nextProps.youAreHere, this.props.youAreHere) === false) {
       this.props.fetchShelters(nextProps.youAreHere);
       this.setState({
         center: nextProps.youAreHere,
