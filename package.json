@@ -126,7 +126,7 @@
     "material-ui-bottom-sheet": "^0.5.1",
     "material-ui-icons": "^1.0.0-beta.36",
     "polyline": "^0.2.0",
-    "preact": "^8.2.6",
+    "preact": "^8.2.9",
     "preact-async-route": "^2.1.0",
     "preact-compat": "^3.18.0",
     "preact-helmet": "^4.0.0-alpha-3",
