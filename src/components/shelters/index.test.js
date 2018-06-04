@@ -137,6 +137,25 @@ describe('components/shelters', () => {
     expect(onSetBounds).to.have.been.calledWith([]);
   });
 
+  it('should not call onBBoxChange upon SearchBox focus', () => {
+    const onBBoxChange = sinon.spy();
+    const fakeTimer = sinon.useFakeTimers();
+    const bbox = { bbox: 10, oldBBox: 8, oldZoom: 16, zoom: 15 };
+    const wrapper = shallow(<Shelters {...defaultProps} onBBoxChange={onBBoxChange} />);
+
+    wrapper.find(SearchBox).attr('onFocus')();
+    wrapper.find(<SheltersMap />).simulate('BBoxChange', bbox);
+    fakeTimer.tick(500);
+
+    expect(onBBoxChange).to.not.have.been.called;
+
+    wrapper.find(SearchBox).attr('onBlur')();
+    wrapper.find(<SheltersMap />).simulate('BBoxChange', bbox);
+    fakeTimer.tick(500);
+
+    expect(onBBoxChange).to.have.been.called;
+  });
+
   it('should call onBBoxChange upon SheltersMap onBBoxChange', () => {
     const onBBoxChange = sinon.spy();
     const fakeTimer = sinon.useFakeTimers();

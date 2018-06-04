@@ -29,6 +29,8 @@ export default class Shelters extends Component {
     this.handleCloseShelterDetail = this.handleCloseShelterDetail.bind(this);
     this.handleClickShelter = this.handleClickShelter.bind(this);
     this.handleBBoxChange = this.handleBBoxChange.bind(this);
+    this.handleSearchBoxBlur = this.handleSearchBoxBlur.bind(this);
+    this.handleSearchBoxFocus = this.handleSearchBoxFocus.bind(this);
   }
 
   componentWillMount() {
@@ -73,6 +75,9 @@ export default class Shelters extends Component {
     oldZoom,
     zoom,
   }) {
+    // Fix Android keyboard trigger bbox change
+    if (this.searchBoxFocus) return;
+
     if (this.props.bounds.length) {
       this.props.onSetBounds([]);
     }
@@ -119,6 +124,14 @@ export default class Shelters extends Component {
     this.setState({ hideShelterDetail: false });
   }
 
+  handleSearchBoxBlur() {
+    this.searchBoxFocus = false;
+  }
+
+  handleSearchBoxFocus() {
+    this.searchBoxFocus = true;
+  }
+
   render() {
     return (<div className={style.maximize}>
       {!!this.props.selectedAddress.name && (
@@ -139,6 +152,8 @@ export default class Shelters extends Component {
       <SearchBox
         styles={style.searchBox}
         onSelectAddress={this.props.onSelectAddress}
+        onBlur={this.handleSearchBoxBlur}
+        onFocus={this.handleSearchBoxFocus}
       />
       <SheltersMap
         center={this.state.center}

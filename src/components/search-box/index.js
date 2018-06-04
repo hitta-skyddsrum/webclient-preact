@@ -68,7 +68,9 @@ export default class SearchBox extends Component {
               language: 'sv',
               countries: ['se'],
             }}
+            onBlur={this.props.onBlur}
             onChange={this.handleAddressSelection}
+            onFocus={this.props.onFocus}
             onLimit={this.handleAlgoliaLimit}
             onError={this.handleAlgoliaError}
             placeholder="Var vill du söka från?"

@@ -61,7 +61,7 @@ describe('components/search-box', () => {
       const context = shallow(<SearchBox />);
 
       try {
-        context.find('AlgoliaPlaces').attr('onLimit')();
+        context.find(AlgoliaPlaces).attr('onLimit')();
       } catch (e) {}
 
       expect(context.state('error')).to.eql({
@@ -73,14 +73,14 @@ describe('components/search-box', () => {
     it('should throw an error, to be catched by Raven, upon AlgoliaPlaces onLimit event', () => {
       const context = shallow(<SearchBox />);
 
-      expect(context.find('AlgoliaPlaces').attr('onLimit')).to.throw(Error, /Rate limit/);
+      expect(context.find(AlgoliaPlaces).attr('onLimit')).to.throw(Error, /Rate limit/);
     });
 
     it('should update state upon AlgoliaPlaces onError event', () => {
       const context = shallow(<SearchBox />);
 
       try {
-        context.find('AlgoliaPlaces').attr('onError')();
+        context.find(AlgoliaPlaces).attr('onError')();
       } catch (e) {}
 
       expect(context.state('error')).to.eql({
@@ -94,17 +94,37 @@ describe('components/search-box', () => {
       const error = new Error('This is bad');
 
       // eslint-disable-next-line max-nested-callbacks
-      expect(() => context.find('AlgoliaPlaces').attr('onError')(error)).to.throw(Error, /This is bad/);
+      expect(() => context.find(AlgoliaPlaces).attr('onError')(error)).to.throw(Error, /This is bad/);
+    });
+
+    it('should call onBlur upon AlgoliaPlaces onBlur event', () => {
+      const onBlur = sinon.spy();
+      const mockEvent = new Event('blur');
+      const wrapper = shallow(<SearchBox onBlur={onBlur} />);
+
+      wrapper.find(AlgoliaPlaces).attr('onBlur')(mockEvent);
+
+      expect(onBlur).to.have.been.calledWith(mockEvent);
+    });
+
+    it('should call onFocus upon AlgoliaPlaces onFocus event', () => {
+      const onFocus = sinon.spy();
+      const mockEvent = new Event('blur');
+      const wrapper = shallow(<SearchBox onFocus={onFocus} />);
+
+      wrapper.find(AlgoliaPlaces).attr('onFocus')(mockEvent);
+
+      expect(onFocus).to.have.been.calledWith(mockEvent);
     });
 
     it('should change route upon address selection', () => {
       jest.mock('preact-router');
 
       const context = shallow(<SearchBox onSelectAddress={sinon.spy()} />);
-      const algoliaPlaces = context.find('AlgoliaPlaces');
+      const algoliaPlaces = context.find(AlgoliaPlaces);
       const lat = 14.53;
       const lon = 15.54;
-      algoliaPlaces.output().attributes.onChange({ suggestion: { latlng: { lat, lng: lon } }});
+      algoliaPlaces.attr('onChange')({ suggestion: { latlng: { lat, lng: lon } }});
 
       expect(route).to.have.been.calledOnce;
 
