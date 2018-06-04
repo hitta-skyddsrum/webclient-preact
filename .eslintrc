@@ -5,6 +5,7 @@
     "plugin:jest/recommended"
   ],
   "plugins": [
+    "compat",
     "react",
     "jest"
   ],
@@ -89,5 +90,18 @@
     "object-shorthand": 2,
     "prefer-arrow-callback": 2,
     "jest/valid-expect": 0
+  },
+  "overrides": {
+    "files": "src/**/*.js",
+    "excludedFiles": "*.test.js",
+    "rules": {
+      "compat/compat": "error"
+    },
+    "settings": {
+      "polyfills": [
+        "fetch",
+        "promises"
+      ]
+    }
   }
 }

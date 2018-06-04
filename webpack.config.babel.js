@@ -113,7 +113,7 @@ module.exports = {
                 sourceMap: CSS_MAPS,
                 options: {},
                 plugins: () => {
-                  autoprefixer({ browsers: [ 'last 2 versions' ] });
+                  autoprefixer();
                 }
               }
             },
@@ -146,7 +146,7 @@ module.exports = {
               options: {
                 sourceMap: CSS_MAPS,
                 plugins: () => {
-                  autoprefixer({ browsers: [ 'last 2 versions' ] });
+                  autoprefixer();
                 }
               }
             },
