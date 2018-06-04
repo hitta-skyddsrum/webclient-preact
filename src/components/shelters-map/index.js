@@ -29,6 +29,10 @@ export default ({
       >
         <TileLayer
           url='https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png'
+          attribution="&copy; <a href=&quot;https://openrouteservice.org/&quot;>openrouteservice</a> contributors"
+        />
+        <TileLayer
+          url='https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png'
           attribution="&copy; <a href=&quot;https://osm.org/copyright&quot;>OpenStreetMap</a> contributors"
         />
         {!!youAreHere.length && <Marker
