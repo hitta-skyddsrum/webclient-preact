@@ -118,7 +118,7 @@
     "classlist-polyfill": "^1.2.0",
     "classnames": "^2.2.5",
     "debounce": "^1.1.0",
-    "dynamic-polyfill": "^1.0.2",
+    "dynamic-polyfill": "^1.1.0",
     "history": "^4.7.2",
     "leaflet": "^1.3.1",
     "leaflet.markercluster": "^1.3.0",
