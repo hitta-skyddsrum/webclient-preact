@@ -6,6 +6,7 @@ import { Map, Marker, Polyline, ZoomControl } from 'react-leaflet';
 import L from 'leaflet';
 
 import SheltersMap from './';
+import ShelterMarker from '../shelter-marker';
 
 describe('components/SheltersMap', () => {
   const bounds = [ [1, 2], [3, 4]];
@@ -63,22 +64,7 @@ describe('components/SheltersMap', () => {
   it('should not render a marker if no youAreHere is given', () => {
     mapContext.render(<SheltersMap center={[]} shelters={[]} routes={[]} />);
 
-    expect(mapContext.find(<Marker />).length).to.equal(0);
-  });
-
-  it('should render all the shelters as markers', () => {
-    expect(shelters.length).to.be.greaterThan(1);
-
-    shelters.forEach(shelter =>
-      expect(mapContext.find(<Marker position={[shelter.position.lat, shelter.position.long]} />).length).to.equal(1));
-
-    const shelterIconCalls = L.icon.getCalls()
-      .filter(call => call.args[0].className === 'shelter');
-
-    expect(shelterIconCalls.length).to.equal(shelters.length);
-
-    shelterIconCalls
-      .forEach(call => expect(call.args[0].iconSize).to.eql([50, 49]));
+    expect(mapContext.find(<ShelterMarker />).length).to.equal(0);
   });
 
   it('should call onBBoxChange with zoom and bbox value upon map move end', () => {
@@ -144,9 +130,9 @@ describe('components/SheltersMap', () => {
     expect(shelters.length).to.be.greaterThan(1);
     const shelter = shelters.pop();
 
-    mapContext.find(<Marker position={[shelter.position.lat, shelter.position.long]} />).simulate('click');
+    mapContext.find(<ShelterMarker shelter={shelter} />).simulate('click');
 
-    expect(onSelectShelter).to.have.been.calledWith(shelter);
+    expect(onSelectShelter).to.have.been.calledWith();
   });
 
   it('should display the provided routes', () => {

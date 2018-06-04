@@ -3,6 +3,9 @@ import L from 'leaflet';
 import { Map, Marker, Polyline, TileLayer, ZoomControl } from 'react-leaflet';
 import MarketClusterGroup from 'react-leaflet-markercluster';
 
+import ShelterMarker from '../shelter-marker';
+import isIE from '../../lib/is-ie';
+
 import 'leaflet/dist/leaflet.css';
 import style from './style.scss';
 
@@ -51,7 +54,7 @@ export default class SheltersMap extends Component {
           style={{height: '100%'}}
           onMoveend={this.handleBBoxChange}
           onZoomend={this.handleBBoxChange}
-          zoomControl={false}
+          zoomControl={isIE()}
           {...!!center.length && { center }}
           {...!!bounds.length && { bounds }}
         >
@@ -62,6 +65,7 @@ export default class SheltersMap extends Component {
           {!!youAreHere.length && <Marker
             position={youAreHere}
             interactive={false}
+            ref={ref => { this.yahElem = ref; }}
             icon={
               L.icon({
                 iconUrl: '/assets/images/icon-you_are_here.png',
@@ -70,28 +74,23 @@ export default class SheltersMap extends Component {
               })
             }
           />}
-          <MarketClusterGroup>
+          <MarketClusterGroup key="cluster-1">
             {shelters
               .map(shelter => ({
                 shelter,
                 iconSize: [50, 49].map(size => selectedShelterId === shelter.shelterId ? size * 1.5 : size),
               }))
               .map(({ shelter, iconSize }) => (
-                <Marker
-                  position={[shelter.position.lat, shelter.position.long]}
-                  onClick={() => onSelectShelter(shelter)}
-                  icon={
-                    L.icon({
-                      iconUrl: '/assets/images/icon-shelter.png',
-                      iconSize,
-                      className: 'shelter',
-                    })
-                  }
+                <ShelterMarker
+                  key={shelter.shelterId}
+                  shelter={shelter}
+                  onClick={onSelectShelter}
+                  iconSize={iconSize}
                 />
               ))}
           </MarketClusterGroup>
           {routes.map(route => <Polyline positions={route.coordinates} />)}
-          <ZoomControl position="bottomright" />
+          {!isIE() && <ZoomControl position="bottomright" />}
         </Map>
       </div>
     );
