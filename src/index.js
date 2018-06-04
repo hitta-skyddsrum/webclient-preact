@@ -19,6 +19,7 @@ polyfill({
   fills: [
     'fetch',
     'Array.prototype.filter',
+    'Array.prototype.find',
     'Object.assign',
     'Promise',
     'Element.prototype.classList',
