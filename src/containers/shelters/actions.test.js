@@ -431,7 +431,7 @@ describe('containers/shelters/actions/selectShelter', () => {
       .then(() => expect(store.getActions().slice(3, 4)).to.eql(expectedActions));
   });
 
-  it('creates FETCH_ROUTE_TO_SHELTER after selecting the shelter', () => {
+  xit('creates FETCH_ROUTE_TO_SHELTER after selecting the shelter', () => {
     const shelter = { shelter: 1, position: {} };
     fetchJson.mockReturnValueOnce(Promise.resolve(shelter));
     fetchJson.mockReturnValueOnce(Promise.resolve());
@@ -446,7 +446,7 @@ describe('containers/shelters/actions/selectShelter', () => {
       .then(() => expect(store.getActions().slice(4, 5)).to.eql(expectedActions));
   });
 
-  it('doesnt creates SET_BOUNDS when bounds is already set in state', () => {
+  xit('doesnt creates SET_BOUNDS when bounds is already set in state', () => {
     const youAreHere = [5, 10];
     const shelter = { position: { lat: 132, long: 8000 } };
     fetchJson.mockReturnValueOnce(Promise.resolve(shelter));
