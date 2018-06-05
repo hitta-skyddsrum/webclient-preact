@@ -1,5 +1,31 @@
-.title {
+.item .title {
   margin: 0;
   font-size: 1.8em;
   color: rgba(0, 0, 0, 0.87);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+
+  @media only screen and (max-width: 450px) {
+    font-size: 1.4em;
+  }
 }
+
+@media only screen and (max-width: 450px) {
+  ul .item {
+    padding-top: 5px;
+    padding-bottom: 0px;
+
+    &:last-child {
+      padding-bottom: 5px;
+    }
+  }
+
+  .itemCoordinates span {
+    display: block;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+}
+
