@@ -17,6 +17,10 @@ export default class ShelterDetail extends Component {
       </Button>
     );
 
+    const address = [this.props.shelter.address, this.props.shelter.municipality]
+      .filter(section => !!section)
+      .join(', ');
+
     return (<BottomSheet
       onRequestClose={this.props.onClose}
       style={{ height: 'auto' }}
@@ -38,19 +42,19 @@ export default class ShelterDetail extends Component {
             title={`Skyddsrum ${this.props.shelter.shelterId}`}
           />
           <List>
-            <ListItem disabled>
+            <ListItem disabled className={style.item}>
               <h1 class={style.title}>Skyddsrum {this.props.shelter.shelterId}</h1>
             </ListItem>
-            <ListItem disabled>
+            <ListItem disabled className={style.item}>
               <ListItemText primary={`Fastighetsbeteckning: ${this.props.shelter.estateId}`} />
             </ListItem>
-            <ListItem disabled>
-              <ListItemText primary={`Adress: ${this.props.shelter.address}, ${this.props.shelter.municipality}`} />
+            <ListItem disabled className={style.item}>
+              <ListItemText primary={`Adress: ${address}`} />
             </ListItem>
-            <ListItem disabled>
+            <ListItem disabled className={style.item}>
               <ListItemText primary={`Antal platser: ${this.props.shelter.slots}`} />
             </ListItem>
-            <ListItem disabled>
+            <ListItem disabled className={style.item.concat(' ', style.itemCoordinates)}>
               <ListItemText primary={
                 <span>Koordinater:
                 <a
