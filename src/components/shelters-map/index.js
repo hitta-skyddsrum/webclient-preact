@@ -1,6 +1,8 @@
 import { Component, h } from 'preact';
 import L from 'leaflet';
-import { Map, Marker, Polyline, TileLayer, ZoomControl } from 'react-leaflet';
+import * as ReactLeaflet from 'react-leaflet';
+// https://github.com/PaulLeCam/react-leaflet/issues/448
+const { Map: LeafletMap, Marker, Polyline, TileLayer, ZoomControl } = ReactLeaflet;
 import MarketClusterGroup from 'react-leaflet-markercluster';
 
 import ShelterMarker from '../shelter-marker';
@@ -48,7 +50,7 @@ export default class SheltersMap extends Component {
 
     return (
       <div className={style.mapContainer}>
-        <Map
+        <LeafletMap
           boundsOptions={boundsOptions}
           zoom={14}
           style={{height: '100%'}}
@@ -91,7 +93,7 @@ export default class SheltersMap extends Component {
           </MarketClusterGroup>
           {routes.map(route => <Polyline positions={route.coordinates} />)}
           {!isIE() && <ZoomControl position="bottomright" />}
-        </Map>
+        </LeafletMap>
       </div>
     );
   }
