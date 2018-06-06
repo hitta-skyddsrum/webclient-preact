@@ -26,6 +26,21 @@ describe('containers/shelters/reducer', () => {
       .to.eql([lat, lon]);
   });
 
+  it('should accept long as search param when setting state upon @@router/LOCATION_CHANGE', () => {
+    const lat = 13.133;
+    const long = 12;
+    const search = `?lat=${lat}&long=${long}`;
+    const payload = { search, pathname: '' };
+
+    expect(SheltersReducer({}, { type: '@@router/LOCATION_CHANGE', payload }).youAreHere)
+      .to.eql([lat, long]);
+  });
+
+  it('should not update youAreHere state upon @@router/LOCATION_CHANGE if not both lat and lon is present', () => {
+    const state = SheltersReducer({}, { type: '@@router/LOCATION_CHANGE', payload: { search: '?lat=12', pathname: '' }}).youAreHere;
+    expect(state).to.eql([]);
+  });
+
   it('should unset youAreHere state upon @@router/LOCATION_CHANGE', () => {
     const oldState = { youAreHere: [11, 10] };
     const search = '';

@@ -34,16 +34,20 @@ const initialState = {
 
 export default (state = initialState, action) => {
   switch (action.type) {
-    case '@@router/LOCATION_CHANGE':
+    case '@@router/LOCATION_CHANGE': {
+      const youAreHere = [
+        getSearchParam(action.payload.search, 'lat'),
+        getSearchParam(action.payload.search, 'lon') || getSearchParam(action.payload.search, 'long'),
+      ]
+        .filter(pos => !!pos)
+        .map(pos => parseFloat(pos));
+
       return {
         ...state,
-        youAreHere: [
-          getSearchParam(action.payload.search, 'lat'),
-          getSearchParam(action.payload.search, 'lon'),
-        ].filter(pos => !!pos)
-          .map(pos => parseFloat(pos)),
+        youAreHere: youAreHere.length === 2 ? youAreHere : [],
         selectedShelterId: getValueAfterSection(action.payload.pathname, 'skyddsrum') || 0,
       };
+    }
     case SELECT_ADDRESS:
       return {
         ...state,
