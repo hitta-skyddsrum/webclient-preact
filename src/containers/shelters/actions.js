@@ -171,9 +171,6 @@ export const selectShelter = id => (dispatch, getStore) => {
 
       dispatch({ type: SELECT_SHELTER, shelter });
 
-      // Disable until API works again
-      return;
-      // eslint-disable-next-line no-unreachable
       const { youAreHere } = getStore().Shelters;
       dispatch(fetchRouteToShelter(youAreHere, shelter));
     });
