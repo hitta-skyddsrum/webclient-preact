@@ -7,6 +7,8 @@ import path from 'path';
 const ENV = process.env.NODE_ENV || 'development';
 const UglifyJSPlugin = require('uglifyjs-webpack-plugin')
 const GitRevisionPlugin = require('git-revision-webpack-plugin');
+const SentryCliPlugin = require('@sentry/webpack-plugin');
+
 require('dotenv').config();
 
 const CSS_MAPS = ENV !== 'production';
@@ -201,7 +203,12 @@ module.exports = {
       { from: './_redirects', to: './' },
       { from: './favicon.ico', to: './' },
       { from: './sitemap*.xml', to: './' },
-    ])
+    ]),
+    new SentryCliPlugin({
+      dryRun: ENV !== 'production',
+      include: './build',
+      release: new GitRevisionPlugin().commithash(),
+    }),
   ]),
 
   stats: { colors: true },

@@ -48,6 +48,7 @@
     ]
   },
   "devDependencies": {
+    "@sentry/webpack-plugin": "^1.5.2",
     "autoprefixer": "^8.0.0",
     "babel": "^6.5.2",
     "babel-core": "^6.24.0",
