@@ -204,12 +204,12 @@ module.exports = {
       { from: './favicon.ico', to: './' },
       { from: './sitemap*.xml', to: './' },
     ]),
+  ].concat(process.env.ENV !== 'production' ? [] : [
     new SentryCliPlugin({
-      dryRun: ENV !== 'production',
       include: './build',
       release: new GitRevisionPlugin().commithash(),
     }),
-  ]),
+  ])),
 
   stats: { colors: true },
 
