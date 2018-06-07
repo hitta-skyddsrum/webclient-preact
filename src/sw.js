@@ -1,15 +1,27 @@
+import Raven from 'raven-js';
+
+/* eslint-disable compat/compat */
+
 const { assets } = global.serviceWorkerOption;
 
 const CACHE_NAME = process.env.COMMITHASH;
+// const CACHE_NAME = new Date().toString();
 const assetsToCache = [...assets, './']
   .filter(path =>
     [
       '/_redirects',
       '/sitemap.xml',
       '/sitemap2.xml',
+      '/index.html',
     ].indexOf(path) === -1
   )
   .map(path => new URL(path, global.location).toString());
+
+self.addEventListener('message', event => {
+  if (event.data === 'skipWaiting') {
+    self.skipWaiting();
+  }
+});
 
 const handleInstall = event => {
   console.log('[SW] Install event', event);

@@ -28,7 +28,7 @@ export default class UpdateAvailable extends Component {
   }
 
   handleClickInstall() {
-    window.location.reload();
+    this.props.onUpdate();
   }
 
   render() {
