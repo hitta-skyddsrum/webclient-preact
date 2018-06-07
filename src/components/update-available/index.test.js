@@ -6,21 +6,19 @@ import Button from '../button';
 import UpdateAvailable from './';
 
 describe('components.update-available', () => {
-  const sandbox = sinon.createSandbox();
-
   it('should display a container with accurate message', () => {
     const wrapper = shallow(<UpdateAvailable />);
 
     expect(wrapper).to.match(/Det finns en uppdatering tillgänglig/);
   });
 
-  it('should reload the page upon clicking on install button', () => {
-    const wrapper = shallow(<UpdateAvailable />);
-    sandbox.stub(window.location, 'reload');
+  it('should fire onUpdate upon clicking on install button', () => {
+    const onUpdate = sinon.spy();
+    const wrapper = shallow(<UpdateAvailable onUpdate={onUpdate} />);
 
     wrapper.find(<Button role="reload" />).simulate('click');
 
-    expect(window.location.reload).to.have.been.calledOnce;
+    expect(onUpdate).to.have.been.calledOnce;
   });
 
   it('should hide upon clicking on close button', () => {

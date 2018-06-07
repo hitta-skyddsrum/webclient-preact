@@ -3,6 +3,32 @@ import sinon from 'sinon';
 
 import makeServiceWorkerEnv from 'service-worker-mock';
 
+describe('ServiceWorker/message', () => {
+  const sandbox = sinon.createSandbox();
+
+  beforeEach(() => {
+    Object.assign(global,
+      makeServiceWorkerEnv(),
+      { serviceWorkerOption: { assets: [] } },
+    );
+    global.fetch = () => Promise.resolve();
+    process.env.COMMITHASH = 'hash-132';
+    jest.resetModules();
+    require('./sw');
+  });
+
+  afterAll(() => {
+    sandbox.restore();
+  });
+
+  it('should call `skipWaiting` upon message event containing `skipWaiting`', () => {
+    sandbox.spy(self, 'skipWaiting');
+    self.trigger('message', Object.assign(new Event(), { data: 'skipWaiting' }));
+
+    expect(self.skipWaiting).to.have.been.calledOnce;
+  });
+});
+
 describe('ServiceWorker/install', () => {
   const assets = [
     '/big.js',
