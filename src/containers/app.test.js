@@ -9,6 +9,14 @@ import App from './app';
 import Sidenav from '../components/sidenav';
 
 describe('App', () => {
+  beforeAll(() => {
+    jest.mock('raven-js');
+  });
+
+  afterAll(() => {
+    jest.unmock('raven-js');
+  });
+
   it('should provide a title template', () => {
     const titleTemplate = shallow(<App />)
       .find(<Helmet />).attr('titleTemplate');

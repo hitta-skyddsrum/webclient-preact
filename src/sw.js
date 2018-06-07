@@ -33,6 +33,9 @@ const handleInstall = event => {
       .then(() => {
         console.log('Cached assets: main', assetsToCache);
       })
+      .catch(error => {
+        Raven.captureException(error);
+      })
   );
 };
 
@@ -49,6 +52,9 @@ const handleActivate = event => {
             .filter(cacheName => cacheName.indexOf(CACHE_NAME) === -1)
             .map(cacheName => global.caches.delete(cacheName))
         ))
+      .catch(error => {
+        Raven.captureException(error);
+      })
   );
 };
 
@@ -97,14 +103,10 @@ const handleFetch = event => {
           })
           .then(() => {
             console.log(`[SW] Cache asset: ${requestUrl.href}`);
-          });
+          })
+          .catch(error => Raven.captureException(error));
 
         return responseNetwork;
-      })
-      .catch(error => {
-        console.error(error);
-
-        return null;
       });
   });
 

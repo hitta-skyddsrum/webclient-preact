@@ -37,6 +37,12 @@ describe('ServiceWorker/install', () => {
     '/sitemap.xml',
     '/sitemap2.xml',
   ];
+  const sandbox = sinon.createSandbox();
+
+  beforeAll(() => {
+    jest.mock('raven-js');
+  });
+
   beforeEach(() => {
     Object.assign(global,
       makeServiceWorkerEnv(),
@@ -46,6 +52,14 @@ describe('ServiceWorker/install', () => {
     process.env.COMMITHASH = 'hash-132';
     jest.resetModules();
     require('./sw');
+  });
+
+  afterEach(() => {
+    sandbox.restore();
+  });
+
+  afterAll(() => {
+    jest.unmock('raven-js');
   });
 
   it('use process.env.COMMITHASH as cache key', async () => {
@@ -65,9 +79,25 @@ describe('ServiceWorker/install', () => {
         .reduce((output, asset) => ({ ...output, [asset]: 'fake' }), {})
     );
   });
+
+  it('shoud catch add to cache exception with Raven', async () => {
+    const Raven = require('raven-js');
+    const error = new Error();
+    sandbox.stub(global, 'fetch').returns(Promise.reject(error));
+
+    await self.trigger('install');
+
+    expect(Raven.captureException).to.have.been.calledWith(error);
+  });
 });
 
 describe('ServiceWorker/activate', () => {
+  const sandbox = sinon.createSandbox();
+
+  beforeAll(() => {
+    jest.mock('raven-js');
+  });
+
   beforeEach(() => {
     Object.assign(global,
       makeServiceWorkerEnv(),
@@ -76,6 +106,14 @@ describe('ServiceWorker/activate', () => {
     process.env.COMMITHASH = 'hash24';
     jest.resetModules();
     require('./sw');
+  });
+
+  afterEach(() => {
+    sandbox.restore();
+  });
+
+  afterAll(() => {
+    jest.unmock('raven-js');
   });
 
   it('clean the caches', async () => {
@@ -90,9 +128,25 @@ describe('ServiceWorker/activate', () => {
     expect(self.snapshot().caches.VERY_OLD_CACHE).to.be.undefined;
     expect(self.snapshot().caches.OLD_CACHE).to.be.undefined;
   });
+
+  it('shoud catch clean cache exception with Raven', async () => {
+    const Raven = require('raven-js');
+    const error = new Error();
+    sandbox.stub(global.caches, 'keys').returns(Promise.reject(error));
+
+    await self.trigger('activate');
+
+    expect(Raven.captureException).to.have.been.calledWith(error);
+  });
 });
 
 describe('ServiceWorker/fetch', () => {
+  const sandbox = sinon.createSandbox();
+
+  beforeAll(() => {
+    jest.mock('raven-js');
+  });
+
   beforeEach(() => {
     Object.assign(global,
       makeServiceWorkerEnv(),
@@ -101,6 +155,14 @@ describe('ServiceWorker/fetch', () => {
     jest.resetModules();
     process.env.COMMITHASH = 'cache';
     require('./sw');
+  });
+
+  afterEach(() => {
+    sandbox.restore();
+  });
+
+  afterAll(() => {
+    jest.unmock('raven-js');
   });
 
   it('should return cached response upon a GET request from same origin', async () => {
@@ -167,6 +229,20 @@ describe('ServiceWorker/fetch', () => {
 
     expect(response).to.equal(networkResponse);
     expect(self.snapshot().caches[commitHash][request.url]).to.eql(networkResponse);
+  });
+
+  it('shoud catch exception with Raven upon store to cache error', async () => {
+    const Raven = require('raven-js');
+    const error = new Error();
+    global.fetch = sandbox.stub().returns(Promise.resolve({ ok: true, clone: sinon.spy() }));
+    sandbox.stub(global.caches, 'open').returns(Promise.reject(error));
+
+    await self.trigger('fetch', new Request('throw.me'));
+
+    return Promise.resolve()
+      .then(() => {
+        expect(Raven.captureException).to.have.been.calledWith(error);
+      });
   });
 
   it('should return the error upon failure', async () => {
