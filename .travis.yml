@@ -30,6 +30,9 @@ jobs:
     - stage: test
       if: type != api
       script: npm run test && codecov
+    - stage: lighthouse
+      if: type = api
+      script: npm run lh -- --score=96 --no-comment $SITE_URL
     - stage: e2e
       if: type = api
       script: npm run install-selenium && xvfb-run --server-args="-screen 0 1200x800x24" npm run e2e || (errorshots push s3 && false)
