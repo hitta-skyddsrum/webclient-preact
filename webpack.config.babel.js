@@ -1,5 +1,4 @@
 import webpack from 'webpack';
-import ExtractTextPlugin from 'extract-text-webpack-plugin';
 import HtmlWebpackPlugin from 'html-webpack-plugin';
 import autoprefixer from 'autoprefixer';
 import CopyWebpackPlugin from 'copy-webpack-plugin';
@@ -9,6 +8,7 @@ import path from 'path';
 const ENV = process.env.NODE_ENV || 'development';
 const GitRevisionPlugin = require('git-revision-webpack-plugin');
 const SentryCliPlugin = require('@sentry/webpack-plugin');
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 
 require('dotenv').config();
 
@@ -98,9 +98,8 @@ module.exports = {
           path.resolve(__dirname, 'src/components'),
           path.resolve(__dirname, 'src/containers'),
         ],
-        use: ExtractTextPlugin.extract({
-          fallback: 'style-loader',
-          use: [
+        use: [
+            ENV === 'production' ? MiniCssExtractPlugin.loader : 'style-loader',
             {
               loader: 'css-loader',
               options: { 
@@ -114,7 +113,6 @@ module.exports = {
               loader: `postcss-loader`,
               options: {
                 sourceMap: CSS_MAPS,
-                options: {},
                 plugins: () => {
                   autoprefixer();
                 }
@@ -124,8 +122,7 @@ module.exports = {
               loader: 'sass-loader',
               options: { sourceMap: CSS_MAPS }
             }
-          ]
-        })
+        ],
       },
       {
         test: /\.(scss|css)$/,
@@ -133,16 +130,15 @@ module.exports = {
           path.resolve(__dirname, 'src/components'),
           path.resolve(__dirname, 'src/containers'),
         ],
-        use: ExtractTextPlugin.extract({
-          fallback: 'style-loader',
-          use: [
+        use: [
+            ENV === 'production' ? MiniCssExtractPlugin.loader : 'style-loader',
             {
               loader: 'css-loader',
               options: { 
                 sourceMap: CSS_MAPS, 
                 importLoaders: 1,
                 minimize: true,
-              }
+              },
             },
             {
               loader: `postcss-loader`,
@@ -157,8 +153,7 @@ module.exports = {
               loader: 'sass-loader',
               options: { sourceMap: CSS_MAPS }
             }
-          ]
-        })
+        ],
       },
       {
         test: /\.json$/,
@@ -176,10 +171,9 @@ module.exports = {
   },
   plugins: ([
     new webpack.NoEmitOnErrorsPlugin(),
-    new ExtractTextPlugin({
-      filename: 'style.css',
-      allChunks: true,
-      disable: ENV !== 'production'
+    new MiniCssExtractPlugin({
+      filename: "[name].css",
+      chunkFilename: "[id].css"
     }),
     new webpack.DefinePlugin({
       'process.env.NODE_ENV': JSON.stringify(ENV),
