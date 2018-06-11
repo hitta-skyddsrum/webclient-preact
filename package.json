@@ -112,7 +112,7 @@
     "serve": "^8.1.1",
     "service-worker-mock": "^1.8.0",
     "serviceworker-webpack-plugin": "^1.0.0-alpha02",
-    "sinon": "^5.1.0",
+    "sinon": "^6.0.0",
     "sinon-chai": "^3.1.0",
     "source-map-loader": "^0.2.1",
     "style-loader": "^0.21.0",
