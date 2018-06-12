@@ -156,6 +156,7 @@ module.exports = {
         ],
       },
       {
+        type: 'javascript/auto',
         test: /\.json$/,
         use: 'json-loader'
       },
@@ -185,6 +186,7 @@ module.exports = {
       'process.env.COMMITHASH': JSON.stringify(new GitRevisionPlugin().commithash()),
       'process.env.ALGOLIA_APP_ID': JSON.stringify(process.env.ALGOLIA_APP_ID),
       'process.env.ALGOLIA_API_KEY': JSON.stringify(process.env.ALGOLIA_API_KEY),
+      'process.env.LANTMATERIET_TOKEN': JSON.stringify(process.env.LANTMATERIET_TOKEN),
     }),
     new HtmlWebpackPlugin({
       template: './index.ejs',

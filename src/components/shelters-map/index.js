@@ -4,6 +4,7 @@ import * as ReactLeaflet from 'react-leaflet';
 // https://github.com/PaulLeCam/react-leaflet/issues/448
 const { Map: LeafletMap, Marker, Polyline, TileLayer, ZoomControl } = ReactLeaflet;
 import MarketClusterGroup from 'react-leaflet-markercluster';
+import 'proj4leaflet';
 
 import ShelterMarker from '../shelter-marker';
 import isIE from '../../lib/is-ie';
@@ -19,6 +20,17 @@ export default class SheltersMap extends Component {
     this.zoom = null;
 
     this.handleBBoxChange = this.handleBBoxChange.bind(this);
+    this.crs = new L.Proj.CRS(
+      'EPSG:3006',
+      '+proj=utm +zone=33 +ellps=GRS80 +towgs84=0,0,0,0,0,0,0 +units=m +no_defs',
+      {
+        bounds:  L.bounds([-1200000.000000, 8500000.000000], [4305696.000000, 2994304.000000]),
+        origin: [-1200000.000000, 8500000.000000],
+        resolutions: [
+          4096, 2048, 1024, 512, 256, 128, 64, 32, 16, 8,
+        ],
+      },
+    );
   }
 
   handleBBoxChange(event) {
@@ -51,18 +63,22 @@ export default class SheltersMap extends Component {
     return (
       <div className={style.mapContainer}>
         <LeafletMap
+          crs={this.crs}
           boundsOptions={boundsOptions}
-          zoom={14}
+          zoom={4}
           style={{height: '100%'}}
           onMoveend={this.handleBBoxChange}
           onZoomend={this.handleBBoxChange}
+          maxZoom={9}
           zoomControl={isIE()}
-          {...!!center.length && { center }}
           {...!!bounds.length && { bounds }}
+          {...!!center.length && { center }}
         >
           <TileLayer
-            url='https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png'
-            attribution="&copy; <a href=&quot;https://osm.org/copyright&quot;>OpenStreetMap</a> contributors"
+            maxZoom={9}
+            minZoom={0}
+            attribution="&amp;copy <a href=&quot;https://www.lantmateriet.se/en/&quot;>Lantmäteriet</a> Topografisk Webbkarta Visning, CCB"
+            url={`https://api.lantmateriet.se/open/topowebb-ccby/v1/wmts/token/${process.env.LANTMATERIET_TOKEN}/1.0.0/topowebb/default/3006/{z}/{y}/{x}.png`}
           />
           {!!youAreHere.length && <Marker
             position={youAreHere}
