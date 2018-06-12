@@ -4,10 +4,10 @@ import MenuIcon from 'material-ui-icons/Menu';
 import InfoIcon from 'material-ui-icons/Info';
 import NearMeIcon from 'material-ui-icons/NearMe';
 import HelpIcon from 'material-ui-icons/Help';
-import Button from 'material-ui/Button';
-import Drawer from 'material-ui/Drawer';
-import { MenuItem } from 'material-ui/Menu';
-import Subheader from 'material-ui/List/ListSubheader';
+import Button from '@material-ui/core/Button';
+import Drawer from '@material-ui/core/Drawer';
+import { MenuItem } from '@material-ui/core/Menu';
+import Subheader from '@material-ui/core/ListSubheader';
 
 import style from './style.scss';
 

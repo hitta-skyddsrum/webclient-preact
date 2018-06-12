@@ -2,7 +2,7 @@ import { h } from 'preact';
 import { Provider } from 'preact-redux';
 import { createStore, applyMiddleware, compose } from 'redux';
 import thunk from 'redux-thunk';
-import { MuiThemeProvider, createMuiTheme } from 'material-ui/styles';
+import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles';
 import Helmet from 'preact-helmet';
 import { syncHistoryWithStore } from 'preact-router-redux';
 

@@ -6,8 +6,8 @@ import sinon from 'sinon';
 import Dialog, {
   DialogContentText,
   DialogTitle,
-} from 'material-ui/Dialog';
-import Button from 'material-ui/Button';
+} from '@material-ui/core/Dialog';
+import Button from '@material-ui/core/Button';
 import ErrorDialog from './';
 
 describe('components/ErrorDialog', () => {

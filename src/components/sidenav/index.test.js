@@ -1,10 +1,10 @@
 import { h } from 'preact';
 import { expect } from 'chai';
 import { shallow } from 'preact-render-spy';
-import MenuIcon from 'material-ui-icons/Menu';
-import Button from 'material-ui/Button';
-import Drawer from 'material-ui/Drawer';
-import { MenuItem } from 'material-ui/Menu';
+import MenuIcon from '@material-ui/core-icons/Menu';
+import Button from '@material-ui/core/Button';
+import Drawer from '@material-ui/core/Drawer';
+import { MenuItem } from '@material-ui/core/Menu';
 
 import Sidenav from './';
 

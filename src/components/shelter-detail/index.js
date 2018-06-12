@@ -1,7 +1,7 @@
 import { h, Component } from 'preact';
 import { BottomSheet } from 'material-ui-bottom-sheet';
-import Button from 'material-ui/Button';
-import List, { ListItem, ListItemText } from 'material-ui/List';
+import Button from '@material-ui/core/Button';
+import List, { ListItem, ListItemText } from '@material-ui/core/List';
 import Helmet from 'preact-helmet';
 import ClearIcon from 'material-ui-icons/Clear';
 

@@ -3,7 +3,7 @@ import { expect } from 'chai';
 import { shallow } from 'preact-render-spy';
 import Helmet from 'preact-helmet';
 
-jest.mock('material-ui/styles');
+jest.mock('@material-ui/core/styles');
 
 import App from './app';
 import Sidenav from '../components/sidenav';
