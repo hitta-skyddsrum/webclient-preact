@@ -12,7 +12,7 @@ import ErrorDialog from '../error-dialog';
 import LoadingIndicator from '../loading-indicator';
 import MapNotification from '../map-notification';
 import ShelterDetail from '../shelter-detail';
-import SearchBox from '../search-box';
+import SearchBox from '../../containers/search-box';
 
 describe('components/shelters', () => {
   let defaultProps;

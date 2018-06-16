@@ -1,7 +1,6 @@
 import fetchJson from '../../lib/fetch-json';
 import formatNominatimAddress from '../../lib/format-nominatim-address';
 import { getBoundsAroundPositions } from '../../lib/geo-utils';
-import history from '../../history';
 
 import {
   FETCH_SINGLE_SHELTER,
@@ -16,11 +15,7 @@ import {
   FETCH_ROUTE_TO_SHELTER_SUCCESS,
   FETCH_ROUTE_TO_SHELTER_FAILED,
   FETCH_ROUTE_TO_SHELTER_FAILED_NOT_FOUND,
-  GET_CURRENT_POSITION,
-  GET_CURRENT_POSITION_FAILED,
-  GET_CURRENT_POSITION_SUCCESS,
   SELECT_SHELTER,
-  SELECT_ADDRESS,
   REVERSE_GEOCODE,
   REVERSE_GEOCODE_FAILED,
   REVERSE_GEOCODE_SUCCESS,
@@ -116,35 +111,6 @@ export const fetchSheltersWithin = bbox => dispatch => {
     }));
 };
 
-export const getCurrentPosition = () => dispatch => {
-  dispatch({
-    type: GET_CURRENT_POSITION,
-  });
-
-  if (!('geolocation' in navigator)) {
-    return dispatch({
-      type: GET_CURRENT_POSITION_FAILED,
-      error: new Error('Din webbläsare har inte stöd för att hämta din position'),
-    });
-  }
-
-  navigator.geolocation.getCurrentPosition(
-    position => {
-      dispatch({
-        type: GET_CURRENT_POSITION_SUCCESS,
-        position,
-      });
-
-      const { coords: { latitude, longitude } } = position;
-      history.push(`/skyddsrum?lat=${latitude}&lon=${longitude}`);
-    },
-    error => dispatch({
-      type: GET_CURRENT_POSITION_FAILED,
-      error,
-    }),
-  );
-};
-
 export const setBounds = bounds => ({
   type: SET_BOUNDS,
   bounds,
@@ -207,13 +173,6 @@ export const selectShelter = id => (dispatch, getStore) => {
       const { youAreHere } = getStore().Shelters;
       dispatch(fetchRouteToShelter(youAreHere, shelter));
     });
-};
-
-export const selectAddress = suggestion => {
-  return {
-    type: SELECT_ADDRESS,
-    address: suggestion,
-  };
 };
 
 export const unselectShelter = () => {

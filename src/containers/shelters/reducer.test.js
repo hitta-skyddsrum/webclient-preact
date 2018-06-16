@@ -1,6 +1,12 @@
 import polyline from 'polyline';
 import { expect } from 'chai';
 
+import {
+  GET_CURRENT_POSITION,
+  GET_CURRENT_POSITION_FAILED,
+  GET_CURRENT_POSITION_SUCCESS,
+  SELECT_ADDRESS,
+} from '../search-box/types';
 import * as types from './types';
 import SheltersReducer from './reducer';
 
@@ -71,7 +77,7 @@ describe('containers/shelters/reducer', () => {
   it('should set selectedAddress upon SELECT_ADDRESS', () => {
     const address = { name: 'the streets no 1' };
 
-    expect(SheltersReducer(undefined, { type: types.SELECT_ADDRESS, address }).selectedAddress)
+    expect(SheltersReducer(undefined, { type: SELECT_ADDRESS, address }).selectedAddress)
       .to.eql(address);
   });
 
@@ -255,7 +261,7 @@ describe('containers/shelters/reducer', () => {
       loading: 21,
     };
     const returnedState = SheltersReducer(initialState, {
-      type: types.GET_CURRENT_POSITION,
+      type: GET_CURRENT_POSITION,
     });
 
     expect(returnedState.loading).to.equal(initialState.loading + 1);
@@ -266,7 +272,7 @@ describe('containers/shelters/reducer', () => {
       loading: 223,
     };
     const returnedState = SheltersReducer(initialState, {
-      type: types.GET_CURRENT_POSITION_FAILED,
+      type: GET_CURRENT_POSITION_FAILED,
       error: new Error(),
     });
 
@@ -276,7 +282,7 @@ describe('containers/shelters/reducer', () => {
   it('should set accurate error upon GET_CURRENT_POSITION_FAILED', () => {
     const error = new Error('Human error');
     const returnedState = SheltersReducer(undefined, {
-      type: types.GET_CURRENT_POSITION_FAILED,
+      type: GET_CURRENT_POSITION_FAILED,
       error,
     });
 
@@ -289,7 +295,7 @@ describe('containers/shelters/reducer', () => {
       loading: 222,
     };
     const returnedState = SheltersReducer(initialState, {
-      type: types.GET_CURRENT_POSITION_SUCCESS,
+      type: GET_CURRENT_POSITION_SUCCESS,
     });
 
     expect(returnedState.loading).to.equal(initialState.loading - 1);
