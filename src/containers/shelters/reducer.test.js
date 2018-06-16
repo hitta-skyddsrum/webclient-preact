@@ -250,6 +250,51 @@ describe('containers/shelters/reducer', () => {
       .to.match(new RegExp('kunde inte hittas'));
   });
 
+  it('should increment loading state upon GET_CURRENT_POSITION', () => {
+    const initialState = {
+      loading: 21,
+    };
+    const returnedState = SheltersReducer(initialState, {
+      type: types.GET_CURRENT_POSITION,
+    });
+
+    expect(returnedState.loading).to.equal(initialState.loading + 1);
+  });
+
+  it('should decrement loading state upon GET_CURRENT_POSITION_FAILED', () => {
+    const initialState = {
+      loading: 223,
+    };
+    const returnedState = SheltersReducer(initialState, {
+      type: types.GET_CURRENT_POSITION_FAILED,
+      error: new Error(),
+    });
+
+    expect(returnedState.loading).to.equal(initialState.loading - 1);
+  });
+
+  it('should set accurate error upon GET_CURRENT_POSITION_FAILED', () => {
+    const error = new Error('Human error');
+    const returnedState = SheltersReducer(undefined, {
+      type: types.GET_CURRENT_POSITION_FAILED,
+      error,
+    });
+
+    expect(returnedState.error).to.equal(error);
+    expect(returnedState.humanError).to.equal(error.toString());
+  });
+
+  it('should decrement loading state upon GET_CURRENT_POSITION_SUCCESS', () => {
+    const initialState = {
+      loading: 222,
+    };
+    const returnedState = SheltersReducer(initialState, {
+      type: types.GET_CURRENT_POSITION_SUCCESS,
+    });
+
+    expect(returnedState.loading).to.equal(initialState.loading - 1);
+  });
+
   it('should add selected shelter to state upon SELECT_SHELTER', () => {
     const shelter = { shelter: 'is selected' };
 

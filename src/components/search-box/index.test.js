@@ -8,6 +8,43 @@ import ErrorDialog from '../error-dialog';
 import SearchBox from './';
 
 describe('components/search-box', () => {
+  const sandbox = sinon.createSandbox();
+  let mockContainer;
+
+  beforeEach(() => {
+    sandbox.stub(SearchBox.prototype, 'setContainerRef');
+
+    const addEventListener = sinon.spy();
+    mockContainer = {
+      querySelector: () => ({
+        addEventListener,
+      }),
+    };
+
+    SearchBox.prototype.containerRef = mockContainer;
+
+    const getCurrentPosition = sinon.spy();
+    Object.assign(navigator, {
+      geolocation: {
+        getCurrentPosition,
+      },
+    });
+  });
+
+  afterEach(() => {
+    sandbox.restore();
+  });
+
+  it('should call onGeolocation upon clicking on pin icon', () => {
+    sandbox.spy(SearchBox.prototype.containerRef, 'querySelector');
+    const onGeolocation = sinon.spy();
+    shallow(<SearchBox onGeolocation={onGeolocation} />);
+
+    expect(mockContainer.querySelector).to.have.been.calledWith('.ap-icon-pin');
+    expect(mockContainer.querySelector().addEventListener)
+      .to.have.been.calledWith('click', onGeolocation);
+  });
+
   describe('ErrorDialog', () => {
     it('should display an ErrorDialog upon state error truthy', () => {
       const context = shallow(<SearchBox />);

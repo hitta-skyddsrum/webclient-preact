@@ -151,6 +151,7 @@ export default class Shelters extends Component {
       <div class={style.shadowHeader} />
       <SearchBox
         styles={style.searchBox}
+        onGeolocation={this.props.onGeolocation}
         onSelectAddress={this.props.onSelectAddress}
         onBlur={this.handleSearchBoxBlur}
         onFocus={this.handleSearchBoxFocus}
