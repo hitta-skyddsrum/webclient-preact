@@ -8,7 +8,7 @@ import VadArEttSkyddsrum from '../components/vad-ar-ett-skyddsrum';
 import NotFound from '../components/not-found';
 import Redirect from './redirect/index';
 
-const home = import(/* webpackPrefetch: true */ './home');
+const home = import(/* webpackPrefetch: true */ '../components/home');
 const shelters = import(/* webpackPrefetch: true */ './shelters');
 
 export const loadHome = () =>

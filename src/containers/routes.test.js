@@ -7,7 +7,7 @@ import Routes, { loadHome, loadShelters } from './routes';
 import VadArEttSkyddsrum from '../components/vad-ar-ett-skyddsrum';
 import OmTjansten from '../components/om-tjansten';
 import Redirect from './redirect';
-import Home from './home';
+import Home from '../components/home';
 import Shelters from './shelters';
 import NotFound from '../components/not-found';
 

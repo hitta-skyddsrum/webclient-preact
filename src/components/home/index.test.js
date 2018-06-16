@@ -1,10 +1,9 @@
 import { h } from 'preact';
 import { expect } from 'chai';
-import sinon from 'sinon';
 import { shallow } from 'preact-render-spy';
 
 import Home from './';
-import SearchBox from '../search-box';
+import SearchBox from '../../containers/search-box';
 
 describe('components/home', () => {
   it('should show the home text', () => {
@@ -13,9 +12,8 @@ describe('components/home', () => {
   });
 
   it('should display a SearchBox componet', () => {
-    const onSelectAddress = sinon.spy();
-    const home = shallow(<Home onSelectAddress={onSelectAddress} />);
+    const home = shallow(<Home />);
 
-    expect(home.contains(<SearchBox onSelectAddress={onSelectAddress} />)).to.equal(true);
+    expect(home.contains(<SearchBox />)).to.equal(true);
   });
 });
