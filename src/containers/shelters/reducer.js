@@ -12,6 +12,9 @@ import {
   FETCH_ROUTE_TO_SHELTER_SUCCESS,
   FETCH_ROUTE_TO_SHELTER_FAILED,
   FETCH_ROUTE_TO_SHELTER_FAILED_NOT_FOUND,
+  GET_CURRENT_POSITION,
+  GET_CURRENT_POSITION_SUCCESS,
+  GET_CURRENT_POSITION_FAILED,
   SELECT_SHELTER,
   UNSELECT_SHELTER,
   REVERSE_GEOCODE_SUCCESS,
@@ -156,6 +159,23 @@ export default (state = initialState, action) => {
             kan bero på att bilvägar mellan platserna saknas eller
             att vår data-källa saknar kunskap om denna väg.`,
         },
+      };
+    case GET_CURRENT_POSITION:
+      return {
+        ...state,
+        loading: state.loading + 1,
+      };
+    case GET_CURRENT_POSITION_FAILED:
+      return {
+        ...state,
+        error: action.error,
+        humanError: action.error.toString(),
+        loading: state.loading - 1,
+      };
+    case GET_CURRENT_POSITION_SUCCESS:
+      return {
+        ...state,
+        loading: state.loading - 1,
       };
     case SELECT_SHELTER:
       return {

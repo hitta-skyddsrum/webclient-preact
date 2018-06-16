@@ -17,6 +17,12 @@ export default class SearchBox extends Component {
     this.handleAlgoliaLimit = this.handleAlgoliaLimit.bind(this);
     this.handleAlgoliaError = this.handleAlgoliaError.bind(this);
     this.handleCloseErrorDialog = this.handleCloseErrorDialog.bind(this);
+    this.setContainerRef = this.setContainerRef.bind(this);
+  }
+
+  componentDidMount() {
+    this.containerRef.querySelector('.ap-icon-pin')
+      .addEventListener('click', this.props.onGeolocation);
   }
 
   handleAddressSelection({ suggestion }) {
@@ -50,9 +56,13 @@ export default class SearchBox extends Component {
     this.setState({ error: null });
   }
 
+  setContainerRef(ref) {
+    this.containerRef = ref;
+  }
+
   render(props, { error }) {
     return (
-      <div>
+      <div ref={this.setContainerRef}>
         {error &&
           <ErrorDialog
             title={error.title}
