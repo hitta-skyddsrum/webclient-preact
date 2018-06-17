@@ -11,6 +11,16 @@
         background-color: #fff;
       }
 
+      .ap-icon-pin {
+        cursor: pointer;
+        min-width: 40px;
+
+        svg {
+          right: 50%;
+          transform: translateY(-50%) translateX(50%);
+        }
+      }
+
       .ap-dropdown-menu {
         color: #000;
 
