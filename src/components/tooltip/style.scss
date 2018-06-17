@@ -1,0 +1,41 @@
+@import  '../../style/variables';
+
+.tooltip {
+  position: absolute;
+  bottom: calc(100% + 5px);
+  right: 0;
+  background-color: $orange;
+  z-index: 1;
+  padding: 10px;
+  border-radius: 5px;
+  text-align: left;
+  animation: fade 0.5s;
+
+  @keyframes fade {
+    from {
+      opacity: 0;
+    }
+
+    to {
+      opacity: 1;
+    }
+  }
+
+  .header {
+    font-size: 80%;
+    display: inline-block;
+    transform: rotate(-10deg) translateY(-4px);
+  }
+
+  .arrow {
+    position: absolute;
+    top: calc(100% - 10px);
+    right: 15px;
+    height: 20px;
+    width: 20px;
+    background-color: $orange;
+    transform: rotate(45deg);
+  }
+}
+
+
