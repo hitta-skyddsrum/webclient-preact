@@ -79,19 +79,19 @@ describe('components/search-box', () => {
     it('should contain AlgoliaPlaces component', () => {
       const apiKey = 'api-123';
       const appId = 'app-no-1';
-
       process.env.ALGOLIA_API_KEY = apiKey;
       process.env.ALGOLIA_APP_ID = appId;
+      const wrapper = shallow(<SearchBox />);
 
-      expect(<SearchBox />).to.contain(<AlgoliaPlaces
-        placeholder="Var vill du söka från?"
-        options={{
-          language: 'sv',
-          countries: ['se'],
-          apiKey,
-          appId,
-        }}
-      />);
+      const apComp = wrapper.find(AlgoliaPlaces);
+      expect(apComp.length).to.equal(1);
+      expect(apComp.attr('placeholder')).to.equal('Var vill du söka från?');
+      expect(apComp.attr('options')).to.deep.include({
+        language: 'sv',
+        countries: ['se'],
+        apiKey,
+        appId,
+      });
     });
 
     it('should update state upon AlgoliaPlaces onLimit event', () => {

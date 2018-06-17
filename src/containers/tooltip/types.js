@@ -1,0 +1,1 @@
+export const HIDE_TOOLTIP = 'TOOLTIP/HIDE_TOOLTIP';
