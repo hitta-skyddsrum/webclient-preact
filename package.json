@@ -89,7 +89,7 @@
     "jest": "^23.1.0",
     "jest-cli": "^23.0.0",
     "json-loader": "^0.5.4",
-    "lighthouse-ci": "git+https://github.com/kontrollanten/lighthouse-ci.git",
+    "lighthouse-ci": "kontrollanten/lighthouse-ci#master",
     "mkdirp": "^0.5.1",
     "ncp": "^2.0.0",
     "nightwatch": "github:kontrollanten/nightwatch-visual-regression#cd907b996810ed58c1c7867c6da7b7e0f3b52e28",
