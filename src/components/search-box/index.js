@@ -3,7 +3,7 @@ import { route } from 'preact-router';
 import classNames from 'classnames';
 import AlgoliacePlaces from 'algolia-places-react';
 import ErrorDialog from '../error-dialog';
-import Tooltip from '../tooltip';
+import Tooltip from '../../containers/tooltip';
 import styles from './style.scss';
 
 export default class SearchBox extends Component {
@@ -72,7 +72,7 @@ export default class SearchBox extends Component {
           />
         }
         <div className={classNames(styles.algolia, props.styles)}>
-          <Tooltip title="Klicka här för att söka utifrån din position." />
+          <Tooltip tooltipId="geo_search" title="Klicka här för att söka utifrån din position." />
           <AlgoliacePlaces
             options={{
               apiKey: process.env.ALGOLIA_API_KEY,
