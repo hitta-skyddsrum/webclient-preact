@@ -1,9 +1,10 @@
 import { createStore, applyMiddleware, compose } from 'redux';
 import thunk from 'redux-thunk';
+import statePersist, { getInitialState } from './middlewares/state-persist';
 import hittaSkyddsrumApp from './reducer';
 
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
-let middlewares = [thunk];
+let middlewares = [thunk, statePersist];
 
 if (process.env.NODE_ENV !== 'development') {
   const createRavenMiddleware = require('raven-for-redux');
@@ -20,6 +21,12 @@ if (process.env.NODE_ENV !== 'development') {
   middlewares.push(createRavenMiddleware(Raven));
 }
 
-export default createStore(hittaSkyddsrumApp, composeEnhancers(
-  applyMiddleware(...middlewares)
-));
+const store = createStore(
+  hittaSkyddsrumApp,
+  getInitialState(),
+  composeEnhancers(
+    applyMiddleware(...middlewares)
+  ),
+);
+
+export default store;
