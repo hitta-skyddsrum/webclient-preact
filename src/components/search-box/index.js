@@ -71,7 +71,7 @@ export default class SearchBox extends Component {
             handleClose={this.handleCloseErrorDialog}
           />
         }
-        <div className={classNames(styles.algolia, props.styles)}>
+        <div className={classNames(styles.algolia, props.styles, { [styles.loadingGeo]: this.props.loadingGeo })}>
           {window.localStorage && (
             <Tooltip tooltipId="geo_search" title="Klicka här för att söka utifrån din position." />
           )}
@@ -88,6 +88,10 @@ export default class SearchBox extends Component {
             onLimit={this.handleAlgoliaLimit}
             onError={this.handleAlgoliaError}
             placeholder="Var vill du söka från?"
+            {...(!this.props.geoLoading ? {} : {
+              disabled: true,
+              value: 'Hämtar din position...',
+            })}
           />
         </div>
       </div>

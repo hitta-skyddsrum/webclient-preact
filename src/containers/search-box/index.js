@@ -5,7 +5,8 @@ import {
 } from './actions';
 import SearchBox from '../../components/search-box';
 
-const mapStateToProps = () => ({
+const mapStateToProps = ({ SearchBox }) => ({
+  loadingGeo: SearchBox.loadingGeo,
 });
 
 const mapDispatchToProps = dispatch => ({

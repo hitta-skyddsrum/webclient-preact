@@ -173,5 +173,12 @@ describe('components/search-box', () => {
 
       jest.unmock('preact-router');
     });
+
+    it('should disable input field and show custom value upon geoLoading', () => {
+      const wrapper = shallow(<SearchBox geoLoading />);
+
+      expect(wrapper.find(AlgoliaPlaces).attr('disabled')).to.equal(true);
+      expect(wrapper.find(AlgoliaPlaces).attr('value')).to.contain('Hämtar');
+    });
   });
 });
