@@ -1,3 +1,23 @@
+@import '../../style/variables';
+
+@keyframes fill {
+  0% {
+    opacity: 1;
+  }
+
+  25% {
+    opacity: 0;
+  }
+
+  50% {
+    clip-path: inset(20px 0px 0px 0px);
+  }
+
+  100% {
+    clip-path: inset(0px 0px 0px 0px);
+  }
+}
+
 .algolia {
   max-width: 100%;
   position: relative;
@@ -9,15 +29,25 @@
       input {
         box-sizing: border-box;
         background-color: #fff;
+
+        &[disabled] {
+          background-color: $dark_gray;
+          color: $gray;
+        }
       }
 
-      .ap-icon-pin {
+      .ap-icon-pin :local {
         cursor: pointer;
         min-width: 40px;
 
         svg {
           right: 50%;
           transform: translateY(-50%) translateX(50%);
+
+          @at-root .loadingGeo#{&} {
+            fill: $orange;
+            animation: fill 3s infinite;
+          }
         }
       }
 
