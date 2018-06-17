@@ -72,7 +72,9 @@ export default class SearchBox extends Component {
           />
         }
         <div className={classNames(styles.algolia, props.styles)}>
-          <Tooltip tooltipId="geo_search" title="Klicka här för att söka utifrån din position." />
+          {window.localStorage && (
+            <Tooltip tooltipId="geo_search" title="Klicka här för att söka utifrån din position." />
+          )}
           <AlgoliacePlaces
             options={{
               apiKey: process.env.ALGOLIA_API_KEY,
