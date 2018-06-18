@@ -1,10 +1,10 @@
 import polyline from 'polyline';
 import { expect } from 'chai';
+import sinon from 'sinon';
 
+import * as humanError from '../../lib/human-error';
 import {
-  GET_CURRENT_POSITION,
   GET_CURRENT_POSITION_FAILED,
-  GET_CURRENT_POSITION_SUCCESS,
   SELECT_ADDRESS,
 } from '../search-box/types';
 import * as types from './types';
@@ -256,49 +256,19 @@ describe('containers/shelters/reducer', () => {
       .to.match(new RegExp('kunde inte hittas'));
   });
 
-  it('should increment loading state upon GET_CURRENT_POSITION', () => {
-    const initialState = {
-      loading: 21,
-    };
-    const returnedState = SheltersReducer(initialState, {
-      type: GET_CURRENT_POSITION,
-    });
-
-    expect(returnedState.loading).to.equal(initialState.loading + 1);
-  });
-
-  it('should decrement loading state upon GET_CURRENT_POSITION_FAILED', () => {
-    const initialState = {
-      loading: 223,
-    };
-    const returnedState = SheltersReducer(initialState, {
-      type: GET_CURRENT_POSITION_FAILED,
-      error: new Error(),
-    });
-
-    expect(returnedState.loading).to.equal(initialState.loading - 1);
-  });
-
   it('should set accurate error upon GET_CURRENT_POSITION_FAILED', () => {
-    const error = new Error('Human error');
+    const humanErrorMessage = 'Humans only';
+    sinon.stub(humanError, 'getMessageForGetPositionError').returns(humanErrorMessage);
+    const error = new Error();
     const returnedState = SheltersReducer(undefined, {
       type: GET_CURRENT_POSITION_FAILED,
       error,
     });
 
     expect(returnedState.error).to.equal(error);
-    expect(returnedState.humanError).to.equal(error.toString());
-  });
+    expect(returnedState.humanError).to.equal(humanErrorMessage);
 
-  it('should decrement loading state upon GET_CURRENT_POSITION_SUCCESS', () => {
-    const initialState = {
-      loading: 222,
-    };
-    const returnedState = SheltersReducer(initialState, {
-      type: GET_CURRENT_POSITION_SUCCESS,
-    });
-
-    expect(returnedState.loading).to.equal(initialState.loading - 1);
+    humanError.getMessageForGetPositionError.restore();
   });
 
   it('should add selected shelter to state upon SELECT_SHELTER', () => {

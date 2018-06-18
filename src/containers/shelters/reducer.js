@@ -1,8 +1,7 @@
 import polyline from 'polyline';
 import { getSearchParam, getValueAfterSection } from '../../lib/url-parser';
+import { getMessageForGetPositionError } from '../../lib/human-error';
 import {
-  GET_CURRENT_POSITION,
-  GET_CURRENT_POSITION_SUCCESS,
   GET_CURRENT_POSITION_FAILED,
   SELECT_ADDRESS,
 } from '../search-box/types';
@@ -162,22 +161,11 @@ export default (state = initialState, action) => {
             att vår data-källa saknar kunskap om denna väg.`,
         },
       };
-    case GET_CURRENT_POSITION:
-      return {
-        ...state,
-        loading: state.loading + 1,
-      };
     case GET_CURRENT_POSITION_FAILED:
       return {
         ...state,
         error: action.error,
-        humanError: action.error.toString(),
-        loading: state.loading - 1,
-      };
-    case GET_CURRENT_POSITION_SUCCESS:
-      return {
-        ...state,
-        loading: state.loading - 1,
+        humanError: getMessageForGetPositionError(action.error),
       };
     case SELECT_SHELTER:
       return {
