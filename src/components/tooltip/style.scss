@@ -11,6 +11,26 @@
   border-radius: 5px;
   text-align: left;
   animation: fade 0.5s;
+  cursor: pointer;
+
+  &:after {
+    content: 'x';
+    position: absolute;
+    top: 3px;
+    right: 10px;
+    line-height: 1;
+    color: $dark_gray;
+    transition: transform 0.3s;
+
+    &:hover {
+    }
+  }
+
+  &:hover {
+    &:after {
+      transform: scale(1.3);
+    }
+  }
 
   @keyframes fade {
     from {
