@@ -10,12 +10,13 @@ export default class SearchBox extends Component {
     super();
 
     this.handleAddressSelection = this.handleAddressSelection.bind(this);
+    this.handleClickGeolocation = this.handleClickGeolocation.bind(this);
     this.setContainerRef = this.setContainerRef.bind(this);
   }
 
   componentDidMount() {
     this.containerRef.querySelector('.ap-icon-pin')
-      .addEventListener('click', this.props.onGeolocation);
+      .addEventListener('click', this.handleClickGeolocation);
   }
 
   handleAddressSelection({ suggestion }) {
@@ -23,6 +24,11 @@ export default class SearchBox extends Component {
     this.props.onSelectAddress(suggestion);
   }
 
+  handleClickGeolocation() {
+    this.containerRef.querySelector('input').blur();
+
+    this.props.onGeolocation();
+  }
 
   setContainerRef(ref) {
     this.containerRef = ref;
