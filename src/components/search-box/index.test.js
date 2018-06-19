@@ -14,9 +14,11 @@ describe('components/search-box', () => {
     sandbox.stub(SearchBox.prototype, 'setContainerRef');
 
     const addEventListener = sinon.spy();
+    const blur = sinon.spy();
     mockContainer = {
-      querySelector: () => ({
+      querySelector: sinon.stub().returns({
         addEventListener,
+        blur,
       }),
     };
 
@@ -35,13 +37,18 @@ describe('components/search-box', () => {
   });
 
   it('should call onGeolocation upon clicking on pin icon', () => {
-    sandbox.spy(SearchBox.prototype.containerRef, 'querySelector');
     const onGeolocation = sinon.spy();
     shallow(<SearchBox onGeolocation={onGeolocation} />);
 
     expect(mockContainer.querySelector).to.have.been.calledWith('.ap-icon-pin');
     expect(mockContainer.querySelector().addEventListener)
-      .to.have.been.calledWith('click', onGeolocation);
+      .to.have.been.calledWith('click', sinon.match.func);
+
+    mockContainer.querySelector().addEventListener.lastCall.args[1]();
+
+    expect(mockContainer.querySelector).to.have.been.calledWith('input');
+    expect(mockContainer.querySelector().blur).to.have.been.calledWith();
+    expect(onGeolocation).to.have.been.calledWith();
   });
 
   describe('AlgoliaPlaces', () => {
