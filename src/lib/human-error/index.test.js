@@ -7,7 +7,7 @@ describe('lib/human-error/getMessageForGetPositionError', () => {
     error.code = 1;
 
     const message = getMessageForGetPositionError(error);
-    expect(message.message).to.contain('Nekad behörighet');
+    expect(message.title).to.contain('Nekad behörighet');
     expect(message.desc).to.contain('webbläsare');
   });
 
@@ -16,7 +16,7 @@ describe('lib/human-error/getMessageForGetPositionError', () => {
     error.code = 2;
 
     const message = getMessageForGetPositionError(error);
-    expect(message.message).to.contain('Misslyckades hämta din position');
+    expect(message.title).to.contain('Misslyckades hämta din position');
     expect(message.desc).to.contain('Webbläsare');
   });
 
@@ -25,7 +25,7 @@ describe('lib/human-error/getMessageForGetPositionError', () => {
     error.code = 3;
 
     const message = getMessageForGetPositionError(error);
-    expect(message.message).to.contain('för lång tid');
+    expect(message.title).to.contain('för lång tid');
     expect(message.desc).to.contain('att hämta din position tog för lång');
   });
 });

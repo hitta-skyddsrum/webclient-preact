@@ -12,8 +12,8 @@ export default class ErrorDialog extends Component {
     return (
       <Dialog
         modal={false}
-        open={true}
-        onClose={this.props.handleClose}
+        open={this.props.show}
+        onClose={this.props.onClose}
         aria-labelledby="alert-dialog-title"
         aria-describedby="alert-dialog-description"
         className="error-dialog"
@@ -29,7 +29,7 @@ export default class ErrorDialog extends Component {
         <DialogActions>
           <Button
             color="primary"
-            onClick={this.props.handleClose}
+            onClick={this.props.onClose}
           >Okej</Button>
         </DialogActions>
       </Dialog>

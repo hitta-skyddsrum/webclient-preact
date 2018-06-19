@@ -8,7 +8,6 @@ import Helmet from 'preact-helmet';
 import Shelters from './';
 
 import SheltersMap from '../shelters-map';
-import ErrorDialog from '../error-dialog';
 import LoadingIndicator from '../loading-indicator';
 import MapNotification from '../map-notification';
 import ShelterDetail from '../shelter-detail';
@@ -51,40 +50,6 @@ describe('components/shelters', () => {
     const context = shallow(<Shelters loading={4} {...defaultProps} />);
 
     expect(context.find(<LoadingIndicator />).length).to.equal(1);
-  });
-
-  it('displays an ErrorDialog upon incoming humanError', () => {
-    const humanError = {
-      message: 'Varning',
-      desc: 'Hold on',
-    };
-    const context = shallow(<Shelters
-      shelters={[]}
-      {...defaultProps}
-    />);
-
-    expect(context.find(<ErrorDialog />).length).to.equal(0);
-
-    context.render(<Shelters
-      humanError={humanError}
-      shelters={[]}
-      {...defaultProps}
-    />);
-
-    expect(context.find(<ErrorDialog title={humanError.message} desc={humanError.desc} />).length).to.equal(1);
-  });
-
-  it('fires onCloseError upon closing ErrorDialog', () => {
-    const onCloseError = sinon.spy();
-    const context = shallow(<Shelters
-      humanError={new Error('What\'s going on?')}
-      onCloseErrorDialog={onCloseError}
-      {...defaultProps}
-    />);
-
-    context.find(<ErrorDialog />).attr('handleClose')();
-
-    expect(onCloseError.calledOnce).to.equal(true);
   });
 
   it('should contain a SearchBox container', () => {

@@ -2,22 +2,14 @@ import { h, Component } from 'preact';
 import { route } from 'preact-router';
 import classNames from 'classnames';
 import AlgoliacePlaces from 'algolia-places-react';
-import ErrorDialog from '../error-dialog';
 import Tooltip from '../../containers/tooltip';
 import styles from './style.scss';
 
 export default class SearchBox extends Component {
-  state = {
-    error: null,
-  };
-
   constructor() {
     super();
 
     this.handleAddressSelection = this.handleAddressSelection.bind(this);
-    this.handleAlgoliaLimit = this.handleAlgoliaLimit.bind(this);
-    this.handleAlgoliaError = this.handleAlgoliaError.bind(this);
-    this.handleCloseErrorDialog = this.handleCloseErrorDialog.bind(this);
     this.setContainerRef = this.setContainerRef.bind(this);
   }
 
@@ -31,46 +23,14 @@ export default class SearchBox extends Component {
     this.props.onSelectAddress(suggestion);
   }
 
-  handleAlgoliaLimit() {
-    this.setState({
-      error: {
-        title: 'Adressförslagen kunde inte hämtas',
-        desc: <div>Tjänsten är för tillfället överbelastad och kan därmed inte visa förslag utifrån din sökning. Vi rekommenderar att du istället besöker <a href="https://gisapp.msb.se/apps/kartportal/enkel-karta_skyddsrum/">MSB</a> för att hitta ditt närmaste skyddsrum.</div>,
-      },
-    });
-
-    throw new Error('AlgoliaPlaces: Rate limit');
-  }
-
-  handleAlgoliaError(error) {
-    this.setState({
-      error: {
-        title: 'Addressförslagen kunde inte hämtas',
-        desc: <div>Tjänsten för att hämta addressförslag är för tillfället inte tillgänglig. Vi rekommenderar att du istället besöker <a href="https://gisapp.msb.se/apps/kartportal/enkel-karta_skyddsrum/">MSB</a> för att hitta ditt närmaste skyddsrum.</div>,
-      },
-    });
-
-    throw new Error(error);
-  }
-
-  handleCloseErrorDialog() {
-    this.setState({ error: null });
-  }
 
   setContainerRef(ref) {
     this.containerRef = ref;
   }
 
-  render(props, { error }) {
+  render(props) {
     return (
       <div ref={this.setContainerRef}>
-        {error &&
-          <ErrorDialog
-            title={error.title}
-            desc={error.desc}
-            handleClose={this.handleCloseErrorDialog}
-          />
-        }
         <div className={classNames(styles.algolia, props.styles, { [styles.loadingGeo]: this.props.loadingGeo })}>
           {window.localStorage && (
             <Tooltip tooltipId="geo_search" title="Klicka här för att söka utifrån din position." />
@@ -85,10 +45,10 @@ export default class SearchBox extends Component {
             onBlur={this.props.onBlur}
             onChange={this.handleAddressSelection}
             onFocus={this.props.onFocus}
-            onLimit={this.handleAlgoliaLimit}
-            onError={this.handleAlgoliaError}
+            onLimit={this.props.onLimit}
+            onError={this.props.onSearchError}
             placeholder="Var vill du söka från?"
-            {...(!this.props.geoLoading ? {} : {
+            {...(!this.props.loadingGeo ? {} : {
               disabled: true,
               value: 'Hämtar din position...',
             })}

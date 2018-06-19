@@ -1,0 +1,1 @@
+export const CLEAR_ERROR = 'ERROR_DIALOG/CLEAR_ERROR';

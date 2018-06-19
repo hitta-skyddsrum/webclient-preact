@@ -4,7 +4,6 @@ import sinon from 'sinon';
 import { shallow } from 'preact-render-spy';
 import { route } from 'preact-router';
 import AlgoliaPlaces from 'algolia-places-react';
-import ErrorDialog from '../error-dialog';
 import SearchBox from './';
 
 describe('components/search-box', () => {
@@ -45,36 +44,6 @@ describe('components/search-box', () => {
       .to.have.been.calledWith('click', onGeolocation);
   });
 
-  describe('ErrorDialog', () => {
-    it('should display an ErrorDialog upon state error truthy', () => {
-      const context = shallow(<SearchBox />);
-      const title = 'This is the title';
-      const desc = 'Descriptionable description';
-
-      expect(context.find(<ErrorDialog />).length).to.equal(0);
-
-      context.setState({
-        error: {
-          title,
-          desc,
-        },
-      });
-
-      expect(context.find(<ErrorDialog title={title} desc={desc} />).length).to.equal(1);
-    });
-
-    it('should hide ErrorDialog upon calling onClose cb', () => {
-      const context = shallow(<SearchBox />);
-      context.setState({
-        error: {},
-      });
-      context.find('ErrorDialog').attr('handleClose')();
-      context.rerender();
-
-      expect(context.find(<ErrorDialog />).length).to.equal(0);
-    });
-  });
-
   describe('AlgoliaPlaces', () => {
     it('should contain AlgoliaPlaces component', () => {
       const apiKey = 'api-123';
@@ -94,44 +63,23 @@ describe('components/search-box', () => {
       });
     });
 
-    it('should update state upon AlgoliaPlaces onLimit event', () => {
-      const context = shallow(<SearchBox />);
+    it('should call onLimit upon AlgoliaPlaces onLimit event', () => {
+      const onLimit = sinon.spy();
+      const wrapper = shallow(<SearchBox onLimit={onLimit} />);
 
-      try {
-        context.find(AlgoliaPlaces).attr('onLimit')();
-      } catch (e) {}
+      wrapper.find(AlgoliaPlaces).attr('onLimit')();
 
-      expect(context.state('error')).to.eql({
-        title: 'Adressförslagen kunde inte hämtas',
-        desc: <div>Tjänsten är för tillfället överbelastad och kan därmed inte visa förslag utifrån din sökning. Vi rekommenderar att du istället besöker <a href="https://gisapp.msb.se/apps/kartportal/enkel-karta_skyddsrum/">MSB</a> för att hitta ditt närmaste skyddsrum.</div>,
-      });
+      expect(onLimit).to.have.been.calledWith();
     });
 
-    it('should throw an error, to be catched by Raven, upon AlgoliaPlaces onLimit event', () => {
-      const context = shallow(<SearchBox />);
+    it('should call onSearchError upon AlgoliaPlaces onError event', () => {
+      const onSearchError = sinon.spy();
+      const error = new Error();
+      const wrapper = shallow(<SearchBox onSearchError={onSearchError} />);
 
-      expect(context.find(AlgoliaPlaces).attr('onLimit')).to.throw(Error, /Rate limit/);
-    });
+      wrapper.find(AlgoliaPlaces).attr('onError')(error);
 
-    it('should update state upon AlgoliaPlaces onError event', () => {
-      const context = shallow(<SearchBox />);
-
-      try {
-        context.find(AlgoliaPlaces).attr('onError')();
-      } catch (e) {}
-
-      expect(context.state('error')).to.eql({
-        title: 'Addressförslagen kunde inte hämtas',
-        desc: <div>Tjänsten för att hämta addressförslag är för tillfället inte tillgänglig. Vi rekommenderar att du istället besöker <a href="https://gisapp.msb.se/apps/kartportal/enkel-karta_skyddsrum/">MSB</a> för att hitta ditt närmaste skyddsrum.</div>,
-      });
-    });
-
-    it('should throw an error, to be catched by Raven, upon AlgoliaPlaces onError event', () => {
-      const context = shallow(<SearchBox />);
-      const error = new Error('This is bad');
-
-      // eslint-disable-next-line max-nested-callbacks
-      expect(() => context.find(AlgoliaPlaces).attr('onError')(error)).to.throw(Error, /This is bad/);
+      expect(onSearchError).to.have.been.calledWith(error);
     });
 
     it('should call onBlur upon AlgoliaPlaces onBlur event', () => {
@@ -174,8 +122,8 @@ describe('components/search-box', () => {
       jest.unmock('preact-router');
     });
 
-    it('should disable input field and show custom value upon geoLoading', () => {
-      const wrapper = shallow(<SearchBox geoLoading />);
+    it('should disable input field and show custom value upon loadingGeo', () => {
+      const wrapper = shallow(<SearchBox loadingGeo />);
 
       expect(wrapper.find(AlgoliaPlaces).attr('disabled')).to.equal(true);
       expect(wrapper.find(AlgoliaPlaces).attr('value')).to.contain('Hämtar');

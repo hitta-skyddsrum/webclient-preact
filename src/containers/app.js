@@ -7,6 +7,7 @@ import Helmet from 'preact-helmet';
 import store from '../store';
 import browserHistory from '../history';
 import Sidenav from '../components/sidenav';
+import ErrorDialog from './error-dialog';
 import Routes from './routes';
 
 import '../style/index.scss';
@@ -37,6 +38,7 @@ export default () => {
           <div className={style.maximize}>
             <Sidenav location={history.location} />
             <Routes history={history} />
+            <ErrorDialog />
           </div>
         </MuiThemeProvider>
       </div>
