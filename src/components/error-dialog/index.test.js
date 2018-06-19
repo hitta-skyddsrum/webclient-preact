@@ -14,7 +14,7 @@ describe('components/ErrorDialog', () => {
   it('should display a Dialog', () => {
     const context = shallow(<ErrorDialog />);
 
-    expect(context.find(<Dialog open={true} />).length).to.equal(1);
+    expect(context.find(<Dialog />).length).to.equal(1);
   });
 
   it('should display a Dialog with correct title', () => {
@@ -31,17 +31,17 @@ describe('components/ErrorDialog', () => {
     expect(context.find(<DialogContentText />).text()).to.equal(desc);
   });
 
-  it('should fire prop handleClose upon button click', () => {
+  it('should fire prop onClose upon button click', () => {
     const onClose = sinon.spy();
-    const context = deep(<ErrorDialog handleClose={onClose} />, { depth: 1 });
+    const context = deep(<ErrorDialog onClose={onClose} />, { depth: 1 });
     context.find(<Button />).simulate('click');
 
     expect(onClose.calledOnce).to.equal(true);
   });
 
-  it('should fire prop handleClose upon clicking outside of Dialog', () => {
+  it('should fire prop onClose upon clicking outside of Dialog', () => {
     const onClose = sinon.spy();
-    const context = deep(<ErrorDialog handleClose={onClose} />, { depth: 1 });
+    const context = deep(<ErrorDialog onClose={onClose} />, { depth: 1 });
     context.find(<Dialog />).attr('onClose')();
 
     expect(onClose.calledOnce).to.equal(true);

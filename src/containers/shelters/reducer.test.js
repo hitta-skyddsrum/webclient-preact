@@ -1,8 +1,6 @@
 import polyline from 'polyline';
 import { expect } from 'chai';
-import sinon from 'sinon';
 
-import * as humanError from '../../lib/human-error';
 import {
   GET_CURRENT_POSITION_FAILED,
   SELECT_ADDRESS,
@@ -124,10 +122,6 @@ describe('containers/shelters/reducer', () => {
 
     expect(SheltersReducer(undefined, { type: types.FETCH_SINGLE_SHELTER_FAILED, error }).error)
       .to.eql(error);
-    expect(SheltersReducer(undefined, { type: types.FETCH_SINGLE_SHELTER_FAILED, error }).humanError.message)
-      .to.match(new RegExp('Fel'));
-    expect(SheltersReducer(undefined, { type: types.FETCH_SINGLE_SHELTER_FAILED, error }).humanError.desc)
-      .to.match(new RegExp('misslyckades'));
   });
 
   it('should set error state upon FETCH_SINGLE_SHELTER_FAILED_NOT_FOUND', () => {
@@ -135,10 +129,6 @@ describe('containers/shelters/reducer', () => {
 
     expect(SheltersReducer(undefined, { type: types.FETCH_SINGLE_SHELTER_FAILED_NOT_FOUND, error }).error)
       .to.eql(error);
-    expect(SheltersReducer(undefined, { type: types.FETCH_SINGLE_SHELTER_FAILED_NOT_FOUND, error }).humanError.message)
-      .to.match(new RegExp(/kunde inte hittas/i));
-    expect(SheltersReducer(undefined, { type: types.FETCH_SINGLE_SHELTER_FAILED_NOT_FOUND, error }).humanError.desc)
-      .to.match(new RegExp(/inte finns/i));
   });
 
   it('should decrement loading upon FETCH_SINGLE_SHELTER_FAILED', () => {
@@ -182,10 +172,6 @@ describe('containers/shelters/reducer', () => {
 
     expect(SheltersReducer(undefined, { type: types.FETCH_SHELTERS_FAILED, error}).error)
       .to.equal(error);
-    expect(SheltersReducer(undefined, { type: types.FETCH_SHELTERS_FAILED, error}).humanError.message)
-      .to.equal('Fel vid hämtning skyddsrumsdata');
-    expect(SheltersReducer(undefined, { type: types.FETCH_SHELTERS_FAILED, error}).humanError.desc)
-      .to.match(new RegExp('misslyckades'));
   });
 
   it('should set bounds upon SET_BOUNDS', () => {
@@ -240,25 +226,15 @@ describe('containers/shelters/reducer', () => {
     const error = new Error();
     expect(SheltersReducer(undefined, { type: types.FETCH_ROUTE_TO_SHELTER_FAILED, error}).error)
       .to.equal(error);
-    expect(SheltersReducer(undefined, { type: types.FETCH_ROUTE_TO_SHELTER_FAILED, error}).humanError.message)
-      .to.equal('Fel vid hämtning av vägbeskrivning');
-    expect(SheltersReducer(undefined, { type: types.FETCH_ROUTE_TO_SHELTER_FAILED, error}).humanError.desc)
-      .to.match(new RegExp('misslyckades'));
   });
 
   it('should add error to state upon FETCH_ROUTE_TO_SHELTER_FAILED_NOT_FOUND', () => {
     const error = new Error();
     expect(SheltersReducer(undefined, { type: types.FETCH_ROUTE_TO_SHELTER_FAILED_NOT_FOUND, error}).error)
       .to.equal(error);
-    expect(SheltersReducer(undefined, { type: types.FETCH_ROUTE_TO_SHELTER_FAILED_NOT_FOUND, error}).humanError.message)
-      .to.equal('Kunde inte hitta vägbeskrivning');
-    expect(SheltersReducer(undefined, { type: types.FETCH_ROUTE_TO_SHELTER_FAILED_NOT_FOUND, error}).humanError.desc)
-      .to.match(new RegExp('kunde inte hittas'));
   });
 
   it('should set accurate error upon GET_CURRENT_POSITION_FAILED', () => {
-    const humanErrorMessage = 'Humans only';
-    sinon.stub(humanError, 'getMessageForGetPositionError').returns(humanErrorMessage);
     const error = new Error();
     const returnedState = SheltersReducer(undefined, {
       type: GET_CURRENT_POSITION_FAILED,
@@ -266,9 +242,6 @@ describe('containers/shelters/reducer', () => {
     });
 
     expect(returnedState.error).to.equal(error);
-    expect(returnedState.humanError).to.equal(humanErrorMessage);
-
-    humanError.getMessageForGetPositionError.restore();
   });
 
   it('should add selected shelter to state upon SELECT_SHELTER', () => {
@@ -301,12 +274,5 @@ describe('containers/shelters/reducer', () => {
     const response = { address: 'is here' };
 
     expect(SheltersReducer({}, { type: types.REVERSE_GEOCODE_SUCCESS, response }).selectedAddress).to.eql(response);
-  });
-
-  it('should remove error from state upon CLEAR_ERROR', () => {
-    expect(SheltersReducer({ error: true }, { type: types.CLEAR_ERROR }).error)
-      .to.eql(null);
-    expect(SheltersReducer({ humanError: true }, { type: types.CLEAR_ERROR }).humanError)
-      .to.eql(null);
   });
 });

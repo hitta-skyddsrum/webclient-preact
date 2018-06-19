@@ -3,6 +3,8 @@ import {
   GET_CURRENT_POSITION,
   GET_CURRENT_POSITION_FAILED,
   GET_CURRENT_POSITION_SUCCESS,
+  RATE_LIMIT_EXCEEDED,
+  SEARCH_ERROR,
   SELECT_ADDRESS,
 } from './types';
 
@@ -34,6 +36,15 @@ export const getCurrentPosition = () => dispatch => {
     }),
   );
 };
+
+export const rateLimitExceeded = () => ({
+  type: RATE_LIMIT_EXCEEDED,
+});
+
+export const searchError = error => ({
+  type: SEARCH_ERROR,
+  error,
+});
 
 export const selectAddress = suggestion => {
   return {

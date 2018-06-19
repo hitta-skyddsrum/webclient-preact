@@ -3,7 +3,6 @@ import { route } from 'preact-router';
 import Helmet from 'preact-helmet';
 
 import SheltersMap from '../shelters-map';
-import ErrorDialog from '../error-dialog';
 import LoadingIndicator from '../loading-indicator';
 import MapNotification from '../map-notification';
 import ShelterDetail from '../shelter-detail';
@@ -140,11 +139,6 @@ export default class Shelters extends Component {
         />
       )}
       {!!this.props.loading && <LoadingIndicator />}
-      {this.props.humanError && <ErrorDialog
-        title={this.props.humanError.message}
-        desc={this.props.humanError.desc}
-        handleClose={this.props.onCloseErrorDialog}
-      />}
       {this.state.limitedView && (<MapNotification>
         Zooma in för att hämta skyddsrum.
       </MapNotification>)}

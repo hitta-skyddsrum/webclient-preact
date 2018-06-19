@@ -1,6 +1,5 @@
 import polyline from 'polyline';
 import { getSearchParam, getValueAfterSection } from '../../lib/url-parser';
-import { getMessageForGetPositionError } from '../../lib/human-error';
 import {
   GET_CURRENT_POSITION_FAILED,
   SELECT_ADDRESS,
@@ -21,7 +20,6 @@ import {
   UNSELECT_SHELTER,
   REVERSE_GEOCODE_SUCCESS,
   REVERSE_GEOCODE_FAILED,
-  CLEAR_ERROR,
   SET_BOUNDS,
 } from './types';
 
@@ -29,7 +27,6 @@ const initialState = {
   shelters: [],
   routes: [],
   error: null,
-  humanError: null,
   loading: 0,
   youAreHere: [],
   bounds: [],
@@ -77,12 +74,6 @@ export default (state = initialState, action) => {
         loading: state.loading - 1,
         error: action.error,
         selectedShelterId: 0,
-        humanError: {
-          message: 'Fel vid hämtning av skyddsrumsdata',
-          desc: `Hämtningen av skyddsrumsdata för det skyddsrum du söker misslyckades.
-            Felet kan bero på att länken är gammal eller på grund av ett tillfälligt fel.
-            Vi rekommenderar att du besöker msb.se för att hämta data om skyddsrum.`,
-        },
       };
     case FETCH_SINGLE_SHELTER_FAILED_NOT_FOUND:
       return {
@@ -90,11 +81,6 @@ export default (state = initialState, action) => {
         loading: state.loading - 1,
         error: action.error,
         selectedShelterId: 0,
-        humanError: {
-          message: 'Skyddsrummet kunde inte hittas',
-          desc: `Skyddsrummet du sökte finns inte i vår databas. Detta kan bero på
-            att skyddsrummet inte finns längre.`,
-        },
       };
     case FETCH_SHELTERS:
       return {
@@ -112,13 +98,6 @@ export default (state = initialState, action) => {
         ...state,
         loading: state.loading - 1,
         error: action.error,
-        humanError: {
-          message: 'Fel vid hämtning skyddsrumsdata',
-          desc: `Hämtningen av skyddsrumsdata för ditt
-            sökområde misslyckades. Felet kan bero på att
-            tjänsten är överbelastad. Vi rekommenderar att
-            du besöker msb.se för att hämta data om skyddsrum.`,
-        },
       };
     case SET_BOUNDS:
       return {
@@ -134,38 +113,25 @@ export default (state = initialState, action) => {
       return {
         ...state,
         loading: state.loading - 1,
-        routes: action.route.routes.map(route => ({ ...route, coordinates: polyline.decode(route.geometry) })),
+        routes: action.route.routes
+          .map(route => ({ ...route, coordinates: polyline.decode(route.geometry) })),
       };
     case FETCH_ROUTE_TO_SHELTER_FAILED:
       return {
         ...state,
         loading: state.loading - 1,
         error: action.error,
-        humanError: {
-          message: 'Fel vid hämtning av vägbeskrivning',
-          desc: `Hämtningen av vägbeskrivning för ditt valda
-            skyddsrum misslyckades. Felet kan bero på att
-            tjänsten är överbelastad.`,
-        },
       };
     case FETCH_ROUTE_TO_SHELTER_FAILED_NOT_FOUND:
       return {
         ...state,
         loading: state.loading - 1,
         error: action.error,
-        humanError: {
-          message: 'Kunde inte hitta vägbeskrivning',
-          desc: `En vägbeskrivning mellan den plats du angett
-            och det skyddsrum du valt kunde inte hittas. Detta
-            kan bero på att bilvägar mellan platserna saknas eller
-            att vår data-källa saknar kunskap om denna väg.`,
-        },
       };
     case GET_CURRENT_POSITION_FAILED:
       return {
         ...state,
         error: action.error,
-        humanError: getMessageForGetPositionError(action.error),
       };
     case SELECT_SHELTER:
       return {
@@ -187,12 +153,6 @@ export default (state = initialState, action) => {
       return {
         ...state,
         selectedAddress: action.response,
-      };
-    case CLEAR_ERROR:
-      return {
-        ...state,
-        error: null,
-        humanError: null,
       };
     default:
       return state;

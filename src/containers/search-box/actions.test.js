@@ -88,7 +88,25 @@ describe('containers/search-box/actions/getCurrentPosition', () => {
   });
 });
 
-describe('containers/shelters/actions/selectAddress', () => {
+describe('containers/search-box/actions/rateLimitExceeded', () => {
+  it('creates RATE_LIMIT_EXCEEDED', () => {
+    const action = require('./actions').rateLimitExceeded();
+
+    expect(action.type).to.equal(types.RATE_LIMIT_EXCEEDED);
+  });
+});
+
+describe('containers/search-box/actions/searchError', () => {
+  it('creates RATE_LIMIT_EXCEEDED', () => {
+    const error = new Error();
+    const action = require('./actions').searchError(error);
+
+    expect(action.error).to.equal(error);
+    expect(action.type).to.equal(types.SEARCH_ERROR);
+  });
+});
+
+describe('containers/search-box/actions/selectAddress', () => {
   it('creates SELECT_ADDRESS', () => {
     const address = { add: 'res' };
     expect(require('./actions').selectAddress(address))
