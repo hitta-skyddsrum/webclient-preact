@@ -18,26 +18,19 @@ export default class Shelters extends Component {
   };
 
   state = {
+    center: !this.props.youAreHere.length ? [62.166667, 14.95] : this.props.youAreHere,
     hideShelterDetail: true,
     limitedView: false,
   };
 
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
 
     this.handleCloseShelterDetail = this.handleCloseShelterDetail.bind(this);
     this.handleClickShelter = this.handleClickShelter.bind(this);
     this.handleBBoxChange = this.handleBBoxChange.bind(this);
     this.handleSearchBoxBlur = this.handleSearchBoxBlur.bind(this);
     this.handleSearchBoxFocus = this.handleSearchBoxFocus.bind(this);
-  }
-
-  componentWillMount() {
-    if (!this.props.youAreHere.length) {
-      this.setState({ center: [62.166667, 14.95] });
-    } else {
-      this.setState({ center: this.props.youAreHere });
-    }
 
     if (this.props.selectedShelterId) {
       this.props.onSelectShelter(this.props.selectedShelterId);
@@ -118,6 +111,9 @@ export default class Shelters extends Component {
   }
 
   handleClickShelter({ shelterId }) {
+    /**
+     * TODO: this.props.onSelectShelter() ?
+     */
     const url = `/skyddsrum/${shelterId}${location.search}`;
     route(url, false);
     this.setState({ hideShelterDetail: false });
