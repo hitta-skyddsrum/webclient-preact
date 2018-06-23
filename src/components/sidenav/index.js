@@ -66,6 +66,7 @@ export default class Sidenav extends Component {
             <List>
               {menuItems.map(item => (
                 <List.LinkItem
+                  aria-label={item.title}
                   className={style.menuItem}
                   ripple
                   href={item.url}
@@ -78,6 +79,7 @@ export default class Sidenav extends Component {
           </Drawer.DrawerContent>
         </aside>
         <Button
+          aria-label="Meny"
           onClick={this.handleToggle}
           className={style.menuButton}
           tabIndex={0}

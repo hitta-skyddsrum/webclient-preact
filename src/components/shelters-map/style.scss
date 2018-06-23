@@ -8,7 +8,7 @@
 :global .marker-cluster {
   background: #000;
   border-radius: 50%;
-  color: #fff;
+  color: #000;
   text-align: center;
   display: flex;
 
@@ -30,12 +30,12 @@
   }
 
   &.marker-cluster-medium {
-    background: $blue;
+    background: lighten($blue, 5%);
     box-shadow: $box-shadow-props $blue;
   }
 
   &.marker-cluster-large {
-    background: $orange;
+    background: lighten($orange, 5%);
     box-shadow: $box-shadow-props $orange;
   }
 }

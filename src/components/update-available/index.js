@@ -47,14 +47,14 @@ export default class UpdateAvailable extends Component {
         <p>Ladda om sidan för att använda den senaste versionen.</p>
         <Button
           onClick={this.handleClickInstall}
-          role="reload"
+          role="button"
         >
           Ladda om
         </Button>
         <Button
           onClick={this.handleClickClose}
           type="secondary"
-          role="close"
+          role="button"
         >
           Stäng
         </Button>

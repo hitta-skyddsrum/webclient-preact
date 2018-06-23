@@ -16,7 +16,7 @@ describe('components.update-available', () => {
     const onUpdate = sinon.spy();
     const wrapper = shallow(<UpdateAvailable onUpdate={onUpdate} />);
 
-    wrapper.find(<Button role="reload" />).simulate('click');
+    wrapper.find(<Button role="button" />).simulate('click');
 
     expect(onUpdate).to.have.been.calledOnce;
   });
@@ -26,7 +26,7 @@ describe('components.update-available', () => {
     const onClose = sinon.spy();
     const wrapper = shallow(<UpdateAvailable onClose={onClose} />);
 
-    wrapper.find(<Button role="close" />).simulate('click');
+    wrapper.find(<Button role="button">Stäng</Button>).simulate('click');
     timer.tick(500);
     wrapper.rerender();
 
