@@ -1,0 +1,4 @@
+This is a Brave Payments publisher verification file.
+
+Domain: hittaskyddsrum.se
+Token: 0895f73cd31b759846fb86bbd875d3e4ae26fac47665475e86e3accc0ff6d4c6
