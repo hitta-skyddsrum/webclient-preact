@@ -204,6 +204,7 @@ module.exports = {
       { from: './_redirects', to: './' },
       { from: './favicon.ico', to: './' },
       { from: './sitemap*.xml', to: './' },
+      { from: '.well-known', to: '.well-known' },
     ]),
   ]).concat(process.env.ENV !== 'production' ? [] : [
     new SentryCliPlugin({
