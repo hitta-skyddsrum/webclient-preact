@@ -109,7 +109,7 @@
     "sass-loader": "^7.0.3",
     "script-ext-html-webpack-plugin": "^2.0.0",
     "selenium-standalone": "^6.15.1",
-    "serve": "^9.1.0",
+    "serve": "^10.0.0",
     "service-worker-mock": "^1.8.0",
     "serviceworker-webpack-plugin": "^1.0.0-alpha02",
     "sinon": "^6.0.0",
