@@ -1,28 +1,28 @@
 import { expect } from 'chai';
 import sinon from 'sinon';
+import mockLocalStorage from '../../../test/mock-ls';
 import { HIDE_TOOLTIP } from '../../containers/tooltip/types';
 import StatePersist, { getInitialState } from './';
 
 describe('middlewares/state-persist', () => {
   beforeEach(() => {
-    window.localStorage = {
-      getItem: sinon.stub(),
-      setItem: sinon.spy(),
-    };
+    mockLocalStorage();
   });
 
   describe('getInitialState', () => {
     it('should export initialState as an empty object if there\'s no localStorage support', () => {
-      window.localStorage = undefined;
+      Object.defineProperty(global, '_localStorage', {
+        value: undefined,
+      });
 
       expect(getInitialState()).to.eql({});
     });
 
     it('should export initialState as an empty object if the storage is unparseable', () => {
-      window.localStorage.getItem.returns('not JSON');
+      global.localStorage.getItem.returns('not JSON');
 
       expect(getInitialState()).to.eql({});
-      expect(window.localStorage.getItem).to.have.been.called;
+      expect(global.localStorage.getItem).to.have.been.called;
     });
 
     it('should export initialState value', () => {

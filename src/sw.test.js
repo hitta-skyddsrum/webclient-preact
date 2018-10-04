@@ -101,7 +101,9 @@ describe('ServiceWorker/activate', () => {
   beforeEach(() => {
     Object.assign(global,
       makeServiceWorkerEnv(),
-      { serviceWorkerOption: {} },
+      { serviceWorkerOption: {
+        assets: [],
+      } },
     );
     process.env.COMMITHASH = 'hash24';
     jest.resetModules();
@@ -150,7 +152,9 @@ describe('ServiceWorker/fetch', () => {
   beforeEach(() => {
     Object.assign(global,
       makeServiceWorkerEnv(),
-      { serviceWorkerOption: {} },
+      { serviceWorkerOption: {
+        assets: [],
+      } },
     );
     jest.resetModules();
     process.env.COMMITHASH = 'cache';

@@ -6,6 +6,7 @@ import CopyWebpackPlugin from 'copy-webpack-plugin';
 import ServiceWorkerWebpackPlugin from 'serviceworker-webpack-plugin';
 import UglifyJSPlugin from 'uglifyjs-webpack-plugin';
 import path from 'path';
+import cssnano from 'cssnano';
 const ENV = process.env.NODE_ENV || 'development';
 const GitRevisionPlugin = require('git-revision-webpack-plugin');
 const SentryCliPlugin = require('@sentry/webpack-plugin');
@@ -110,7 +111,6 @@ module.exports = {
                 modules: true, 
                 sourceMap: CSS_MAPS, 
                 importLoaders: 1,
-                minimize: true,
               },
             },
             {
@@ -120,6 +120,7 @@ module.exports = {
                 options: {},
                 plugins: () => {
                   autoprefixer();
+                  cssnano();
                 }
               }
             },
@@ -147,7 +148,6 @@ module.exports = {
               options: { 
                 sourceMap: CSS_MAPS, 
                 importLoaders: 1,
-                minimize: true,
               }
             },
             {
@@ -156,6 +156,7 @@ module.exports = {
                 sourceMap: CSS_MAPS,
                 plugins: () => {
                   autoprefixer();
+                  cssnano();
                 }
               }
             },
