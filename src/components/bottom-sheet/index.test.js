@@ -1,0 +1,32 @@
+import { h } from 'preact';
+import { expect } from 'chai';
+import { shallow } from 'preact-render-spy';
+import sinon from 'sinon';
+
+import Fab from 'preact-material-components/Fab';
+import BottomSheet from './';
+import styles from './styles.scss';
+
+describe('components/BottomSheet', () => {
+  it('should render its children', () => {
+    const children = 'tjenare';
+    const wrapper = shallow(<BottomSheet>{children}</BottomSheet>);
+
+    expect(wrapper.text()).to.match(new RegExp(children));
+  });
+
+  it('should call onClose upon click on close Fab', () => {
+    const onClose = sinon.spy();
+    const wrapper = shallow(<BottomSheet onClose={onClose}>hej</BottomSheet>);
+
+    wrapper.find(Fab).simulate('click');
+
+    expect(onClose).to.have.been.calledWith();
+  });
+
+  it('should append accurate class upon isOpen', () => {
+    const wrapper = shallow(<BottomSheet isOpen />);
+
+    expect(wrapper.find('div').first().attr('className')).to.contain(styles.IsOpen);
+  });
+});

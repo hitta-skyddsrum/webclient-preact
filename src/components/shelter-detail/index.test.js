@@ -4,8 +4,8 @@ import { shallow } from 'preact-render-spy';
 import sinon from 'sinon';
 import Helmet from 'preact-helmet';
 
-import { List } from 'material-ui';
-import { BottomSheet } from 'material-ui-bottom-sheet';
+import List from 'preact-material-components/List';
+import BottomSheet from '../bottom-sheet';
 import ShelterDetail from './';
 
 describe('components/shelter-detail', () => {
@@ -48,7 +48,7 @@ describe('components/shelter-detail', () => {
       onHeightChange={sinon.spy()}
     />);
 
-    expect(context.find(<BottomSheet open onRequestClose={onClose} />).length).to.equal(1);
+    expect(context.find(<BottomSheet isOpen onClose={onClose} />).length).to.equal(1);
   });
 
   it('should have the shelterId as header', () => {

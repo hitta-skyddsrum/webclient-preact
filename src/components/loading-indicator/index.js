@@ -1,5 +1,5 @@
 import { h } from 'preact';
-import { CircularProgress } from 'material-ui/Progress';
+import CircularProgress from '../circular-progress';
 
 import styles from './style.scss';
 

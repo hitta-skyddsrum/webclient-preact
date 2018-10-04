@@ -1,0 +1,42 @@
+@import "@material/animation/_functions";
+
+$animation-time: 400ms;
+
+.Container {
+  background-color: #fff;
+  max-height: 0;
+  z-index: 1000;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  transition: mdc-animation-exit-temporary(max-height, $animation-time, 0ms);
+  will-change: max-height;
+
+  :global ul.mdc-list {
+    padding: 12px;
+  }
+}
+
+.IsOpen {
+  max-height: 600px;
+  transition: mdc-animation-enter(max-height, $animation-time, 0ms);
+}
+
+.CloseButton {
+  position: absolute !important;
+  top: -28px;
+  right: 16px;
+  float: none;
+  margin-top: 0;
+  margin-right: 0;
+  z-index: 2;
+  opacity: 0;
+  transition: mdc-animation-exit-temporary(opacity, $animation-time, 0ms);
+  will-change: opacity;
+
+  .IsOpen & {
+    transition: mdc-animation-enter(opacity, $animation-time, 0ms);
+    opacity: 1;
+  }
+}

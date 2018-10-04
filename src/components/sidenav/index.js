@@ -1,14 +1,13 @@
 import { h, Component } from 'preact';
-import { Link } from 'preact-router/match';
-import MenuIcon from 'material-ui-icons/Menu';
-import InfoIcon from 'material-ui-icons/Info';
-import NearMeIcon from 'material-ui-icons/NearMe';
-import HelpIcon from 'material-ui-icons/Help';
-import Button from 'material-ui/Button';
-import Drawer from 'material-ui/Drawer';
-import { MenuItem } from 'material-ui/Menu';
-import Subheader from 'material-ui/List/ListSubheader';
+import Icon from 'preact-material-components/Icon';
+import Button from 'preact-material-components/Button';
+import Drawer from 'preact-material-components/Drawer';
+import List from 'preact-material-components/List';
 
+import 'preact-material-components/Button/style.css';
+import 'preact-material-components/Drawer/style.css';
+import 'preact-material-components/Icon/style.css';
+import 'preact-material-components/List/style.css';
 import style from './style.scss';
 
 export default class Sidenav extends Component {
@@ -25,6 +24,7 @@ export default class Sidenav extends Component {
 
   handleOpen() {
     this.setState({
+      hasOpened: true,
       isOpen: true,
     });
   }
@@ -36,66 +36,62 @@ export default class Sidenav extends Component {
   }
 
   render() {
-    const iconClasses = { root: style.menuItemIcon };
+    const iconClasses = style.menuItemIcon;
     const menuItems = [
       {
         title: 'Hitta skyddsrum',
         url: '/',
-        icon: <NearMeIcon classes={iconClasses} />,
+        icon: <Icon className={iconClasses}>near_me</Icon>,
       },
       {
         title: 'Vad är ett skyddsrum?',
         url: '/vad-ar-ett-skyddsrum',
-        icon: <HelpIcon classes={iconClasses} />,
+        icon: <Icon className={iconClasses}>help</Icon>,
       },
       {
         title: 'Om Hitta skyddsrum',
         url: '/om-tjansten',
-        icon: <InfoIcon classes={iconClasses} />,
+        icon: <Icon className={iconClasses}>info</Icon>,
       },
     ];
+    console.log(this.state.isOpen);
 
     return (
-      <div>
+      <div className={this.state.hasOpened && style.Animated || ''}>
         <Button
           onClick={this.handleOpen}
-          classes={{
-            root: style.menuButton,
-          }}
-          color="primary"
+          className={style.menuButton}
+          tabIndex={0}
+          primary
         >
-          <MenuIcon
-            color="primary"
+          <Icon
+            primary
             titleAccess="Meny"
-            classes={{
-              root: style.menuButtonIcon,
-            }}
-          />
+            className={style.menuButtonIcon}
+          >
+            menu
+          </Icon>
         </Button>
-        <Drawer
+        <Drawer.TemporaryDrawer
           open={this.state.isOpen}
-          anchor="right"
           onClose={this.handleClose}
-          classes={{
-            paper: style.menuContainer,
-          }}
         >
-          <Subheader color="primary">Hitta skyddsrum</Subheader>
-
-          {menuItems.map(item => (
-            <MenuItem
-              classes={{ root: style.menuItem }}
-              selected={this.props.location.pathname === item.url}
-              component={Link}
-              href={item.url}
-              onClick={this.handleClose}
-              onKeyDown={this.handleClose}
-            >
-              {item.icon}
-              {item.title}
-            </MenuItem>
-          ))}
-        </Drawer>
+          <Drawer.DrawerContent className={style.DrawerContent}>
+            <List>
+              {menuItems.map(item => (
+                <List.LinkItem
+                  className={style.menuItem}
+                  onClick={this.handleClose}
+                  ripple
+                  href={item.url}
+                >
+                  {item.icon}
+                  {item.title}
+                </List.LinkItem>
+              ))}
+            </List>
+          </Drawer.DrawerContent>
+        </Drawer.TemporaryDrawer>
       </div>
     );
   }

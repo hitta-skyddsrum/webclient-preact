@@ -1,0 +1,55 @@
+@import '../../style/variables';
+
+.CircularProgress {
+  font-size: 3rem;
+  position: relative;
+  display: inline-block;
+  width: 1em;
+  height: 1em;
+  transform: rotate(-90deg);
+  color: $orange;
+}
+
+.Circle {
+  animation: rmwc-circular-progress-indeterminate-bar-rotate 2s linear infinite;
+  height: 100%;
+  width: 100%;
+}
+
+.Path {
+  transition: stroke-dasharray 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+  fill: none;
+  stroke-dasharray: 2.08%, 416%;
+  stroke-dashoffset: 0;
+  stroke-linecap: round;
+  stroke-miterlimit: 20;
+  stroke-width: 0.25rem;
+  stroke: currentColor;
+  animation: rmwc-circular-progress-indeterminate-bar-dash 1.5s ease-in-out infinite;
+}
+
+/** Overrides for icons */
+.rmwc-icon .rmwc-circular-progress {
+  font-size: inherit;
+}
+
+@keyframes rmwc-circular-progress-indeterminate-bar-rotate {
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes rmwc-circular-progress-indeterminate-bar-dash {
+  0% {
+    stroke-dasharray: 2.08%, 416%;
+    stroke-dashoffset: 0%;
+  }
+  50% {
+    stroke-dasharray: 185.4%, 416%;
+    stroke-dashoffset: -72.9%;
+  }
+  to {
+    stroke-dasharray: 185.4%, 416%;
+    stroke-dashoffset: -258.33%;
+  }
+}

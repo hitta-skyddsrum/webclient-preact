@@ -2,7 +2,7 @@ import { h } from 'preact';
 import { expect } from 'chai';
 import { shallow } from 'preact-render-spy';
 
-import { CircularProgress } from 'material-ui/Progress';
+import CircularProgress from '../circular-progress';
 import LoadingIndicator from './';
 
 describe('components/loading-indicator', () => {

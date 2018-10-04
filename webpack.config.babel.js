@@ -84,7 +84,10 @@ module.exports = {
       {
         test: /\.js$/,
         enforce: 'pre',
-        use: ['source-map-loader']
+        use: ['source-map-loader'],
+        exclude: [
+          path.join(process.cwd(), 'node_modules'),
+        ]
       },
       {
         test: /\.jsx?$/,
@@ -122,7 +125,10 @@ module.exports = {
             },
             {
               loader: 'sass-loader',
-              options: { sourceMap: CSS_MAPS }
+              options: {
+                includePaths: ['node_modules', 'node_modules/@material/*'].map(p => path.join(__dirname, p)),
+                sourceMap: CSS_MAPS,
+              }
             }
           ]
         })

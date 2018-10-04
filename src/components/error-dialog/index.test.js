@@ -1,48 +1,62 @@
 import { h } from 'preact';
-import { shallow, deep } from 'preact-render-spy';
+import { deep } from 'preact-render-spy';
 import { expect } from 'chai';
 import sinon from 'sinon';
 
-import Dialog, {
-  DialogContentText,
-  DialogTitle,
-} from 'material-ui/Dialog';
-import Button from 'material-ui/Button';
+import Dialog from 'preact-material-components/Dialog';
 import ErrorDialog from './';
 
 describe('components/ErrorDialog', () => {
+  const sandbox = sinon.createSandbox();
+
   it('should display a Dialog', () => {
-    const context = shallow(<ErrorDialog />);
+    const context = deep(<ErrorDialog />);
 
     expect(context.find(<Dialog />).length).to.equal(1);
   });
 
+  it('should call MDComponent.show when show prop changes from false to true', () => {
+    const wrapper = deep(<ErrorDialog show={false} />);
+    sandbox.stub(wrapper.component().dialogRef.MDComponent, 'show');
+    wrapper.render(<ErrorDialog show />);
+
+    expect(wrapper.component().dialogRef.MDComponent.show).to.have.been.calledWith();
+  });
+
+  it('should call MDComponent.close when show prop changes from true to false', () => {
+    const wrapper = deep(<ErrorDialog show />);
+    sandbox.stub(wrapper.component().dialogRef.MDComponent, 'close');
+    wrapper.render(<ErrorDialog show={false} />);
+
+    expect(wrapper.component().dialogRef.MDComponent.close).to.have.been.calledWith();
+  });
+
   it('should display a Dialog with correct title', () => {
     const title = 'Varning Harning';
-    const context = shallow(<ErrorDialog title={title} />);
+    const context = deep(<ErrorDialog title={title} />);
 
-    expect(context.find(<DialogTitle />).text()).to.equal(title);
+    expect(context.find(<Dialog.Header />).text()).to.equal(title);
   });
 
   it('should display a Dialog with correct description', () => {
     const desc = 'Somethin went really wrong';
-    const context = shallow(<ErrorDialog desc={desc} />);
+    const context = deep(<ErrorDialog desc={desc} />);
 
-    expect(context.find(<DialogContentText />).text()).to.equal(desc);
+    expect(context.find(<Dialog.Body />).text()).to.equal(desc);
   });
 
   it('should fire prop onClose upon button click', () => {
     const onClose = sinon.spy();
-    const context = deep(<ErrorDialog onClose={onClose} />, { depth: 1 });
-    context.find(<Button />).simulate('click');
+    const context = deep(<ErrorDialog onClose={onClose} />, { depth: 2 });
+    context.find(<Dialog.FooterButton />).simulate('click');
 
     expect(onClose.calledOnce).to.equal(true);
   });
 
   it('should fire prop onClose upon clicking outside of Dialog', () => {
     const onClose = sinon.spy();
-    const context = deep(<ErrorDialog onClose={onClose} />, { depth: 1 });
-    context.find(<Dialog />).attr('onClose')();
+    const context = deep(<ErrorDialog onClose={onClose} />, { depth: 2 });
+    context.find(<Dialog />).attr('onCancel')();
 
     expect(onClose.calledOnce).to.equal(true);
   });

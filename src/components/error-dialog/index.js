@@ -1,37 +1,51 @@
 import { h, Component } from 'preact';
-import Dialog, {
-  DialogActions,
-  DialogContent,
-  DialogContentText,
-  DialogTitle,
-} from 'material-ui/Dialog';
-import Button from 'material-ui/Button';
+import Dialog from 'preact-material-components/Dialog';
+import 'preact-material-components/Dialog/style.css';
+
+import styles from './styles.scss';
 
 export default class ErrorDialog extends Component {
+  componentDidMount() {
+    this.props.show && this.dialogRef.MDComponent.show();
+  }
+
+  componentDidUpdate(prevProps) {
+    if (this.props.show && !prevProps.show) {
+      this.dialogRef.MDComponent.show();
+    }
+
+    if (!this.props.show && prevProps.show) {
+      this.dialogRef.MDComponent.close();
+    }
+  }
+
+  setDialogRef = (ref) => {
+    this.dialogRef = ref;
+  };
+
   render() {
     return (
       <Dialog
         modal={false}
         open={this.props.show}
-        onClose={this.props.onClose}
+        onCancel={this.props.onClose}
+        ref={this.setDialogRef}
         aria-labelledby="alert-dialog-title"
         aria-describedby="alert-dialog-description"
-        className="error-dialog"
+        className={`error-dialog ${styles.errorDialog}`}
       >
-        <DialogTitle>{this.props.title}</DialogTitle>
+        <Dialog.Header>{this.props.title}</Dialog.Header>
 
-        <DialogContent>
-          <DialogContentText>
-            {this.props.desc}
-          </DialogContentText>
-        </DialogContent>
+        <Dialog.Body>
+          {this.props.desc}
+        </Dialog.Body>
 
-        <DialogActions>
-          <Button
-            color="primary"
+        <Dialog.Footer>
+          <Dialog.FooterButton
+            accept
             onClick={this.props.onClose}
-          >Okej</Button>
-        </DialogActions>
+          >Okej</Dialog.FooterButton>
+        </Dialog.Footer>
       </Dialog>
     );
   }
