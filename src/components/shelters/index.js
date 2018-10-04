@@ -40,7 +40,7 @@ export default class Shelters extends Component {
     }
   }
 
-  componentWillUpdate(nextProps) {
+  componentWillReceiveProps(nextProps) {
     if (arrayValueIsEqual(nextProps.youAreHere, this.props.youAreHere) === false) {
       this.props.fetchShelters(nextProps.youAreHere);
       this.setState({

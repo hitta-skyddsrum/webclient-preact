@@ -1,0 +1,7 @@
+.errorDialog {
+  z-index: 1001;
+
+  :global(.mdc-dialog__surface) {
+    max-width: 600px;
+  }
+}

@@ -11,6 +11,12 @@
   }
 }
 
+.itemCoordinates {
+  a {
+    text-decoration: underline;
+  }
+}
+
 @media only screen and (max-width: 450px) {
   ul .item {
     padding-top: 5px;
