@@ -1,5 +1,4 @@
 import webpack from 'webpack';
-import ExtractTextPlugin from 'extract-text-webpack-plugin';
 import HtmlWebpackPlugin from 'html-webpack-plugin';
 import autoprefixer from 'autoprefixer';
 import CopyWebpackPlugin from 'copy-webpack-plugin';
@@ -7,9 +6,10 @@ import ServiceWorkerWebpackPlugin from 'serviceworker-webpack-plugin';
 import UglifyJSPlugin from 'uglifyjs-webpack-plugin';
 import path from 'path';
 import cssnano from 'cssnano';
-const ENV = process.env.NODE_ENV || 'development';
+const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const GitRevisionPlugin = require('git-revision-webpack-plugin');
 const SentryCliPlugin = require('@sentry/webpack-plugin');
+const ENV = process.env.NODE_ENV || 'development';
 
 require('dotenv').config();
 
@@ -102,37 +102,35 @@ module.exports = {
           path.resolve(__dirname, 'src/components'),
           path.resolve(__dirname, 'src/containers'),
         ],
-        use: ExtractTextPlugin.extract({
-          fallback: 'style-loader',
-          use: [
-            {
-              loader: 'css-loader',
-              options: { 
-                modules: true, 
-                sourceMap: CSS_MAPS, 
-                importLoaders: 1,
-              },
+        use: [
+          ENV !== 'production' ? 'style-loader' : MiniCssExtractPlugin.loader,
+          {
+            loader: 'css-loader',
+            options: {
+              modules: true,
+              sourceMap: CSS_MAPS,
+              importLoaders: 1,
             },
-            {
-              loader: `postcss-loader`,
-              options: {
-                sourceMap: CSS_MAPS,
-                options: {},
-                plugins: () => {
-                  autoprefixer();
-                  cssnano();
-                }
-              }
-            },
-            {
-              loader: 'sass-loader',
-              options: {
-                includePaths: ['node_modules', 'node_modules/@material/*'].map(p => path.join(__dirname, p)),
-                sourceMap: CSS_MAPS,
+          },
+          {
+            loader: `postcss-loader`,
+            options: {
+              sourceMap: CSS_MAPS,
+              options: {},
+              plugins: () => {
+                autoprefixer();
+                cssnano();
               }
             }
-          ]
-        })
+          },
+          {
+            loader: 'sass-loader',
+            options: {
+              includePaths: ['node_modules', 'node_modules/@material/*'].map(p => path.join(__dirname, p)),
+              sourceMap: CSS_MAPS,
+            }
+          }
+        ]
       },
       {
         test: /\.(scss|css)$/,
@@ -140,32 +138,30 @@ module.exports = {
           path.resolve(__dirname, 'src/components'),
           path.resolve(__dirname, 'src/containers'),
         ],
-        use: ExtractTextPlugin.extract({
-          fallback: 'style-loader',
-          use: [
-            {
-              loader: 'css-loader',
-              options: { 
-                sourceMap: CSS_MAPS, 
-                importLoaders: 1,
-              }
-            },
-            {
-              loader: `postcss-loader`,
-              options: {
-                sourceMap: CSS_MAPS,
-                plugins: () => {
-                  autoprefixer();
-                  cssnano();
-                }
-              }
-            },
-            {
-              loader: 'sass-loader',
-              options: { sourceMap: CSS_MAPS }
+        use: [
+          ENV !== 'production' ? 'style-loader' : MiniCssExtractPlugin.loader,
+          {
+            loader: 'css-loader',
+            options: {
+              sourceMap: CSS_MAPS,
+              importLoaders: 1,
             }
-          ]
-        })
+          },
+          {
+            loader: `postcss-loader`,
+            options: {
+              sourceMap: CSS_MAPS,
+              plugins: () => {
+                autoprefixer();
+                cssnano();
+              }
+            }
+          },
+          {
+            loader: 'sass-loader',
+            options: { sourceMap: CSS_MAPS }
+          }
+        ]
       },
       {
         test: /\.json$/,
@@ -182,12 +178,11 @@ module.exports = {
     ]
   },
   plugins: ([
-    new webpack.NoEmitOnErrorsPlugin(),
-    new ExtractTextPlugin({
-      filename: 'style.css',
-      allChunks: true,
-      disable: ENV !== 'production'
+    new MiniCssExtractPlugin({
+      filename: ENV !== 'production' ? '[name].css' : '[name].[hash].css',
+      chunkFilename: ENV !== 'production' ? '[id].css' : '[id].[hash].css',
     }),
+    new webpack.NoEmitOnErrorsPlugin(),
     new webpack.DefinePlugin({
       'process.env.NODE_ENV': JSON.stringify(ENV),
       'process.env.ORS_API_KEY': JSON.stringify(process.env.ORS_API_KEY),
