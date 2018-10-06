@@ -9,6 +9,7 @@ import BottomSheet from '../bottom-sheet';
 import ShelterDetail from './';
 
 describe('components/shelter-detail', () => {
+  const sandbox = sinon.createSandbox();
   const shelter = {
     shelterId: 'shelter-1',
     estateId: 'real estate',
@@ -21,6 +22,64 @@ describe('components/shelter-detail', () => {
       long: 22222222,
     },
   };
+
+  beforeEach(() => {
+    sandbox.stub(document, 'addEventListener');
+    sandbox.stub(document, 'removeEventListener');
+  });
+
+  afterEach(() => {
+    sandbox.restore();
+  });
+
+  it('should listen for gesturestart upon mount if shelter is provided', () => {
+    shallow(<ShelterDetail shelter={shelter} />);
+
+    expect(document.addEventListener).to.have.been.calledWith('gesturestart', sinon.match.func);
+  });
+
+  it('should remove all event listeners upon unmount', () => {
+    const wrapper = shallow(<ShelterDetail shelter={shelter} />);
+
+    expect(document.addEventListener).to.have.been.called;
+
+    wrapper.render(null);
+
+    document.addEventListener.getCalls().forEach(call => {
+      expect(document.removeEventListener).to.have.been.calledWith(...call.args);
+    });
+  });
+
+  it('should prevent default zoom behavior upon gesturestart if scale isnt 1', () => {
+    document.addEventListener.restore();
+    shallow(<ShelterDetail shelter={shelter} />);
+
+    const event = Object.assign(new Event('gesturestart'), { scale: 2 });
+    sinon.spy(event, 'preventDefault');
+    document.dispatchEvent(event);
+
+    expect(event.preventDefault).to.have.been.called;
+  });
+
+  it('should listen for gesturestart when updated with a shelter', () => {
+    const wrapper = shallow(<ShelterDetail />);
+
+    expect(document.addEventListener).to.not.have.been.calledWith('gesturestart', sinon.match.func);
+
+    wrapper.render(<ShelterDetail shelter={shelter} />);
+
+    expect(document.addEventListener).to.have.been.calledWith('gesturestart', sinon.match.func);
+  });
+
+  it('should remove all event listeners when shelter prop becomes empty', () => {
+    const wrapper = shallow(<ShelterDetail shelter={shelter} />);
+
+    wrapper.render(<ShelterDetail />);
+
+    document.addEventListener.withArgs('gesturestart').getCalls().forEach(call => {
+      expect(document.removeEventListener).to.have.been.calledWith(...call.args);
+    });
+  });
 
   it('should be able to render without provided shelter', () => {
     expect(shallow(<ShelterDetail />)).to.not.throw;
