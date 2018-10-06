@@ -2,7 +2,6 @@ import { h, Component } from 'preact';
 import { route } from 'preact-router';
 import classNames from 'classnames';
 import AlgoliacePlaces from 'algolia-places-react';
-import Tooltip from '../../containers/tooltip';
 import styles from './style.scss';
 
 export default class SearchBox extends Component {
@@ -38,9 +37,6 @@ export default class SearchBox extends Component {
     return (
       <div ref={this.setContainerRef}>
         <div className={classNames(styles.algolia, props.styles, { [styles.loadingGeo]: this.props.loadingGeo })}>
-          {window.localStorage && (
-            <Tooltip tooltipId="geo_search" title="Klicka här för att söka utifrån din position." />
-          )}
           <AlgoliacePlaces
             options={{
               apiKey: process.env.ALGOLIA_API_KEY,
