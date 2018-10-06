@@ -1,4 +1,5 @@
 import { h, Component } from 'preact';
+import { MDCDrawer } from '@material/drawer';
 import Icon from 'preact-material-components/Icon';
 import Button from 'preact-material-components/Button';
 import Drawer from 'preact-material-components/Drawer';
@@ -18,21 +19,18 @@ export default class Sidenav extends Component {
   constructor() {
     super();
 
-    this.handleOpen = this.handleOpen.bind(this);
-    this.handleClose = this.handleClose.bind(this);
+    this.handleToggle = this.handleToggle.bind(this);
   }
 
-  handleOpen() {
-    this.setState({
-      hasOpened: true,
-      isOpen: true,
-    });
+  componentDidMount() {
+    this.MDComponent = MDCDrawer.attachTo(this.control);
   }
 
-  handleClose() {
-    this.setState({
-      isOpen: false,
-    });
+  handleToggle() {
+    this.MDComponent.open = !this.MDComponent.open;
+    this.setState(state => ({
+      isOpen: !state.isOpen,
+    }));
   }
 
   render() {
@@ -54,12 +52,31 @@ export default class Sidenav extends Component {
         icon: <Icon className={iconClasses}>info</Icon>,
       },
     ];
-    console.log(this.state.isOpen);
 
     return (
-      <div className={this.state.hasOpened && style.Animated || ''}>
+      <div className={this.state.isOpen && style.containerOpen || ''}>
+        <aside
+          className="mdc-typography mdc-drawer mdc-drawer--dismissible"
+          ref={ref => { this.control = ref; }}
+          dir="rtl"
+        >
+          <Drawer.DrawerContent className={style.DrawerContent} dir="ltr">
+            <List>
+              {menuItems.map(item => (
+                <List.LinkItem
+                  className={style.menuItem}
+                  ripple
+                  href={item.url}
+                >
+                  {item.icon}
+                  {item.title}
+                </List.LinkItem>
+              ))}
+            </List>
+          </Drawer.DrawerContent>
+        </aside>
         <Button
-          onClick={this.handleOpen}
+          onClick={this.handleToggle}
           className={style.menuButton}
           tabIndex={0}
           primary
@@ -72,26 +89,6 @@ export default class Sidenav extends Component {
             menu
           </Icon>
         </Button>
-        <Drawer.TemporaryDrawer
-          open={this.state.isOpen}
-          onClose={this.handleClose}
-        >
-          <Drawer.DrawerContent className={style.DrawerContent}>
-            <List>
-              {menuItems.map(item => (
-                <List.LinkItem
-                  className={style.menuItem}
-                  onClick={this.handleClose}
-                  ripple
-                  href={item.url}
-                >
-                  {item.icon}
-                  {item.title}
-                </List.LinkItem>
-              ))}
-            </List>
-          </Drawer.DrawerContent>
-        </Drawer.TemporaryDrawer>
       </div>
     );
   }

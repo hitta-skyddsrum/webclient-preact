@@ -24,7 +24,9 @@ export default () => {
         />
         <div className={style.maximize}>
           <Sidenav />
-          <Routes history={history} />
+          <div className="mdc-drawer-app-content">
+            <Routes history={history} />
+          </div>
           <ErrorDialog />
         </div>
       </div>
