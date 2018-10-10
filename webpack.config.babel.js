@@ -3,12 +3,12 @@ import HtmlWebpackPlugin from 'html-webpack-plugin';
 import autoprefixer from 'autoprefixer';
 import CopyWebpackPlugin from 'copy-webpack-plugin';
 import ServiceWorkerWebpackPlugin from 'serviceworker-webpack-plugin';
-import UglifyJSPlugin from 'uglifyjs-webpack-plugin';
 import path from 'path';
 import cssnano from 'cssnano';
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const GitRevisionPlugin = require('git-revision-webpack-plugin');
 const SentryCliPlugin = require('@sentry/webpack-plugin');
+const TerserPlugin = require('terser-webpack-plugin');
 const ENV = process.env.NODE_ENV || 'development';
 
 require('dotenv').config();
@@ -46,12 +46,13 @@ module.exports = {
 
   optimization: {
     minimizer: [
-      new UglifyJSPlugin({
+      new TerserPlugin({
+        cache: true,
         sourceMap: true,
-        uglifyOptions: {
-          output: {
-            comments: false
-          },
+        parallel: true,
+        extractComments: true,
+        terserOptions: {
+          warnings: false,
           compress: {
             unsafe_comps: true,
             properties: true,
@@ -59,8 +60,6 @@ module.exports = {
             pure_getters: true,
             collapse_vars: true,
             unsafe: true,
-            ie8: false,
-            warnings: false,
             sequences: true,
             dead_code: true,
             drop_debugger: true,
