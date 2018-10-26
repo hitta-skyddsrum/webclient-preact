@@ -100,7 +100,7 @@
     "eslint-plugin-compat": "^2.5.1",
     "eslint-plugin-jest": "^21.22.1",
     "eslint-plugin-react": "^7.11.1",
-    "fetch-mock": "^6.5.2",
+    "fetch-mock": "^7.2.2",
     "file-loader": "^2.0.0",
     "geckodriver": "^1.12.2",
     "git-revision-webpack-plugin": "^3.0.0",
