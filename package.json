@@ -131,7 +131,7 @@
     "script-ext-html-webpack-plugin": "^2.0.0",
     "selenium-standalone": "^6.15.3",
     "serve": "^10.0.2",
-    "service-worker-mock": "^1.9.3",
+    "service-worker-mock": "^1.10.0",
     "serviceworker-webpack-plugin": "^1.0.1",
     "sinon": "^6.3.4",
     "sinon-chai": "^3.2.0",
