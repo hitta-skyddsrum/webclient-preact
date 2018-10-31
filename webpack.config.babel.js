@@ -7,6 +7,7 @@ import path from 'path';
 import cssnano from 'cssnano';
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const GitRevisionPlugin = require('git-revision-webpack-plugin');
+const PacktrackerPlugin = require('@packtracker/webpack-plugin')
 const SentryCliPlugin = require('@sentry/webpack-plugin');
 const TerserPlugin = require('terser-webpack-plugin');
 const ENV = process.env.NODE_ENV || 'development';
@@ -177,6 +178,10 @@ module.exports = {
     ]
   },
   plugins: ([
+    new PacktrackerPlugin({
+      project_token: process.env.PACKTRACKER_TOKEN,
+      upload: process.env.CI === 'true',
+    }),
     new MiniCssExtractPlugin({
       filename: ENV !== 'production' ? '[name].css' : '[name].[hash].css',
       chunkFilename: ENV !== 'production' ? '[id].css' : '[id].[hash].css',

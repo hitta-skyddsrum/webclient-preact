@@ -30,6 +30,9 @@ jobs:
     - stage: test
       if: type != api
       script: npm run test && codecov
+    - stage: packtracker
+      if: type != api
+      script: npm run build
     - stage: lighthouse
       if: type = api
       script: npm run lh -- --score=96 --no-comment $SITE_URL
