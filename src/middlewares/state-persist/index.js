@@ -17,7 +17,11 @@ export { getInitialState };
 export default store => next => action => {
   const result = next(action);
 
-  if (!window.localStorage) {
+  try {
+    if (!window.localStorage) {
+      throw Error();
+    }
+  } catch (err) {
     return result;
   }
 
