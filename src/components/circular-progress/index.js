@@ -6,7 +6,7 @@ export default () => {
 
   return (
     <div className={styles.CircularProgress}>
-      <svg className={styles.Circle} viewBox={`0 0 ${size}`}>
+      <svg className={styles.Circle} viewBox={`0 0 ${size} ${size}`}>
         <circle
           className={styles.Path}
           cx={size / 2}
