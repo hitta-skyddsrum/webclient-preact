@@ -8,9 +8,7 @@ node_js: 8
 addons:
   chrome: stable
 
-cache:
-  directories:
-    - node_modules
+cache: npm
 
 env:
   # Use light theme to avoid dark input fields in Firefox
