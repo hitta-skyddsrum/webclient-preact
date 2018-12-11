@@ -1,4 +1,4 @@
-import polyline from 'polyline';
+import polyline from '@mapbox/polyline';
 import { expect } from 'chai';
 
 import {
