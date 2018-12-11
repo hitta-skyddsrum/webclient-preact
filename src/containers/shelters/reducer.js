@@ -1,4 +1,4 @@
-import polyline from 'polyline';
+import polyline from '@mapbox/polyline';
 import { getSearchParam, getValueAfterSection } from '../../lib/url-parser';
 import {
   GET_CURRENT_POSITION_FAILED,
