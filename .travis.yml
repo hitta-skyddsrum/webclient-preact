@@ -33,7 +33,7 @@ jobs:
       script: npm run build
     - stage: lighthouse
       if: type = api
-      script: npm run lh -- --score=96 --no-comment $SITE_URL
+      script: npm run lh -- --perf=96 --bp=96 --no-comment $SITE_URL
     - stage: e2e
       if: type = api
       script: npm run install-selenium && xvfb-run --server-args="-screen 0 1200x800x24" npm run e2e || (errorshots push s3 && false)
