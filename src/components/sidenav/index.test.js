@@ -2,8 +2,8 @@ import { h } from 'preact';
 import { expect } from 'chai';
 import sinon from 'sinon';
 import { shallow } from 'preact-render-spy';
+import MenuIcon from '@material-ui/icons/Menu';
 import { MDCDrawer } from '@material/drawer';
-import Icon from 'preact-material-components/Icon';
 import Button from 'preact-material-components/Button';
 
 import Sidenav from './';
@@ -15,10 +15,10 @@ describe('component/Sidenav', () => {
     sandbox.restore();
   });
 
-  it('should display a hamburger menu', () => {
+  it('should display a menu icon', () => {
     const context = shallow(<Sidenav location={{}} />);
 
-    expect(context.find(<Icon />).last().text()).to.equal('menu');
+    expect(context.find(<MenuIcon />).length).to.equal(1);
   });
 
   it('should display the menu on click hamburger menu button', () => {

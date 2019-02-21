@@ -91,6 +91,16 @@ module.exports = {
         ]
       },
       {
+        test: /\.js$/,
+        include: [path.resolve('node_modules', '@material-ui', 'icons')],
+        use: {
+          loader: 'babel-loader',
+          options: {
+            plugins: ['preact-fragment']
+          }
+        }
+      },
+      {
         test: /\.jsx?$/,
         exclude: /node_modules/,
         use: 'babel-loader'
