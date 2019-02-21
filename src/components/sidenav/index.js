@@ -1,6 +1,9 @@
 import { h, Component } from 'preact';
 import { MDCDrawer } from '@material/drawer';
-import Icon from 'preact-material-components/Icon';
+import HelpIcon from '@material-ui/icons/Help';
+import InfoIcon from '@material-ui/icons/Info';
+import MenuIcon from '@material-ui/icons/Menu';
+import NearMeIcon from '@material-ui/icons/NearMe';
 import Button from 'preact-material-components/Button';
 import Drawer from 'preact-material-components/Drawer';
 import List from 'preact-material-components/List';
@@ -39,17 +42,17 @@ export default class Sidenav extends Component {
       {
         title: 'Hitta skyddsrum',
         url: '/',
-        icon: <Icon className={iconClasses}>near_me</Icon>,
+        icon: <NearMeIcon className={iconClasses} />,
       },
       {
         title: 'Vad är ett skyddsrum?',
         url: '/vad-ar-ett-skyddsrum',
-        icon: <Icon className={iconClasses}>help</Icon>,
+        icon: <HelpIcon className={iconClasses} />,
       },
       {
         title: 'Om Hitta skyddsrum',
         url: '/om-tjansten',
-        icon: <Icon className={iconClasses}>info</Icon>,
+        icon: <InfoIcon className={iconClasses} />,
       },
     ];
 
@@ -81,13 +84,7 @@ export default class Sidenav extends Component {
           tabIndex={0}
           primary
         >
-          <Icon
-            primary
-            titleAccess="Meny"
-            className={style.menuButtonIcon}
-          >
-            menu
-          </Icon>
+          <MenuIcon className={style.menuButtonIcon} />
         </Button>
       </div>
     );
