@@ -10,7 +10,6 @@ import List from 'preact-material-components/List';
 
 import 'preact-material-components/Button/style.css';
 import 'preact-material-components/Drawer/style.css';
-import 'preact-material-components/Icon/style.css';
 import 'preact-material-components/List/style.css';
 import style from './style.scss';
 
