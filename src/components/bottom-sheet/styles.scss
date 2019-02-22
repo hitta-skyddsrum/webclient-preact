@@ -34,6 +34,8 @@ $animation-time: 400ms;
   opacity: 0;
   transition: mdc-animation-exit-temporary(opacity, $animation-time, 0ms);
   will-change: opacity;
+  font-size: 20px;
+  line-height: 1;
 
   .IsOpen & {
     transition: mdc-animation-enter(opacity, $animation-time, 0ms);
