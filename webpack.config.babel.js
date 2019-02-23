@@ -189,6 +189,7 @@ module.exports = {
   },
   plugins: ([
     new PacktrackerPlugin({
+      branch: process.env.TRAVIS_PULL_REQUEST_BRANCH || process.env.TRAVIS_BRANCH,
       project_token: process.env.PACKTRACKER_TOKEN,
       upload: process.env.CI === 'true',
     }),
