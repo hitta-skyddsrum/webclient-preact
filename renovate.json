@@ -1,5 +1,25 @@
 {
   "extends": [
     "config:base"
+  ],
+  "packageRules": [
+    {
+      "automerge": true,
+      "automergeType": "pr",
+      "packagePatterns": [
+        "@packtracker",
+        "babel-eslint",
+        "chai",
+        "chromedriver",
+        "codecov",
+        "eslint",
+        "jest",
+        "preact-jsx-chai",
+        "preact-render-spy",
+        "preact-test-utils",
+        "selenium-standalone",
+        "sinon"
+      ]
+    }
   ]
 }
