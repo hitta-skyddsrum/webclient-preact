@@ -6,12 +6,12 @@ import styles from './styles.scss';
 
 export default class ErrorDialog extends Component {
   componentDidMount() {
-    this.props.show && this.dialogRef.MDComponent.show();
+    this.props.show && this.dialogRef.MDComponent.open();
   }
 
   componentDidUpdate(prevProps) {
     if (this.props.show && !prevProps.show) {
-      this.dialogRef.MDComponent.show();
+      this.dialogRef.MDComponent.open();
     }
 
     if (!this.props.show && prevProps.show) {

@@ -15,12 +15,12 @@ describe('components/ErrorDialog', () => {
     expect(context.find(<Dialog />).length).to.equal(1);
   });
 
-  it('should call MDComponent.show when show prop changes from false to true', () => {
+  it('should call MDComponent.open when show prop changes from false to true', () => {
     const wrapper = deep(<ErrorDialog show={false} />);
-    sandbox.stub(wrapper.component().dialogRef.MDComponent, 'show');
+    sandbox.stub(wrapper.component().dialogRef.MDComponent, 'open');
     wrapper.render(<ErrorDialog show />);
 
-    expect(wrapper.component().dialogRef.MDComponent.show).to.have.been.calledWith();
+    expect(wrapper.component().dialogRef.MDComponent.open).to.have.been.calledWith();
   });
 
   it('should call MDComponent.close when show prop changes from true to false', () => {
