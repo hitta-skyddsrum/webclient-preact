@@ -119,7 +119,7 @@
     "nightwatch": "github:kontrollanten/nightwatch-visual-regression#b9ccaa6436691b1de30b37f633ea78b846ec241c",
     "nightwatch-html-reporter": "2.0.5",
     "node-resemble-js": "0.2.0",
-    "node-sass": "4.9.3",
+    "node-sass": "4.11.0",
     "offline-plugin": "5.0.5",
     "postcss-loader": "3.0.0",
     "preact-jsx-chai": "2.2.1",
