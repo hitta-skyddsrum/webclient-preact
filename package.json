@@ -116,7 +116,7 @@
     "mini-css-extract-plugin": "0.5.0",
     "mkdirp": "0.5.1",
     "ncp": "2.0.0",
-    "nightwatch": "github:kontrollanten/nightwatch-visual-regression#b9ccaa6436691b1de30b37f633ea78b846ec241c",
+    "nightwatch": "github:kontrollanten/nightwatch-visual-regression#375f578509e0d3ba819b7f1ef466159874d58086",
     "nightwatch-html-reporter": "2.0.6",
     "node-resemble-js": "0.2.0",
     "node-sass": "4.11.0",
