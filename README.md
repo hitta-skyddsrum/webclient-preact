@@ -10,21 +10,21 @@ Thanks to
 ## Development
 ```
 git clone https://github.com/hitta-skyddsrum/webclient-preact
-npm install
-npm run dev
+yarn
+yarn dev
 ```
 
 ## Testing
 
 ### Unit
 ```
-npm test
+yarn test
 ```
 
 ### e2e
 ```
-npm run install-selenium
-npm run e2e
+yarn install-selenium
+yarn e2e
 ```
 
 ## Open source sponsors

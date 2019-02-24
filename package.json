@@ -3,21 +3,21 @@
   "version": "2.0.0",
   "description": "",
   "scripts": {
-    "precommit": "npm run lint",
+    "precommit": "yarn lint",
     "commit": "git-cz",
     "dev": "cross-env NODE_ENV=development webpack-dev-server --inline --hot --progress",
-    "e2e": "curl -o /dev/null $SITE_URL && npm run nightwatch -- -e chrome",
+    "e2e": "curl -o /dev/null $SITE_URL && yarn nightwatch -- -e chrome",
     "install-selenium": "selenium-standalone install",
     "lh": "lighthouse-ci",
     "nightwatch": "nightwatch",
     "start": "serve -s -l 5000 build",
-    "prestart": "npm run build",
+    "prestart": "yarn build",
     "build": "cross-env NODE_ENV=production webpack --progress",
     "prebuild": "mkdirp build && ncp src/assets build/assets",
-    "test": "npm run -s lint && jest --coverage",
-    "test:watch": "npm run -s lint && jest --watch",
+    "test": "yarn -s lint && jest --coverage",
+    "test:watch": "yarn -s lint && jest --watch",
     "lint": "eslint src test",
-    "postinstall": "npm rebuild node-sass"
+    "postinstall": "npm rebuild node-sass --update-binary"
   },
   "keywords": [
     "preact",

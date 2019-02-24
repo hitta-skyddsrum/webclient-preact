@@ -1,13 +1,14 @@
 /node_modules
 /npm-debug.log
 /build
-.DS_Store
 /coverage
 /.idea
 /.vscode
-.env
 /reports
 /selenium-debug.log
+
+.DS_Store
+.env
 *.swp
-yarn.lock
+package-lock.json
 yarn-error.log
