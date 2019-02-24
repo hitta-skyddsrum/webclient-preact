@@ -177,6 +177,9 @@
     "redux": "4.0.1",
     "redux-thunk": "2.3.0"
   },
+  "resolutions": {
+    "@material/dialog": "0.40.1"
+  },
   "config": {
     "commitizen": {
       "path": "./node_modules/cz-conventional-changelog"
