@@ -20,7 +20,7 @@ before_install:
 install:
   - nvm install
   - nvm use
-  - npm install
+  - npm ci
 
 jobs:
   include:
