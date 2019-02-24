@@ -1281,20 +1281,7 @@
     "@material/theme" "^0.40.1"
     "@material/typography" "^0.40.1"
 
-"@material/dialog@0.39.3", "@material/dialog@^0.39.3":
-  version "0.39.3"
-  resolved "https://registry.yarnpkg.com/@material/dialog/-/dialog-0.39.3.tgz#88e3282d27af237f469514784bfdf0bba0aaab7c"
-  dependencies:
-    "@material/animation" "^0.39.0"
-    "@material/base" "^0.39.0"
-    "@material/elevation" "^0.39.1"
-    "@material/ripple" "^0.39.3"
-    "@material/rtl" "^0.39.1"
-    "@material/theme" "^0.39.1"
-    "@material/typography" "^0.39.0"
-    focus-trap "^2.3.0"
-
-"@material/dialog@^0.40.0":
+"@material/dialog@0.39.3", "@material/dialog@0.40.1", "@material/dialog@^0.39.3", "@material/dialog@^0.40.0":
   version "0.40.1"
   resolved "https://registry.yarnpkg.com/@material/dialog/-/dialog-0.40.1.tgz#fd197fa60b40362ac86cbfb1951ff7af5a5456fb"
   dependencies:
