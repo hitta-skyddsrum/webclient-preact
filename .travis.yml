@@ -8,7 +8,7 @@ node_js: 8
 addons:
   chrome: stable
 
-cache: npm
+cache: yarn
 
 env:
   # Use light theme to avoid dark input fields in Firefox
@@ -20,25 +20,25 @@ before_install:
 install:
   - nvm install
   - nvm use
-  - npm ci
+  - yarn --frozen-lockfile
 
 jobs:
   include:
     - stage: lint
       if: type != api
-      script: npm run lint
+      script: yarn lint
     - stage: test
       if: type != api
-      script: npm run test && codecov
+      script: yarn test && codecov
     - stage: packtracker
       if: type != api
-      script: npm run build
+      script: yarn build
     - stage: lighthouse
       if: type = api
-      script: npm run lh -- --perf=96 --bp=96 --no-comment $SITE_URL
+      script: yarn lh -- --perf=96 --bp=96 --no-comment $SITE_URL
     - stage: e2e
       if: type = api
-      script: npm run install-selenium && xvfb-run --server-args="-screen 0 1200x800x24" npm run e2e || (errorshots push s3 && false)
+      script: yarn install-selenium && xvfb-run --server-args="-screen 0 1200x800x24" yarn e2e || (errorshots push s3 && false)
 
 notifications:
   webhooks:
