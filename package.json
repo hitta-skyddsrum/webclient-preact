@@ -100,7 +100,7 @@
     "errorshots": "github:kontrollanten/errorshots",
     "eslint": "5.14.1",
     "eslint-plugin-compat": "2.7.0",
-    "eslint-plugin-jest": "21.24.1",
+    "eslint-plugin-jest": "22.3.0",
     "eslint-plugin-react": "7.12.4",
     "fetch-mock": "7.3.0",
     "file-loader": "2.0.0",
