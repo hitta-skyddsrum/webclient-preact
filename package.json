@@ -172,7 +172,7 @@
     "raven-for-redux": "1.4.0",
     "raven-js": "3.27.0",
     "react-custom-scrollbars": "4.2.1",
-    "react-leaflet": "1.9.1",
+    "react-leaflet": "2.2.1",
     "react-leaflet-markercluster": "1.1.8",
     "redux": "4.0.1",
     "redux-thunk": "2.3.0"
