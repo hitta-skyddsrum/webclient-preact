@@ -8837,9 +8837,9 @@ preact-jsx-chai@2.2.1:
   dependencies:
     preact-render-to-string "^3.2.0"
 
-preact-material-components@1.5.3:
-  version "1.5.3"
-  resolved "https://registry.yarnpkg.com/preact-material-components/-/preact-material-components-1.5.3.tgz#2cd2c546cbf05bc34cf9f8b888bcf2274288b3de"
+preact-material-components@1.5.7:
+  version "1.5.7"
+  resolved "https://registry.yarnpkg.com/preact-material-components/-/preact-material-components-1.5.7.tgz#301346ff1279b60b51e93fda9f72431548d62ca8"
   dependencies:
     "@babel/runtime" "^7.0.0-beta.54"
     "@material/animation" "0.39.0"

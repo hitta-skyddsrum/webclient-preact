@@ -164,7 +164,7 @@
     "preact-async-route": "2.2.1",
     "preact-compat": "3.18.4",
     "preact-helmet": "4.0.0-alpha-3",
-    "preact-material-components": "1.5.3",
+    "preact-material-components": "1.5.7",
     "preact-redux": "2.0.3",
     "preact-render-to-string": "4.1.0",
     "preact-router": "2.6.1",
