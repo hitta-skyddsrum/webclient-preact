@@ -6,33 +6,6 @@ import BottomSheet from '../bottom-sheet';
 import style from './style.scss';
 
 export default class ShelterDetail extends Component {
-  componentDidMount() {
-    if (this.props.shelter) {
-      document.addEventListener('gesturestart', this.preventZoom);
-    }
-  }
-
-  componentDidUpdate(prevProps) {
-    if (!prevProps.shelter && this.props.shelter) {
-      document.addEventListener('gesturestart', this.preventZoom);
-    }
-
-    if (prevProps.shelter && !this.props.shelter) {
-      document.removeEventListener('gesturestart', this.preventZoom);
-    }
-  }
-
-  componentWillUnmount() {
-    document.removeEventListener('gesturestart', this.preventZoom);
-  }
-
-  preventZoom = (event) => {
-    event = event.originalEvent || event;
-    if (event.scale !== 1) {
-      event.preventDefault();
-    }
-  };
-
   render() {
     if (!this.props.shelter) return <div />;
 

@@ -23,10 +23,17 @@ describe('components/SheltersMap', () => {
   const bottomPadding = 1337;
   const onBBoxChange = sinon.spy();
   const onSelectShelter = sinon.spy();
+  const sandbox = sinon.createSandbox();
   let mapContext;
 
-  beforeAll(() => {
-    sinon.spy(L, 'icon');
+  beforeEach(() => {
+    sandbox.spy(L, 'icon');
+    sandbox.spy(document, 'addEventListener');
+    sandbox.stub(document, 'removeEventListener');
+  });
+
+  afterEach(() => {
+    sandbox.restore();
   });
 
   beforeEach(() => {
@@ -44,6 +51,30 @@ describe('components/SheltersMap', () => {
 
   afterEach(() => {
     L.icon.resetHistory();
+  });
+
+  it('should listen for gesturestart upon mount if shelter is provided', () => {
+    expect(document.addEventListener).to.have.been.calledWith('gesturestart', sinon.match.func);
+  });
+
+  it('should remove all event listeners upon unmount', () => {
+    expect(document.addEventListener).to.have.been.called;
+
+    mapContext.render(null);
+
+    document.addEventListener.getCalls().forEach(call => {
+      expect(document.removeEventListener).to.have.been.calledWith(...call.args);
+    });
+  });
+
+  it('should prevent default zoom behavior upon gesturestart if scale isnt 1', () => {
+    document.addEventListener.restore();
+
+    const event = Object.assign(new Event('gesturestart'), { scale: 2 });
+    sinon.spy(event, 'preventDefault');
+    document.dispatchEvent(event);
+
+    expect(event.preventDefault).to.have.been.called;
   });
 
   it('should render a map', () => {
