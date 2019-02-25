@@ -23,10 +23,12 @@ export default class SheltersMap extends Component {
 
   componentDidMount() {
     document.addEventListener('gesturestart', this.preventZoom);
+    document.addEventListener('touchmove', this.preventZoom);
   }
 
   componentWillUnmount() {
     document.removeEventListener('gesturestart', this.preventZoom);
+    document.removeEventListener('touchmove', this.preventZoom);
   }
 
   preventZoom = (event) => {
