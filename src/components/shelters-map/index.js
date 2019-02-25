@@ -21,6 +21,18 @@ export default class SheltersMap extends Component {
     this.handleBBoxChange = this.handleBBoxChange.bind(this);
   }
 
+  componentDidMount() {
+    document.addEventListener('gesturestart', this.preventZoom);
+  }
+
+  componentWillUnmount() {
+    document.removeEventListener('gesturestart', this.preventZoom);
+  }
+
+  preventZoom = (event) => {
+    event.preventDefault();
+  };
+
   handleBBoxChange(event) {
     const bbox = event.target.getBounds().toBBoxString();
     const zoom = event.target.getZoom();
