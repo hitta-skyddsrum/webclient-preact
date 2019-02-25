@@ -14,7 +14,8 @@
     "prestart": "yarn build",
     "build": "cross-env NODE_ENV=production webpack --progress",
     "prebuild": "mkdirp build && ncp src/assets build/assets",
-    "test": "yarn -s lint && jest --coverage",
+    "test": "yarn -s lint && jest",
+    "test:ci": "jest --coverage",
     "test:watch": "yarn -s lint && jest --watch",
     "lint": "eslint src test",
     "postinstall": "npm rebuild node-sass --update-binary"

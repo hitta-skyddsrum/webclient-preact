@@ -29,7 +29,7 @@ jobs:
       script: yarn lint
     - stage: test
       if: type != api
-      script: yarn test && codecov
+      script: yarn test:ci && codecov
     - stage: packtracker
       if: type != api
       script: yarn build
