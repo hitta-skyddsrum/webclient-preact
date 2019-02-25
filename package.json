@@ -143,7 +143,7 @@
     "url-loader": "1.1.2",
     "webpack": "4.29.5",
     "webpack-cli": "3.2.3",
-    "webpack-dev-server": "3.2.0"
+    "webpack-dev-server": "3.2.1"
   },
   "dependencies": {
     "@mapbox/polyline": "1.0.0",
