@@ -2057,11 +2057,11 @@ algolia-aerial@^1.5.3:
   version "1.5.3"
   resolved "https://registry.yarnpkg.com/algolia-aerial/-/algolia-aerial-1.5.3.tgz#c8b8ca6bc484164ffc7b36717689a424ea6bfe6c"
 
-algolia-places-react@1.3.3:
-  version "1.3.3"
-  resolved "https://registry.yarnpkg.com/algolia-places-react/-/algolia-places-react-1.3.3.tgz#6ddc3c82d45b764be7051d943282be42e6c93e4c"
+algolia-places-react@1.4.0:
+  version "1.4.0"
+  resolved "https://registry.yarnpkg.com/algolia-places-react/-/algolia-places-react-1.4.0.tgz#394bc3a14cdd3ed6f79b979ce44b0868cd50ea42"
   dependencies:
-    places.js "^1.15.1"
+    places.js "1.16.1"
     prop-types "^15.6.0"
 
 algoliasearch@^3.31.0:
@@ -2317,9 +2317,9 @@ atob@^2.1.1:
   version "2.1.2"
   resolved "https://registry.yarnpkg.com/atob/-/atob-2.1.2.tgz#6d9517eb9e030d2436666651e86bd9f6f13533c9"
 
-autocomplete.js@^0.35.0:
-  version "0.35.0"
-  resolved "https://registry.yarnpkg.com/autocomplete.js/-/autocomplete.js-0.35.0.tgz#d397c0c2261af1b556e0a3d8be2e6dd59418d411"
+autocomplete.js@^0.36.0:
+  version "0.36.0"
+  resolved "https://registry.yarnpkg.com/autocomplete.js/-/autocomplete.js-0.36.0.tgz#94fe775fe64b6cd42e622d076dc7fd26bedd837b"
   dependencies:
     immediate "^3.2.3"
 
@@ -7883,13 +7883,13 @@ pkg-dir@^3.0.0:
   dependencies:
     find-up "^3.0.0"
 
-places.js@^1.15.1:
-  version "1.15.5"
-  resolved "https://registry.yarnpkg.com/places.js/-/places.js-1.15.5.tgz#d853a401b6a1bc2a7167c35e9dd1252c819ee1f2"
+places.js@1.16.1:
+  version "1.16.1"
+  resolved "https://registry.yarnpkg.com/places.js/-/places.js-1.16.1.tgz#5e62a917bb17fb44633adf944dd3cb3497393c7f"
   dependencies:
     algolia-aerial "^1.5.3"
     algoliasearch "^3.31.0"
-    autocomplete.js "^0.35.0"
+    autocomplete.js "^0.36.0"
     events "^3.0.0"
     insert-css "^2.0.0"
 
