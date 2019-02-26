@@ -10153,11 +10153,15 @@ serve@10.1.2:
     serve-handler "5.0.8"
     update-check "1.5.2"
 
-service-worker-mock@1.10.1:
-  version "1.10.1"
-  resolved "https://registry.yarnpkg.com/service-worker-mock/-/service-worker-mock-1.10.1.tgz#30fc8b26213ec1570f6d434e3fe7f99b0faeeb88"
+service-worker-mock@2.0.0:
+  version "2.0.0"
+  resolved "https://registry.yarnpkg.com/service-worker-mock/-/service-worker-mock-2.0.0.tgz#6a2305a81e74cd5a086d36f49c869830ffbd7554"
+  integrity sha512-78AENCPDpdU6wkrSEAcMV4hSOPdZHSEZmyWV5WfLEw8sg2oT8mbkDaDRkYPCJ60Invw3nsM4YoYIToF32JbBFg==
   dependencies:
     dom-urls "^1.1.0"
+    shelving-mock-indexeddb "github:philipwalton/shelving-mock-indexeddb#621b7a275568051846d20e3e557fa1101418b1d1"
+    url-search-params "^0.10.0"
+    w3c-hr-time "^1.0.1"
 
 serviceworker-webpack-plugin@1.0.1:
   version "1.0.1"
@@ -10231,6 +10235,18 @@ shelljs@0.7.6:
 shellwords@^0.1.1:
   version "0.1.1"
   resolved "https://registry.yarnpkg.com/shellwords/-/shellwords-0.1.1.tgz#d6b9181c1a48d397324c84871efbcfc73fc0654b"
+
+shelving-mock-event@^1.0.8:
+  version "1.0.12"
+  resolved "https://registry.yarnpkg.com/shelving-mock-event/-/shelving-mock-event-1.0.12.tgz#401dc90b3b49cbf2a817ecf2dd5a83eff4de2e14"
+  integrity sha512-2F+IZ010rwV3sA/Kd2hnC1vGNycsxeBJmjkXR8+4IOlv5e+Wvj+xH+A8Cv8/Z0lUyCut/HcxSpeDccYTVtnuaQ==
+
+"shelving-mock-indexeddb@github:philipwalton/shelving-mock-indexeddb#621b7a275568051846d20e3e557fa1101418b1d1":
+  version "1.0.5"
+  uid "621b7a275568051846d20e3e557fa1101418b1d1"
+  resolved "https://codeload.github.com/philipwalton/shelving-mock-indexeddb/tar.gz/621b7a275568051846d20e3e557fa1101418b1d1"
+  dependencies:
+    shelving-mock-event "^1.0.8"
 
 signal-exit@^3.0.0, signal-exit@^3.0.2:
   version "3.0.2"
@@ -11234,6 +11250,11 @@ url-parse@^1.4.3:
   dependencies:
     querystringify "^2.0.0"
     requires-port "^1.0.0"
+
+url-search-params@^0.10.0:
+  version "0.10.2"
+  resolved "https://registry.yarnpkg.com/url-search-params/-/url-search-params-0.10.2.tgz#e9da69646e48c6140c6732e1f07fb669525f5a4e"
+  integrity sha512-d6GYsr992Bo9rzTZFc9BUw3UFAAg3prE9JGVBgW2TLTbI3rSvg4VDa0BFXHMzKkWbAuhrmaFWpucpRJl+3W7Jg==
 
 url@^0.11.0:
   version "0.11.0"
