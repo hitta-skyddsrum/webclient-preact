@@ -9698,9 +9698,10 @@ select-hose@^2.0.0:
   version "2.0.0"
   resolved "https://registry.yarnpkg.com/select-hose/-/select-hose-2.0.0.tgz#625d8658f865af43ec962bfc376a37359a4994ca"
 
-selenium-standalone@6.15.6:
-  version "6.15.6"
-  resolved "https://registry.yarnpkg.com/selenium-standalone/-/selenium-standalone-6.15.6.tgz#55cc610e405dd74e312c77f3ac7336795ca2cd0c"
+selenium-standalone@6.16.0:
+  version "6.16.0"
+  resolved "https://registry.yarnpkg.com/selenium-standalone/-/selenium-standalone-6.16.0.tgz#ffcf02665c58ff7a7472427ae819ba79c15967ac"
+  integrity sha512-tl7HFH2FOxJD1is7Pzzsl0pY4vuePSdSWiJdPn+6ETBkpeJDiuzou8hBjvWYWpD+eIVcOrmy3L0R3GzkdHLzDw==
   dependencies:
     async "^2.6.2"
     commander "^2.19.0"
