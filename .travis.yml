@@ -43,7 +43,7 @@ jobs:
 notifications:
   webhooks:
     urls:
-      - https://ooh7dsgcya.execute-api.us-east-1.amazonaws.com/dev/github-status
+      - https://zm6ybeuoe8.execute-api.us-east-1.amazonaws.com/dev/github-status
     on_success: always
     on_failure: always
     on_start: always
