@@ -137,7 +137,7 @@
     "serve": "10.1.2",
     "service-worker-mock": "1.10.1",
     "serviceworker-webpack-plugin": "1.0.1",
-    "sinon": "7.3.0",
+    "sinon": "7.3.1",
     "sinon-chai": "3.3.0",
     "source-map-loader": "0.2.4",
     "style-loader": "0.23.1",
