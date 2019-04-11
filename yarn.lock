@@ -5236,16 +5236,16 @@ gaze@^1.0.0:
   dependencies:
     globule "^1.0.0"
 
-geckodriver@1.16.1:
-  version "1.16.1"
-  resolved "https://registry.yarnpkg.com/geckodriver/-/geckodriver-1.16.1.tgz#349ddc88244356eefc475d943c379bc320d7d59a"
-  integrity sha512-e16K82snvoG60GaMc9E4gIOXwc6HaVY9JIToaIlTI+eVjqnj96vUjQ+/gFZlOUw2N3g4KgST7RFpyoeyJ/jzkQ==
+geckodriver@1.16.2:
+  version "1.16.2"
+  resolved "https://registry.yarnpkg.com/geckodriver/-/geckodriver-1.16.2.tgz#4766e6eb6835e9ec8797f1dce1966df2b3fb5985"
+  integrity sha512-kXZP4QferAv57Ru4Fx2WYuu//ErKJP4hPEkJm4mSETo42jsdYFwdNxwQ4vCGhf14gsCdxU9YrwNupJ8gr1GxPg==
   dependencies:
     adm-zip "0.4.11"
     bluebird "3.4.6"
     got "5.6.0"
     https-proxy-agent "2.2.1"
-    tar "4.0.2"
+    tar "4.4.2"
 
 get-caller-file@^1.0.1:
   version "1.0.3"
@@ -7538,14 +7538,14 @@ minimist@~0.0.1:
   version "0.0.10"
   resolved "https://registry.yarnpkg.com/minimist/-/minimist-0.0.10.tgz#de3f98543dbf96082be48ad1a0c7cda836301dcf"
 
-minipass@^2.2.1, minipass@^2.3.4:
+minipass@^2.2.1, minipass@^2.2.4, minipass@^2.3.4:
   version "2.3.5"
   resolved "https://registry.yarnpkg.com/minipass/-/minipass-2.3.5.tgz#cacebe492022497f656b0f0f51e2682a9ed2d848"
   dependencies:
     safe-buffer "^5.1.2"
     yallist "^3.0.0"
 
-minizlib@^1.0.4, minizlib@^1.1.1:
+minizlib@^1.1.0, minizlib@^1.1.1:
   version "1.2.1"
   resolved "https://registry.yarnpkg.com/minizlib/-/minizlib-1.2.1.tgz#dd27ea6136243c7c880684e8672bb3a45fd9b614"
   dependencies:
@@ -10544,14 +10544,17 @@ tar-stream@2.0.0:
     inherits "^2.0.3"
     readable-stream "^3.1.1"
 
-tar@4.0.2:
-  version "4.0.2"
-  resolved "https://registry.yarnpkg.com/tar/-/tar-4.0.2.tgz#e8e22bf3eec330e5c616d415a698395e294e8fad"
+tar@4.4.2:
+  version "4.4.2"
+  resolved "https://registry.yarnpkg.com/tar/-/tar-4.4.2.tgz#60685211ba46b38847b1ae7ee1a24d744a2cd462"
+  integrity sha512-BfkE9CciGGgDsATqkikUHrQrraBCO+ke/1f6SFAEMnxyyfN9lxC+nW1NFWMpqH865DhHIy9vQi682gk1X7friw==
   dependencies:
     chownr "^1.0.1"
-    minipass "^2.2.1"
-    minizlib "^1.0.4"
+    fs-minipass "^1.2.5"
+    minipass "^2.2.4"
+    minizlib "^1.1.0"
     mkdirp "^0.5.0"
+    safe-buffer "^5.1.2"
     yallist "^3.0.2"
 
 tar@^2.0.0:
