@@ -91,6 +91,17 @@ module.exports = {
         ]
       },
       {
+        // Solve IE JS error due to default parameters in fns
+        test: /\.js$/,
+        include: [path.resolve('node_modules', '@material')],
+        use: {
+          loader: 'babel-loader',
+          options: {
+            plugins: ['@babel/plugin-transform-parameters'],
+          },
+        }
+      },
+      {
         test: /\.js$/,
         include: [path.resolve('node_modules', '@material-ui', 'icons')],
         use: {
