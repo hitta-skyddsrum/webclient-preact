@@ -37,15 +37,18 @@ export default class SheltersMap extends Component {
     const bbox = event.target.getBounds().toBBoxString();
     const zoom = event.target.getZoom();
 
-    this.props.onBBoxChange({
-      bbox,
-      oldBBox: this.bbox,
-      oldZoom: this.zoom,
-      zoom,
-    });
+    // Add this check to prevent infinite loop by react-leaflet
+    if (bbox !== this.bbox && zoom !== this.zoom) {
+      this.props.onBBoxChange({
+        bbox,
+        oldBBox: this.bbox,
+        oldZoom: this.zoom,
+        zoom,
+      });
 
-    this.bbox = bbox;
-    this.zoom = zoom;
+      this.bbox = bbox;
+      this.zoom = zoom;
+    }
   }
 
   render({
