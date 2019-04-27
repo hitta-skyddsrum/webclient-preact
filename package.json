@@ -156,7 +156,7 @@
     "@material/base": "0.41.0",
     "@material/drawer": "0.44.1",
     "acorn": "6.1.1",
-    "algolia-places-react": "1.4.0",
+    "algolia-places-react": "1.4.1",
     "classnames": "2.2.6",
     "dynamic-polyfill": "1.1.0",
     "history": "4.9.0",
