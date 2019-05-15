@@ -89,7 +89,7 @@
     "babel-plugin-preact-fragment": "1.1.0",
     "chai": "4.2.0",
     "chromedriver": "74.0.0",
-    "codecov": "3.4.0",
+    "codecov": "3.5.0",
     "commitizen": "3.1.1",
     "copy-webpack-plugin": "5.0.3",
     "core-js": "3.0.1",
