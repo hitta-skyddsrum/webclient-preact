@@ -2846,9 +2846,10 @@ babel-plugin-jest-hoist@^24.6.0:
   dependencies:
     "@types/babel__traverse" "^7.0.6"
 
-babel-plugin-preact-fragment@1.1.0:
-  version "1.1.0"
-  resolved "https://registry.yarnpkg.com/babel-plugin-preact-fragment/-/babel-plugin-preact-fragment-1.1.0.tgz#bf1f0103d9ee80afb33519ff3224801472bcfc19"
+babel-plugin-preact-fragment@1.1.1:
+  version "1.1.1"
+  resolved "https://registry.yarnpkg.com/babel-plugin-preact-fragment/-/babel-plugin-preact-fragment-1.1.1.tgz#001630e0bcc1af21b4f4e8f63aab39774bc1bfa4"
+  integrity sha512-KkeGw6lnVeshKQ5kIgwO2TbJm/PukpqpA7Jaz9f2MTYeeXxrD5T1pXnS258aHIBNBZL0vFwfSG9kzv0utSpkIA==
   dependencies:
     "@babel/plugin-syntax-jsx" "^7.2.0"
     "@babel/register" "^7.0.0"
