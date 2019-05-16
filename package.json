@@ -86,7 +86,7 @@
     "babel-jest": "24.8.0",
     "babel-loader": "8.0.6",
     "babel-plugin-dynamic-import-node": "2.2.0",
-    "babel-plugin-preact-fragment": "1.1.0",
+    "babel-plugin-preact-fragment": "1.1.1",
     "chai": "4.2.0",
     "chromedriver": "74.0.0",
     "codecov": "3.5.0",
