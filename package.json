@@ -174,7 +174,7 @@
     "preact-router": "2.6.1",
     "preact-router-redux": "4.1.0",
     "raven-for-redux": "1.4.0",
-    "raven-js": "3.27.0",
+    "raven-js": "3.27.1",
     "react-custom-scrollbars": "4.2.1",
     "react-leaflet": "1.9.1",
     "react-leaflet-markercluster": "1.1.8",
