@@ -79,7 +79,7 @@
     "@babel/register": "7.4.4",
     "@babel/runtime": "7.4.4",
     "@packtracker/webpack-plugin": "2.1.2",
-    "@sentry/webpack-plugin": "1.6.2",
+    "@sentry/webpack-plugin": "1.7.0",
     "autoprefixer": "9.5.1",
     "babel-core": "7.0.0-bridge.0",
     "babel-eslint": "9.0.0",
