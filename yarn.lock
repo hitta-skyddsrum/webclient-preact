@@ -9700,10 +9700,10 @@ raven-for-redux@1.4.0:
   version "1.4.0"
   resolved "https://registry.yarnpkg.com/raven-for-redux/-/raven-for-redux-1.4.0.tgz#37cf4fc7bdde227ce5cc8fa29942f21ea517b7fb"
 
-raven-js@3.27.1:
-  version "3.27.1"
-  resolved "https://registry.yarnpkg.com/raven-js/-/raven-js-3.27.1.tgz#e187a12982061908ccbf935af0640c9043d7d666"
-  integrity sha512-r/9CwSbaGfBFjo4hGR45DAmrukUKkQ4HdMu80PlVLDY1t8f9b4aaZzTsFegaafu7EGhEYougWDJ9/IcTdYdLXQ==
+raven-js@3.27.2:
+  version "3.27.2"
+  resolved "https://registry.yarnpkg.com/raven-js/-/raven-js-3.27.2.tgz#6c33df952026cd73820aa999122b7b7737a66775"
+  integrity sha512-mFWQcXnhRFEQe5HeFroPaEghlnqy7F5E2J3Fsab189ondqUzcjwSVi7el7F36cr6PvQYXoZ1P2F5CSF2/azeMQ==
 
 raw-body@2, raw-body@2.3.3:
   version "2.3.3"
