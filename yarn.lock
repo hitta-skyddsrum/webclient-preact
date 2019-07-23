@@ -9522,10 +9522,10 @@ preact-render-spy@1.3.0:
     object.entries "^1.0.4"
     preact-render-to-string "^3.6.3"
 
-preact-render-to-string@5.0.3:
-  version "5.0.3"
-  resolved "https://registry.yarnpkg.com/preact-render-to-string/-/preact-render-to-string-5.0.3.tgz#393f73826ad21097982e7ca1a4a03e256bd20422"
-  integrity sha512-FuaMTQXsn/RSQN0JphOpoqeSKEmHm83yLeZUioosgZkzdAyrAFDiAFy4cWUhjmaT371eEwpFZWcwiUHL4oLEUA==
+preact-render-to-string@5.0.6:
+  version "5.0.6"
+  resolved "https://registry.yarnpkg.com/preact-render-to-string/-/preact-render-to-string-5.0.6.tgz#3e89078f78e88157a044f91914b348894cd18d03"
+  integrity sha512-VOsbY/YNPJVIxEdzkUJNwhZNEOE5/w4lbEAsBvhsImbpeDsDhCtUvzpZav/j8tHF8HcG6lNWljmkmXfy+KEnsQ==
   dependencies:
     pretty-format "^3.8.0"
 
