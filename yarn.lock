@@ -4077,7 +4077,7 @@ cosmiconfig@^5.0.0:
     lodash.get "^4.4.2"
     parse-json "^4.0.0"
 
-cosmiconfig@^5.2.1:
+cosmiconfig@^5.2.0, cosmiconfig@^5.2.1:
   version "5.2.1"
   resolved "https://registry.yarnpkg.com/cosmiconfig/-/cosmiconfig-5.2.1.tgz#040f726809c591e77a17c0a3626ca45b4f168b1a"
   integrity sha512-H65gsXo1SKjf8zmrJ67eJk8aIRKV5ff2D4uKZIBZShbhGSpEmsQOPW/SKMKYhSTrqR7ufy6RP69rPogdaPh/kA==
@@ -10122,13 +10122,13 @@ raw-body@2.4.0:
     iconv-lite "0.4.24"
     unpipe "1.0.0"
 
-raw-loader@2.0.0:
-  version "2.0.0"
-  resolved "https://registry.yarnpkg.com/raw-loader/-/raw-loader-2.0.0.tgz#e2813d9e1e3f80d1bbade5ad082e809679e20c26"
-  integrity sha512-kZnO5MoIyrojfrPWqrhFNLZemIAX8edMOCp++yC5RKxzFB3m92DqKNhKlU6+FvpOhWtvyh3jOaD7J6/9tpdIKg==
+raw-loader@3.1.0:
+  version "3.1.0"
+  resolved "https://registry.yarnpkg.com/raw-loader/-/raw-loader-3.1.0.tgz#5e9d399a5a222cc0de18f42c3bc5e49677532b3f"
+  integrity sha512-lzUVMuJ06HF4rYveaz9Tv0WRlUMxJ0Y1hgSkkgg+50iEdaI0TthyEDe08KIHb0XsF6rn8WYTqPCaGTZg3sX+qA==
   dependencies:
     loader-utils "^1.1.0"
-    schema-utils "^1.0.0"
+    schema-utils "^2.0.1"
 
 rc@^1.0.1, rc@^1.1.6, rc@^1.2.7:
   version "1.2.8"
@@ -10754,6 +10754,14 @@ schema-utils@^1.0.0:
   dependencies:
     ajv "^6.1.0"
     ajv-errors "^1.0.0"
+    ajv-keywords "^3.1.0"
+
+schema-utils@^2.0.1:
+  version "2.0.1"
+  resolved "https://registry.yarnpkg.com/schema-utils/-/schema-utils-2.0.1.tgz#1eec2e059556af841b7f3a83b61af13d7a3f9196"
+  integrity sha512-HJFKJ4JixDpRur06QHwi8uu2kZbng318ahWEKgBjc0ZklcE4FDvmm2wghb448q0IRaABxIESt8vqPFvwgMB80A==
+  dependencies:
+    ajv "^6.1.0"
     ajv-keywords "^3.1.0"
 
 script-ext-html-webpack-plugin@2.1.3:
