@@ -162,7 +162,7 @@
     "leaflet": "1.5.1",
     "leaflet.markercluster": "1.4.1",
     "material-components-web": "0.44.1",
-    "preact": "8.4.2",
+    "preact": "8.5.3",
     "preact-async-route": "2.2.1",
     "preact-compat": "3.19.0",
     "preact-context": "1.1.3",
