@@ -158,7 +158,7 @@
     "algolia-places-react": "1.5.0",
     "classnames": "2.2.6",
     "dynamic-polyfill": "1.1.0",
-    "history": "4.9.0",
+    "history": "4.10.1",
     "leaflet": "1.5.1",
     "leaflet.markercluster": "1.4.1",
     "material-components-web": "0.44.1",
