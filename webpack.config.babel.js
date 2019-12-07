@@ -147,7 +147,9 @@ module.exports = {
           {
             loader: 'sass-loader',
             options: {
-              includePaths: ['node_modules', 'node_modules/@material/*'].map(p => path.join(__dirname, p)),
+              sassOptions: {
+                includePaths: ['node_modules', 'node_modules/@material/*'].map(p => path.join(__dirname, p)),
+              },
               sourceMap: CSS_MAPS,
             }
           }
