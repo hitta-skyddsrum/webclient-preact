@@ -1,5 +1,6 @@
 .errorDialog {
   z-index: 1001;
+  background-color: transparent;
 
   :global(.mdc-dialog__surface) {
     max-width: 600px;
