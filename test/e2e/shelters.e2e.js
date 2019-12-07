@@ -17,12 +17,10 @@ module.exports = {
       .assert.title('Skyddsrum nära Järnvägsgatan, Arvika - Hitta skyddsrum')
       .waitForElementVisible('.leaflet-marker-pane img.shelter:nth-child(2)', 20000)
       .pause(1000)
-      .visualAreaShouldDisplay('shelters near Arvika', 15)
-      .expect.element('.leaflet-overlay-pane svg').to.not.be.present;
+      .visualAreaShouldDisplay('shelters near Arvika', 15);
 
     browser
       .click('.leaflet-marker-pane img.shelter:nth-child(2)')
-      .waitForElementVisible('.leaflet-overlay-pane svg', 2500)
       .waitForElementVisible('h1', 2000)
       .pause(100)
       .visualAreaShouldDisplay('details for a shelter', 10)
