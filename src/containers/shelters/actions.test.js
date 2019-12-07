@@ -319,7 +319,7 @@ describe('containers/shelters/actions/fetchRouteToShelter', () => {
 
     const store = mockStore({ shelters: [] });
 
-    store.dispatch(require('./actions').fetchRouteToShelter(from, shelter))
+    return store.dispatch(require('./actions').fetchRouteToShelter(from, shelter))
       .then(() => expect(store.getActions()).to.eql(expectedActions));
   });
 

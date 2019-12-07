@@ -258,6 +258,7 @@ describe('ServiceWorker/fetch', () => {
     try {
       await self.trigger('fetch', request);
     } catch (error) {
+      // eslint-disable-next-line jest/no-try-expect
       expect(error).to.equal(networkError);
     }
   });
