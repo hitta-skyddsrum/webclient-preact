@@ -1,4 +1,4 @@
-import { connect } from 'preact-redux';
+import { connect } from 'react-redux';
 import { hideTooltip } from './actions';
 import Tooltip from '../../components/tooltip';
 

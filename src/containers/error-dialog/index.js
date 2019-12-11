@@ -1,4 +1,4 @@
-import { connect } from 'preact-redux';
+import { connect } from 'react-redux';
 import { CLEAR_ERROR } from './types';
 
 import ErrorDialog from '../../components/error-dialog';
