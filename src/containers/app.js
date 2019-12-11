@@ -1,5 +1,5 @@
 import { h } from 'preact';
-import { Provider } from 'preact-redux';
+import { Provider } from 'react-redux';
 import { syncHistoryWithStore } from 'preact-router-redux';
 import Helmet from 'preact-helmet';
 
