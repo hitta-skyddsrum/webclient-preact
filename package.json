@@ -91,7 +91,7 @@
     "chromedriver": "79.0.0",
     "codecov": "3.6.1",
     "commitizen": "4.0.3",
-    "copy-webpack-plugin": "5.1.0",
+    "copy-webpack-plugin": "5.1.1",
     "core-js": "3.4.8",
     "cross-env": "6.0.3",
     "css-loader": "3.3.2",
