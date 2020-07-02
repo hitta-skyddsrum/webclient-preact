@@ -149,7 +149,6 @@
     "webpack-dev-server": "3.10.1"
   },
   "dependencies": {
-    "@mapbox/polyline": "1.1.0",
     "@material-ui/core": "3.9.4",
     "@material-ui/icons": "3.0.2",
     "@material/animation": "0.41.0",

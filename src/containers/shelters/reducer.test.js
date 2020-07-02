@@ -1,4 +1,3 @@
-import polyline from '@mapbox/polyline';
 import { expect } from 'chai';
 
 import {
@@ -191,7 +190,7 @@ describe('containers/shelters/reducer', () => {
   it('should decrement loading upon FETCH_ROUTE_TO_SHELTER_SUCCESS', () => {
     const loading = 3;
 
-    expect(SheltersReducer({ loading }, { type: types.FETCH_ROUTE_TO_SHELTER_SUCCESS, route: { routes: [] } }).loading)
+    expect(SheltersReducer({ loading }, { type: types.FETCH_ROUTE_TO_SHELTER_SUCCESS, route: { features: [] } }).loading)
       .to.equal(loading - 1);
   });
 
@@ -212,14 +211,15 @@ describe('containers/shelters/reducer', () => {
   it('should add routes to state upon FETCH_ROUTE_TO_SHELTER_SUCCESS', () => {
     const decodedRoutes = [
       {
-        coordinates: [[38.5, -120.2], [40.7, -120.95], [43.252, -126.453]],
+        geometry: {
+          coordinates: [[38.5, -120.2], [40.7, -120.95], [43.252, -126.453]],
+        },
       },
     ];
-    const encodedRoutes = decodedRoutes.map(route => ({ ...route, geometry: polyline.encode(route.coordinates) }));
-    const action = { type: types.FETCH_ROUTE_TO_SHELTER_SUCCESS, route: { routes: encodedRoutes } };
+    const action = { type: types.FETCH_ROUTE_TO_SHELTER_SUCCESS, features: decodedRoutes };
 
-    expect(SheltersReducer(undefined, action).routes)
-      .to.eql(decodedRoutes.map((route, index) => ({...route, ...encodedRoutes[index] })));
+    expect(SheltersReducer(undefined, action).features)
+      .to.eql(decodedRoutes);
   });
 
   it('should add error to state upon FETCH_ROUTE_TO_SHELTER_FAILED', () => {

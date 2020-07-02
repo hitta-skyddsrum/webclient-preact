@@ -1,4 +1,3 @@
-import polyline from '@mapbox/polyline';
 import { getSearchParam, getValueAfterSection } from '../../lib/url-parser';
 import {
   GET_CURRENT_POSITION_FAILED,
@@ -113,8 +112,7 @@ export default (state = initialState, action) => {
       return {
         ...state,
         loading: state.loading - 1,
-        routes: action.route.routes
-          .map(route => ({ ...route, coordinates: polyline.decode(route.geometry) })),
+        features: action.features,
       };
     case FETCH_ROUTE_TO_SHELTER_FAILED:
       return {
