@@ -304,16 +304,16 @@ describe('containers/shelters/actions/fetchRouteToShelter', () => {
   });
 
   it('creates FETCH_ROUTE_TO_SHELTER_SUCCESS when fetching shelters is finished', () => {
-    const route = { route: '66' };
+    const features = { geometry: {coordinates: []}, route: '66' };
     const from = [13, 12];
     const shelter = { position: { lat: 14, long: 18 } };
-    fetchJson.mockReturnValueOnce(Promise.resolve(route));
+    fetchJson.mockReturnValueOnce(Promise.resolve({ features }));
 
     const expectedActions = [
       { type: types.FETCH_ROUTE_TO_SHELTER },
       {
         type: types.FETCH_ROUTE_TO_SHELTER_SUCCESS,
-        route,
+        features,
       },
     ];
 

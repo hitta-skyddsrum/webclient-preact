@@ -54,7 +54,7 @@ export default class SheltersMap extends Component {
   render({
     center,
     shelters,
-    routes,
+    features = [],
     onSelectShelter,
     bounds = [],
     youAreHere = [],
@@ -106,7 +106,7 @@ export default class SheltersMap extends Component {
                 />
               ))}
           </MarketClusterGroup>
-          {routes.map(route => <Polyline positions={route.coordinates} />)}
+          {features.map(feat => <Polyline positions={feat.geometry.coordinates.map(c => ([c[1], c[0]]))} />)}
           {!isIE() && <ZoomControl position="bottomright" />}
         </LeafletMap>
       </div>

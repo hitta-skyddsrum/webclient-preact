@@ -66,13 +66,13 @@ describe('components/shelters', () => {
 
   it('should contain SheltersMap component', () => {
     const shelters = [{ name: 'shelter 1 '}];
-    const routes = 'route 69';
+    const features = 'route 69';
     const youAreHere = [5, 8];
     const bounds = [15, 1];
     const selectedShelterId = 1355;
     const context = shallow(<Shelters
       {...defaultProps}
-      routes={routes}
+      features={features}
       bounds={bounds}
       shelters={shelters}
       youAreHere={youAreHere}
@@ -81,7 +81,7 @@ describe('components/shelters', () => {
     />);
 
     expect(context.find(<SheltersMap
-      routes={routes}
+      features={features}
       shelters={shelters}
       center={youAreHere}
       youAreHere={youAreHere}
@@ -224,14 +224,14 @@ describe('components/shelters', () => {
     jest.mock('preact-router');
 
     const shelter = { id: 37 };
-    const routes = 'route 69';
+    const features = 'route 69';
     const center = {
       lat: 5,
       lon: 9,
     };
 
     const context = shallow(<Shelters
-      routes={routes}
+      features={features}
       shelters={[shelter]}
       youAreHere={[center.lat, center.lon]}
       {...defaultProps}
@@ -262,9 +262,9 @@ describe('components/shelters', () => {
     jest.mock('preact-router');
 
     const shelter = { id: 37 };
-    const routes = 'route 69';
+    const features = 'route 69';
     const context = shallow(<Shelters
-      routes={routes}
+      features={features}
       shelters={[shelter]}
       {...defaultProps}
     />);

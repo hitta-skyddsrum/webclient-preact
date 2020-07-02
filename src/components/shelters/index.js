@@ -148,9 +148,9 @@ export default class Shelters extends Component {
       />
       <SheltersMap
         center={this.state.center}
+        features={this.props.features}
         youAreHere={this.props.youAreHere}
         shelters={this.props.shelters}
-        routes={this.props.routes}
         onBBoxChange={this.handleBBoxChange}
         onSelectShelter={this.handleClickShelter}
         bounds={this.props.bounds}

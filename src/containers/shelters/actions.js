@@ -131,10 +131,10 @@ export const fetchRouteToShelter = (from, shelter) => {
       type: FETCH_ROUTE_TO_SHELTER,
     });
 
-    return fetchJson(`https://api.openrouteservice.org/directions?api_key=${process.env.ORS_API_KEY}&coordinates=${from[1]},${from[0]}|${shelter.position.long},${shelter.position.lat}&profile=driving-car`)
-      .then(route => dispatch({
+    return fetchJson(`https://api.openrouteservice.org/v2/directions/driving-car?api_key=${process.env.ORS_API_KEY}&start=${from[1]},${from[0]}&end=${shelter.position.long},${shelter.position.lat}`)
+      .then(data => dispatch({
         type: FETCH_ROUTE_TO_SHELTER_SUCCESS,
-        route,
+        features: data.features,
       }))
       .catch(error => {
         if (error.status === 404) {
