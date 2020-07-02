@@ -7,7 +7,7 @@ import path from 'path';
 import cssnano from 'cssnano';
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const GitRevisionPlugin = require('git-revision-webpack-plugin');
-const PacktrackerPlugin = require('@packtracker/webpack-plugin')
+const PacktrackerPlugin = require('@packtracker/webpack-plugin');
 const SentryCliPlugin = require('@sentry/webpack-plugin');
 const TerserPlugin = require('terser-webpack-plugin');
 const ENV = process.env.NODE_ENV || 'development';
@@ -202,7 +202,7 @@ module.exports = {
   },
   plugins: ([
     new PacktrackerPlugin({
-      branch: process.env.TRAVIS_PULL_REQUEST_BRANCH || process.env.TRAVIS_BRANCH,
+      branch: process.env.TRAVIS_PULL_REQUEST_BRANCH || process.env.TRAVIS_BRANCH || process.env.BRANCH,
       project_token: process.env.PACKTRACKER_TOKEN,
       upload: process.env.CI === 'true',
     }),
