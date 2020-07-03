@@ -116,7 +116,7 @@
     "json-loader": "0.5.7",
     "lighthouse-ci": "github:kontrollanten/lighthouse-ci#master",
     "mini-css-extract-plugin": "0.9.0",
-    "mkdirp": "0.5.1",
+    "mkdirp": "0.5.5",
     "ncp": "2.0.0",
     "nightwatch": "github:kontrollanten/nightwatch-visual-regression#b9ccaa6436691b1de30b37f633ea78b846ec241c",
     "nightwatch-accessibility": "1.8.0",
