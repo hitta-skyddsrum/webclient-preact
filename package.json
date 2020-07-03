@@ -100,7 +100,7 @@
     "dotenv": "8.2.0",
     "errorshots": "github:kontrollanten/errorshots",
     "eslint": "6.8.0",
-    "eslint-plugin-compat": "3.3.0",
+    "eslint-plugin-compat": "3.8.0",
     "eslint-plugin-jest": "23.17.1",
     "eslint-plugin-jsx-a11y": "6.2.3",
     "eslint-plugin-react": "7.20.3",
