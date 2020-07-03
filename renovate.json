@@ -12,13 +12,13 @@
         "chai",
         "chromedriver",
         "codecov",
-        "eslint",
-        "jest",
+        "^eslint",
+        "^jest",
         "preact-jsx-chai",
         "preact-render-spy",
         "preact-test-utils",
         "selenium-standalone",
-        "sinon"
+        "^sinon"
       ]
     }
   ]
