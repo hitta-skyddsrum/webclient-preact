@@ -154,7 +154,7 @@
     "@material/animation": "0.41.0",
     "@material/base": "0.41.0",
     "@material/drawer": "0.44.1",
-    "algolia-places-react": "1.5.0",
+    "algolia-places-react": "1.6.0",
     "classnames": "2.2.6",
     "dynamic-polyfill": "1.1.0",
     "history": "4.10.1",
