@@ -168,7 +168,7 @@
     "preact-helmet": "4.0.0-alpha-3",
     "preact-material-components": "1.6.1",
     "preact-redux": "2.1.0",
-    "preact-render-to-string": "5.1.2",
+    "preact-render-to-string": "5.1.9",
     "preact-router": "2.6.1",
     "preact-router-redux": "4.1.0",
     "raven-for-redux": "1.4.0",
