@@ -176,7 +176,7 @@
     "react-custom-scrollbars": "4.2.1",
     "react-leaflet": "1.9.1",
     "react-leaflet-markercluster": "1.1.8",
-    "redux": "4.0.4",
+    "redux": "4.0.5",
     "redux-thunk": "2.3.0"
   },
   "resolutions": {
