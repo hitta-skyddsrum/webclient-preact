@@ -146,7 +146,7 @@
     "url-loader": "3.0.0",
     "webpack": "4.43.0",
     "webpack-cli": "3.3.12",
-    "webpack-dev-server": "3.10.1"
+    "webpack-dev-server": "3.11.0"
   },
   "dependencies": {
     "@material-ui/core": "3.9.4",
