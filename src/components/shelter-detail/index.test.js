@@ -1,6 +1,6 @@
 import { h } from 'preact';
 import { expect } from 'chai';
-import { shallow } from 'preact-render-spy';
+import { shallow } from 'enzyme';
 import sinon from 'sinon';
 import Helmet from 'preact-helmet';
 
@@ -29,14 +29,14 @@ describe('components/shelter-detail', () => {
   it('should hide all content when no shelter is provided', () => {
     const context = shallow(<ShelterDetail />);
 
-    expect(context.find(<Helmet />).length).to.equal(0);
-    expect(context.find(<List />).length).to.equal(0);
+    expect(context.find(Helmet).length).to.equal(0);
+    expect(context.find(List).length).to.equal(0);
   });
 
   it('should set the title when a shelter.shelterId is provided', () => {
     const context = shallow(<ShelterDetail onHeightChange={sinon.spy()} shelter={shelter} />);
 
-    expect(context.find(<Helmet />).attr('title')).to.match(new RegExp(shelter.shelterId));
+    expect(context.find(Helmet).prop('title')).to.match(new RegExp(shelter.shelterId));
   });
 
   it('should have a BottomSheet', () => {
@@ -48,36 +48,40 @@ describe('components/shelter-detail', () => {
       onHeightChange={sinon.spy()}
     />);
 
-    expect(context.find(<BottomSheet isOpen onClose={onClose} />).length).to.equal(1);
+    expect(context.findWhere(n =>
+      n.type() === BottomSheet &&
+      n.props().isOpen === true &&
+      n.props().onClose === onClose
+    ).length).to.equal(1);
   });
 
   it('should have the shelterId as header', () => {
     const context = shallow(<ShelterDetail onHeightChange={sinon.spy()} shelter={shelter} />);
 
-    expect(context.find('h1')).match(new RegExp(shelter.shelterId));
+    expect(context.find('h1').html()).match(new RegExp(shelter.shelterId));
   });
 
   it('should display estate id', () => {
     const context = shallow(<ShelterDetail onHeightChange={sinon.spy()} open shelter={shelter} />);
 
-    expect(context.find(<List />)).match(new RegExp(shelter.estateId));
+    expect(context.find(List).html()).match(new RegExp(shelter.estateId));
   });
 
   it('should display address', () => {
     const context = shallow(<ShelterDetail onHeightChange={sinon.spy()} open shelter={shelter} />);
 
-    expect(context.find(<List />)).match(new RegExp(`${shelter.address}, ${shelter.municipality}`));
+    expect(context.find(List).html()).match(new RegExp(`${shelter.address}, ${shelter.municipality}`));
   });
 
   it('should display amount of slots', () => {
     const context = shallow(<ShelterDetail open onHeightChange={sinon.spy()} shelter={shelter} />);
 
-    expect(context.find(<List />)).match(new RegExp(shelter.slots));
+    expect(context.find(List).html()).match(new RegExp(shelter.slots));
   });
 
   it('should display coordinates with geo URI link', () => {
     const context = shallow(<ShelterDetail open onHeightChange={sinon.spy()} shelter={shelter} />);
 
-    expect(context.find(<List />)).match(new RegExp(`${shelter.position.lat}, ${shelter.position.long}`));
+    expect(context.find(List).html()).match(new RegExp(`${shelter.position.lat}, ${shelter.position.long}`));
   });
 });

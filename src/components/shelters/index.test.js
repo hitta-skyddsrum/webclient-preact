@@ -2,7 +2,7 @@ import { h } from 'preact';
 import { route } from 'preact-router';
 import { expect } from 'chai';
 import sinon from 'sinon';
-import { shallow } from 'preact-render-spy';
+import { shallow } from 'enzyme';
 import Helmet from 'preact-helmet';
 
 import Shelters from './';
@@ -36,20 +36,20 @@ describe('components/shelters', () => {
       reverseGeocode={sinon.spy()}
     />);
 
-    expect(context.find(<Helmet />).length).to.equal(0);
+    expect(context.find(Helmet).length).to.equal(0);
 
-    context.render(<Shelters
-      selectedAddress={selectedAddress}
-      reverseGeocode={sinon.spy()}
-    />);
+    context.setProps({
+      selectedAddress,
+      reverseGeocode: sinon.spy(),
+    });
 
-    expect(context.find(<Helmet />).attr('title')).to.match(new RegExp(selectedAddress.name));
+    expect(context.find(Helmet).prop('title')).to.match(new RegExp(selectedAddress.name));
   });
 
   it('displays a LoadingIndicator when loading is truthy', () => {
     const context = shallow(<Shelters loading={4} {...defaultProps} />);
 
-    expect(context.find(<LoadingIndicator />).length).to.equal(1);
+    expect(context.find(LoadingIndicator).length).to.equal(1);
   });
 
   it('should contain a SearchBox container', () => {
@@ -61,7 +61,11 @@ describe('components/shelters', () => {
       {...defaultProps}
     />);
 
-    expect(context.find(<SearchBox onGeolocation={onGeolocation} onSelectAddress={onSelectAddress} />).length).to.equal(1);
+    expect(context.findWhere(n =>
+      n.type() === SearchBox &&
+      n.props().onGeolocation === onGeolocation &&
+      n.props().onSelectAddress === onSelectAddress
+    ).length).to.equal(1);
   });
 
   it('should contain SheltersMap component', () => {
@@ -80,14 +84,15 @@ describe('components/shelters', () => {
       onSelectShelter={sinon.spy()}
     />);
 
-    expect(context.find(<SheltersMap
-      features={features}
-      shelters={shelters}
-      center={youAreHere}
-      youAreHere={youAreHere}
-      bounds={bounds}
-      selectedShelterId={selectedShelterId}
-    />).length)
+    expect(context.findWhere(n =>
+      n.type() === SheltersMap &&
+      n.props().features === features &&
+      n.props().shelters === shelters &&
+      n.props().center === youAreHere &&
+      n.props().youAreHere === youAreHere &&
+      n.props().bounds === bounds &&
+      n.props().selectedShelterId === selectedShelterId
+    ).length)
       .to.equal(1, 'Expected ShelersMap component to exist');
   });
 
@@ -99,7 +104,7 @@ describe('components/shelters', () => {
       onSetBounds={onSetBounds}
     />);
 
-    wrapper.find(<SheltersMap />).simulate('BBoxChange', {});
+    wrapper.find(SheltersMap).props().onBBoxChange({});
 
     expect(onSetBounds).to.have.been.calledWith([]);
   });
@@ -110,14 +115,14 @@ describe('components/shelters', () => {
     const bbox = { bbox: 10, oldBBox: 8, oldZoom: 16, zoom: 15 };
     const wrapper = shallow(<Shelters {...defaultProps} onBBoxChange={onBBoxChange} />);
 
-    wrapper.find(SearchBox).attr('onFocus')();
-    wrapper.find(<SheltersMap />).simulate('BBoxChange', bbox);
+    wrapper.find(SearchBox).prop('onFocus')();
+    wrapper.find(SheltersMap).props().onBBoxChange(bbox);
     fakeTimer.tick(500);
 
     expect(onBBoxChange).to.not.have.been.called;
 
-    wrapper.find(SearchBox).attr('onBlur')();
-    wrapper.find(<SheltersMap />).simulate('BBoxChange', bbox);
+    wrapper.find(SearchBox).prop('onBlur')();
+    wrapper.find(SheltersMap).props().onBBoxChange(bbox);
     fakeTimer.tick(500);
 
     expect(onBBoxChange).to.have.been.called;
@@ -133,12 +138,15 @@ describe('components/shelters', () => {
     />);
 
     const bbox = { bb: 'ox' };
-    wrapper.find(<SheltersMap />).simulate('BBoxChange', { bbox, zoom: 20 });
+    wrapper.find(SheltersMap).props().onBBoxChange({ bbox, zoom: 20 });
 
     fakeTimer.tick(100);
     expect(onBBoxChange).to.not.have.been.called;
 
-    wrapper.render(<Shelters {...defaultProps} loading={false} onBBoxChange={onBBoxChange} />);
+    wrapper.setProps({
+      loading: false,
+      onBBoxChange,
+    });
 
     fakeTimer.tick(100);
     expect(onBBoxChange).to.have.been.calledWith(bbox);
@@ -153,8 +161,8 @@ describe('components/shelters', () => {
       onBBoxChange={onBBoxChange}
     />);
     
-    wrapper.find(<SheltersMap />).simulate('BBoxChange', { bbox: 1, zoom: 20 });
-    wrapper.find(<SheltersMap />).simulate('BBoxChange', { bbox: 2, zoom: 20 });
+    wrapper.find(SheltersMap).props().onBBoxChange({ bbox: 1, zoom: 20 });
+    wrapper.find(SheltersMap).props().onBBoxChange({ bbox: 2, zoom: 20 });
 
     expect(fakeTimer.clearInterval).to.have.been.calledOnce;
 
@@ -170,7 +178,7 @@ describe('components/shelters', () => {
     const fakeTimer = sinon.useFakeTimers();
     const wrapper = shallow(<Shelters {...defaultProps} onBBoxChange={onBBoxChange} />);
 
-    wrapper.find(<SheltersMap />).simulate('BBoxChange', {
+    wrapper.find(SheltersMap).props().onBBoxChange({
       bbox: 1,
       oldBBox: 2,
       oldZoom: 20,
@@ -187,7 +195,7 @@ describe('components/shelters', () => {
     const fakeTimer = sinon.useFakeTimers();
     const wrapper = shallow(<Shelters {...defaultProps} onBBoxChange={onBBoxChange} />);
 
-    wrapper.find(<SheltersMap />).simulate('BBoxChange', {
+    wrapper.find(SheltersMap).props().onBBoxChange({
       bbox: 22,
       oldBBox: 22,
       oldZoom: 16,
@@ -202,14 +210,14 @@ describe('components/shelters', () => {
   it('should display a MapNotification upon onBBoxChange and zoom level is too low', () => {
     const wrapper = shallow(<Shelters {...defaultProps} />);
 
-    wrapper.find(<SheltersMap />).simulate('BBoxChange', { bbox: 1, zoom: 13 });
+    wrapper.find(SheltersMap).props().onBBoxChange({ bbox: 1, zoom: 13 });
 
-    expect(wrapper.find(<MapNotification />).length).to.equal(1);
+    expect(wrapper.find(MapNotification).length).to.equal(1);
 
-    wrapper.rerender();
-    wrapper.find(<SheltersMap />).simulate('BBoxChange', { bbox: 1, zoom: 14 });
+    wrapper.update();
+    wrapper.find(SheltersMap).props().onBBoxChange({ bbox: 1, zoom: 14 });
 
-    expect(wrapper.find(<MapNotification />).length).to.equal(0);
+    expect(wrapper.find(MapNotification).length).to.equal(0);
   });
 
   it('should provide Ytterhogdal as center if youAreHere is empty', () => {
@@ -217,7 +225,7 @@ describe('components/shelters', () => {
       {...defaultProps}
     />);
 
-    expect(context.find(<SheltersMap />).attr('center')).to.eql([62.166667, 14.95]);
+    expect(context.find(SheltersMap).prop('center')).to.eql([62.166667, 14.95]);
   });
 
   it('should change route and keep center upon clicking on a shelter on SheltersMap', () => {
@@ -237,7 +245,7 @@ describe('components/shelters', () => {
       {...defaultProps}
     />);
 
-    context.find(<SheltersMap />).attr('onSelectShelter')(shelter);
+    context.find(SheltersMap).prop('onSelectShelter')(shelter);
 
     // https://github.com/facebook/jest/issues/890
     expect(route).to.have.been.called;
@@ -252,10 +260,14 @@ describe('components/shelters', () => {
     />);
     context.setState({ hideShelterDetail: true });
 
-    context.find(<SheltersMap />).attr('onSelectShelter')(shelter);
-    context.rerender();
+    context.find(SheltersMap).prop('onSelectShelter')(shelter);
+    context.update();
 
-    expect(context.find(<ShelterDetail open={true} shelter={shelter} />).length).to.equal(1);
+    expect(context.findWhere(n =>
+      n.type() === ShelterDetail &&
+      n.props().open === true &&
+      n.props().shelter === shelter
+    ).length).to.equal(1);
   });
 
   it('should change route when no center is given upon clicking on a shelter', () => {
@@ -269,7 +281,7 @@ describe('components/shelters', () => {
       {...defaultProps}
     />);
 
-    context.find(<SheltersMap />).attr('onSelectShelter')(shelter);
+    context.find(SheltersMap).prop('onSelectShelter')(shelter);
 
     expect(route).to.have.been
       .calledWith(`/skyddsrum/${shelter.shelterId}`);
@@ -309,11 +321,10 @@ describe('components/shelters', () => {
       {...defaultProps}
     />);
 
-    context.render(<Shelters
-      shelters={[shelter]}
-      selectedShelterId={shelter.shelterId}
-      {...defaultProps}
-    />);
+    context.setProps({
+      shelters: [shelter],
+      selectedShelterId: shelter.shelterId,
+    });
 
     expect(onSelectShelter).to.have.been.calledWith(shelter.shelterId);
   });
@@ -328,12 +339,11 @@ describe('components/shelters', () => {
       {...defaultProps}
     />);
 
-    context.render(<Shelters
-      shelters={shelters}
-      selectedShelterId={newShelter.id}
-      onSelectShelter={onSelectShelter}
-      {...defaultProps}
-    />);
+    context.setProps({
+      shelters,
+      selectedShelterId: newShelter.id,
+      onSelectShelter,
+    });
 
     expect(onSelectShelter).to.have.been.calledWith(newShelter.id);
   });
@@ -350,11 +360,9 @@ describe('components/shelters', () => {
       {...defaultProps}
     />);
 
-    context.render(<Shelters
-      shelters={shelters}
-      onUnselectShelter={onUnselectShelter}
-      {...defaultProps}
-    />);
+    context.setProps({
+      selectedShelterId: 0,
+    });
 
     expect(onUnselectShelter).to.have.been.calledWith();
   });
@@ -367,16 +375,22 @@ describe('components/shelters', () => {
     />);
     context.setState({ hideShelterDetail: true });
 
-    expect(context.find(<ShelterDetail open={true} />).length).to.equal(0);
+    expect(context.findWhere(n =>
+      n.type() === ShelterDetail &&
+      n.props().open === true
+    ).length).to.equal(0);
 
-    context.find(<SheltersMap />).attr('onSelectShelter')(shelter);
-    context.render(<Shelters
-      shelters={[shelter]}
-      selectedShelter={shelter}
-      {...defaultProps}
-    />);
+    context.find(SheltersMap).prop('onSelectShelter')(shelter);
+    context.setProps({
+      shelters: [shelter],
+      selectedShelter: shelter,
+    });
 
-    expect(context.find(<ShelterDetail open={true} shelter={shelter} />).length).to.equal(1);
+    expect(context.findWhere(n =>
+      n.type() === ShelterDetail &&
+      n.props().open === true &&
+      n.props().shelter === shelter
+    ).length).to.equal(1);
   });
 
   it('should hide ShelterDetail when a falsy selectedShelter is received', () => {
@@ -388,15 +402,20 @@ describe('components/shelters', () => {
     />);
     context.setState({ hideShelterDetail: false });
 
-    expect(context.find(<ShelterDetail open={true} />).length).to.equal(1);
+    expect(context.findWhere(n =>
+      n.type() === ShelterDetail &&
+      n.props().open === true
+    ).length).to.equal(1);
 
-    context.render(<Shelters
-      shelters={[shelter]}
-      selectedShelter={false}
-      {...defaultProps}
-    />);
+    context.setProps({
+      shelters: [shelter],
+      selectedShelter: false,
+    });
 
-    expect(context.find(<ShelterDetail open={true} />).length).to.equal(0);
+    expect(context.findWhere(n =>
+      n.type() === ShelterDetail &&
+      n.props().open === true
+    ).length).to.equal(0);
   });
 
   it('should hide ShelterDetail upon closing selected shelter', () => {
@@ -407,10 +426,13 @@ describe('components/shelters', () => {
       {...defaultProps}
     />);
 
-    context.find(<ShelterDetail />).attr('onClose')();
-    context.rerender();
+    context.find(ShelterDetail).prop('onClose')();
+    context.update();
 
-    expect(context.find(<ShelterDetail open={false} />).length).to.equal(1);
+    expect(context.findWhere(n =>
+      n.type() === ShelterDetail &&
+      n.props().open === false
+    ).length).to.equal(1);
   });
 
   it('should not throw an error if shelterDetailElem or it\'s base property is falsy', () => {
@@ -418,16 +440,16 @@ describe('components/shelters', () => {
       {...defaultProps}
     />);
 
-    expect(() => context.render(null)).to.not.throw();
+    expect(() => context.unmount()).to.not.throw();
 
     context = shallow(<Shelters
       {...defaultProps}
     />);
-    const component = context.component();
+    const component = context.instance();
     component.shelterDetailElem = {
       base: null,
     };
 
-    expect(() => context.render(null)).to.not.throw();
+    expect(() => context.unmount()).to.not.throw();
   });
 });

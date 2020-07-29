@@ -1,6 +1,6 @@
 import { h } from 'preact';
 import { expect } from 'chai';
-import { shallow } from 'preact-render-spy';
+import { shallow } from 'enzyme';
 import sinon from 'sinon';
 
 import Fab from 'preact-material-components/Fab';
@@ -19,7 +19,7 @@ describe('components/BottomSheet', () => {
     const onClose = sinon.spy();
     const wrapper = shallow(<BottomSheet onClose={onClose}>hej</BottomSheet>);
 
-    wrapper.find(Fab).simulate('click');
+    wrapper.find(Fab).props().onClick();
 
     expect(onClose).to.have.been.calledWith();
   });
@@ -27,6 +27,6 @@ describe('components/BottomSheet', () => {
   it('should append accurate class upon isOpen', () => {
     const wrapper = shallow(<BottomSheet isOpen />);
 
-    expect(wrapper.find('div').first().attr('className')).to.contain(styles.IsOpen);
+    expect(wrapper.find('div').first().prop('className')).to.contain(styles.IsOpen);
   });
 });

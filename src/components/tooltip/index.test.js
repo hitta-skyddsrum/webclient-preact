@@ -1,6 +1,6 @@
 import { h } from 'preact';
 import { expect } from 'chai';
-import { shallow } from 'preact-render-spy';
+import { shallow } from 'enzyme';
 import sinon from 'sinon';
 import styles from './style.scss';
 import Tooltip from './';
@@ -24,7 +24,7 @@ describe('components/tooltip', () => {
     yesterday.setDate(yesterday.getDate() - 1);
     const wrapper = shallow(<Tooltip expires={yesterday} />);
 
-    expect(wrapper.output()).to.equal(false);
+    expect(wrapper.exists()).to.equal(false);
   });
 
   it('should call onClick upon click', () => {
@@ -32,7 +32,7 @@ describe('components/tooltip', () => {
     const event = new Event('click');
     const wrapper = shallow(<Tooltip onClick={onClick} />);
 
-    wrapper.simulate('click', event);
+    wrapper.props().onClick(event);
 
     expect(onClick).to.have.been.calledWith(event);
   });

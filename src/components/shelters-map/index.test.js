@@ -1,6 +1,6 @@
 import { h } from 'preact';
 import { expect } from 'chai';
-import { shallow } from 'preact-render-spy';
+import { shallow } from 'enzyme';
 import sinon from 'sinon';
 import { Map, Marker, Polyline, ZoomControl } from 'react-leaflet';
 import L from 'leaflet';
@@ -60,7 +60,7 @@ describe('components/SheltersMap', () => {
   it('should remove all event listeners upon unmount', () => {
     expect(document.addEventListener).to.have.been.called;
 
-    mapContext.render(null);
+    mapContext.unmount();
 
     document.addEventListener.getCalls().forEach(call => {
       expect(document.removeEventListener).to.have.been.calledWith(...call.args);
@@ -78,24 +78,28 @@ describe('components/SheltersMap', () => {
   });
 
   it('should render a map', () => {
-    expect(mapContext.find(
-      <Map
-        zoom={14}
-        bounds={bounds}
-        center={center}
-        boundsOptions={{ paddingBottomRight: [0, bottomPadding] }}
-      />
+    expect(mapContext.findWhere(n =>
+      n.type() === Map &&
+      n.props().zoom === 14 &&
+      n.props().bounds === bounds &&
+      n.props().center === center &&
+      n.props().boundsOptions.paddingBottomRight[0] === 0 &&
+      n.props().boundsOptions.paddingBottomRight[1] === bottomPadding
     ).length).to.equal(1);
   });
 
   it('should render a marker at the youAreHere position', () => {
-    expect(mapContext.find(<Marker position={youAreHere} interactive={false} />).length).to.equal(1);
+    expect(mapContext.findWhere(n =>
+      n.type() === Marker &&
+      n.props().position === youAreHere &&
+      n.props().interactive === false
+    ).length).to.equal(1);
   });
 
   it('should not render a marker if no youAreHere is given', () => {
-    mapContext.render(<SheltersMap center={[]} shelters={[]} features={[]} />);
+    const wrapper = shallow(<SheltersMap center={[]} shelters={[]} routes={[]} />);
 
-    expect(mapContext.find(<ShelterMarker />).length).to.equal(0);
+    expect(wrapper.find(ShelterMarker).length).to.equal(0);
   });
 
   it('should call onBBoxChange with zoom and bbox value upon map move end', () => {
@@ -109,7 +113,7 @@ describe('components/SheltersMap', () => {
         getZoom: () => zoom,
       },
     };
-    mapContext.find(Map).attr('onMoveend')(mockEvent);
+    mapContext.find(Map).prop('onMoveend')(mockEvent);
 
     expect(onBBoxChange).to.have.been.calledWith({
       bbox: bBoxString,
@@ -126,7 +130,7 @@ describe('components/SheltersMap', () => {
         getZoom: () => 300,
       },
     };
-    mapContext.find(Map).simulate('moveend', secondMockEvent);
+    mapContext.find(Map).props().onMoveend(secondMockEvent);
 
     expect(onBBoxChange).to.have.been.calledWith({
       bbox: secondMockEvent.target.getBounds().toBBoxString(),
@@ -147,7 +151,7 @@ describe('components/SheltersMap', () => {
         getZoom: () => zoom,
       },
     };
-    mapContext.find(Map).attr('onZoomend')(mockEvent);
+    mapContext.find(Map).prop('onZoomend')(mockEvent);
 
     expect(onBBoxChange).to.have.been.calledWith({
       bbox: bBoxString,
@@ -161,7 +165,10 @@ describe('components/SheltersMap', () => {
     expect(shelters.length).to.be.greaterThan(1);
     const shelter = shelters.pop();
 
-    mapContext.find(<ShelterMarker shelter={shelter} />).simulate('click');
+    mapContext.findWhere(n =>
+      n.type() === ShelterMarker &&
+      n.props().shelter === shelter
+    ).props().onClick();
 
     expect(onSelectShelter).to.have.been.calledWith();
   });
@@ -170,11 +177,15 @@ describe('components/SheltersMap', () => {
     expect(features.length).to.be.greaterThan(1);
 
     features.forEach(feat =>
-      expect(mapContext.find(<Polyline positions={feat.geometry.coordinates.map(c => ([c[1], c[0]]))} />).length).to.equal(1));
+      expect(mapContext.findWhere(n =>
+        n.type() === Polyline &&
+        n.props().positions[0][0] === feat.geometry.coordinates[0][1] &&
+        n.props().positions[0][1] === feat.geometry.coordinates[0][0]
+      ).length).to.equal(1));
   });
 
   it('should display a ZoomControl in the bottom right corner', () => {
-    expect(mapContext.find(<ZoomControl />).length).to.equal(1);
-    expect(mapContext.find(<ZoomControl />).attr('position')).to.equal('bottomright');
+    expect(mapContext.find(ZoomControl).length).to.equal(1);
+    expect(mapContext.find(ZoomControl).prop('position')).to.equal('bottomright');
   });
 });

@@ -1,7 +1,7 @@
 import { h } from 'preact';
 import { expect } from 'chai';
 import sinon from 'sinon';
-import { shallow } from 'preact-render-spy';
+import { shallow } from 'enzyme';
 import Button from '../button';
 import UpdateAvailable from './';
 
@@ -9,14 +9,14 @@ describe('components.update-available', () => {
   it('should display a container with accurate message', () => {
     const wrapper = shallow(<UpdateAvailable />);
 
-    expect(wrapper).to.match(/Det finns en uppdatering tillgänglig/);
+    expect(wrapper.html()).to.match(/Det finns en uppdatering tillgänglig/);
   });
 
   it('should fire onUpdate upon clicking on install button', () => {
     const onUpdate = sinon.spy();
     const wrapper = shallow(<UpdateAvailable onUpdate={onUpdate} />);
 
-    wrapper.find(<Button role="button" />).simulate('click');
+    wrapper.findWhere((n) => n.type() === Button && n.dive().text().search(/ladda om/i) === 0).first().props().onClick();
 
     expect(onUpdate).to.have.been.calledOnce;
   });
@@ -26,11 +26,11 @@ describe('components.update-available', () => {
     const onClose = sinon.spy();
     const wrapper = shallow(<UpdateAvailable onClose={onClose} />);
 
-    wrapper.find(<Button role="button">Stäng</Button>).simulate('click');
+    wrapper.findWhere((n) => n.type() === Button && n.dive().text().search(/stäng/i) === 0).first().props().onClick();
     timer.tick(500);
-    wrapper.rerender();
+    wrapper.update();
 
-    expect(wrapper.output()).to.equal(null);
+    expect(wrapper.exists()).to.equal(false);
   });
 });
 

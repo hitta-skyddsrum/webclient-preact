@@ -1,6 +1,6 @@
 import { h } from 'preact';
 import { expect } from 'chai';
-import { shallow } from 'preact-render-spy';
+import { shallow } from 'enzyme';
 import Helmet from 'preact-helmet';
 
 import App from './app';
@@ -17,14 +17,14 @@ describe('App', () => {
 
   it('should provide a title template', () => {
     const titleTemplate = shallow(<App />)
-      .find(<Helmet />).attr('titleTemplate');
+      .find(Helmet).prop('titleTemplate');
 
     expect(titleTemplate).to.equal('%s - Hitta skyddsrum');
   });
 
   it('should provide a default title', () => {
     const defaultTitle = shallow(<App />)
-      .find(<Helmet />).attr('defaultTitle');
+      .find(Helmet).prop('defaultTitle');
 
     expect(defaultTitle).to.equal('Hitta skyddsrum');
   });
@@ -32,6 +32,6 @@ describe('App', () => {
   it('should display a Sidenav', () => {
     const context = shallow(<App />);
 
-    expect(context.find(<Sidenav />).length).to.equal(1);
+    expect(context.find(Sidenav).length).to.equal(1);
   });
 });
