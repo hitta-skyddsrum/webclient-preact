@@ -1,5 +1,5 @@
 import { h } from 'preact';
-import { shallow } from 'preact-render-spy';
+import { shallow } from 'enzyme';
 import { expect } from 'chai';
 
 import Bouncer from './';
@@ -9,6 +9,6 @@ describe('components/bouncer', () => {
     const elem = shallow(<Bouncer />);
 
     expect(elem.find('div').length).to.equal(4);
-    expect(elem.find('div').find('div').length).to.equal(3);
+    expect(elem.find('div div').length).to.equal(3);
   });
 });

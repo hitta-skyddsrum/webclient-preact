@@ -62,7 +62,7 @@ export default class Sidenav extends Component {
           ref={ref => { this.control = ref; }}
           dir="rtl"
         >
-          <Drawer.DrawerContent className={style.DrawerContent} dir="ltr">
+          <Drawer.DrawerContent class={style.DrawerContent} dir="ltr">
             <List>
               {menuItems.map(item => (
                 <List.LinkItem

@@ -1,7 +1,7 @@
 import { h } from 'preact';
 import { expect } from 'chai';
 import sinon from 'sinon';
-import { shallow } from 'preact-render-spy';
+import { shallow } from 'enzyme';
 import { route } from 'preact-router';
 import AlgoliaPlaces from 'algolia-places-react';
 import SearchBox from './';
@@ -61,8 +61,8 @@ describe('components/search-box', () => {
 
       const apComp = wrapper.find(AlgoliaPlaces);
       expect(apComp.length).to.equal(1);
-      expect(apComp.attr('placeholder')).to.equal('Var vill du söka från?');
-      expect(apComp.attr('options')).to.deep.include({
+      expect(apComp.prop('placeholder')).to.equal('Var vill du söka från?');
+      expect(apComp.prop('options')).to.deep.include({
         language: 'sv',
         countries: ['se'],
         apiKey,
@@ -74,7 +74,7 @@ describe('components/search-box', () => {
       const onLimit = sinon.spy();
       const wrapper = shallow(<SearchBox onLimit={onLimit} />);
 
-      wrapper.find(AlgoliaPlaces).attr('onLimit')();
+      wrapper.find(AlgoliaPlaces).prop('onLimit')();
 
       expect(onLimit).to.have.been.calledWith();
     });
@@ -84,7 +84,7 @@ describe('components/search-box', () => {
       const error = new Error();
       const wrapper = shallow(<SearchBox onSearchError={onSearchError} />);
 
-      wrapper.find(AlgoliaPlaces).attr('onError')(error);
+      wrapper.find(AlgoliaPlaces).prop('onError')(error);
 
       expect(onSearchError).to.have.been.calledWith(error);
     });
@@ -94,7 +94,7 @@ describe('components/search-box', () => {
       const mockEvent = new Event('blur');
       const wrapper = shallow(<SearchBox onBlur={onBlur} />);
 
-      wrapper.find(AlgoliaPlaces).attr('onBlur')(mockEvent);
+      wrapper.find(AlgoliaPlaces).prop('onBlur')(mockEvent);
 
       expect(onBlur).to.have.been.calledWith(mockEvent);
     });
@@ -104,7 +104,7 @@ describe('components/search-box', () => {
       const mockEvent = new Event('blur');
       const wrapper = shallow(<SearchBox onFocus={onFocus} />);
 
-      wrapper.find(AlgoliaPlaces).attr('onFocus')(mockEvent);
+      wrapper.find(AlgoliaPlaces).prop('onFocus')(mockEvent);
 
       expect(onFocus).to.have.been.calledWith(mockEvent);
     });
@@ -116,7 +116,7 @@ describe('components/search-box', () => {
       const algoliaPlaces = context.find(AlgoliaPlaces);
       const lat = 14.53;
       const lon = 15.54;
-      algoliaPlaces.attr('onChange')({ suggestion: { latlng: { lat, lng: lon } }});
+      algoliaPlaces.prop('onChange')({ suggestion: { latlng: { lat, lng: lon } }});
 
       expect(route).to.have.been.calledOnce;
 
@@ -132,8 +132,8 @@ describe('components/search-box', () => {
     it('should disable input field and show custom value upon loadingGeo', () => {
       const wrapper = shallow(<SearchBox loadingGeo />);
 
-      expect(wrapper.find(AlgoliaPlaces).attr('disabled')).to.equal(true);
-      expect(wrapper.find(AlgoliaPlaces).attr('value')).to.contain('Hämtar');
+      expect(wrapper.find(AlgoliaPlaces).prop('disabled')).to.equal(true);
+      expect(wrapper.find(AlgoliaPlaces).prop('value')).to.contain('Hämtar');
     });
   });
 });

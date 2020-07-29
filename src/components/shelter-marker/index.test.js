@@ -1,5 +1,5 @@
 import { h } from 'preact';
-import { shallow } from 'preact-render-spy';
+import { shallow } from 'enzyme';
 import { expect } from 'chai';
 import sinon from 'sinon';
 import L from 'leaflet';
@@ -14,7 +14,7 @@ describe('components/shelter-marker', () => {
     const iconSize = 300;
     sinon.stub(L, 'icon');
     const wrapper = shallow(<ShelterMarker iconSize={iconSize} shelter={shelter} />);
-    const marker = wrapper.find(<Marker position={[shelter.position.lat, shelter.position.long]} />);
+    const marker = wrapper.findWhere(n => n.type() === Marker && n.props().position[0] === shelter.position.lat && n.props().position[1] === shelter.position.long);
 
     expect(marker.length).to.equal(1);
     expect(L.icon).to.have.been.calledWithMatch({
@@ -28,7 +28,7 @@ describe('components/shelter-marker', () => {
     const shelter = { position: {} };
     const wrapper = shallow(<ShelterMarker shelter={shelter} onClick={onClick} />);
 
-    wrapper.find(<Marker />).simulate('click');
+    wrapper.find(Marker).props().onClick();
 
     expect(onClick).to.have.been.calledWith(shelter);
   });
