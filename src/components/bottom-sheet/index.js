@@ -1,6 +1,6 @@
 import { h } from 'preact';
-import Fab from 'preact-material-components/Fab';
-import 'preact-material-components/Fab/style.css';
+import { Fab } from '@rmwc/fab';
+import '@rmwc/fab/styles';
 
 import styles from './styles.scss';
 

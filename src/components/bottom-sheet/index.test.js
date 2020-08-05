@@ -3,7 +3,7 @@ import { expect } from 'chai';
 import { shallow } from 'enzyme';
 import sinon from 'sinon';
 
-import Fab from 'preact-material-components/Fab';
+import { Fab } from '@rmwc/fab';
 import BottomSheet from './';
 import styles from './styles.scss';
 

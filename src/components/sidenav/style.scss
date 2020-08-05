@@ -1,6 +1,3 @@
-@import "@material/button/mdc-button";
-@import "@material/animation/variables";
-
 @import "../../style/mixins";
 @import "../../style/variables";
 
@@ -9,19 +6,7 @@
   menuItemColor: #fff;
 }
 
-:global(.mdc-drawer-app-content),
-.menuButton {
-  transition-property: transform;
-  transition-timing-function: $mdc-animation-standard-curve-timing-function;
-}
-
 .containerOpen {
-  background-color: red;
-
-  :global(+.mdc-drawer-app-content) {
-    transform: translateX(-256px);
-  }
-
   .menuButton {
     transform: translateX(-256px);
   }
@@ -34,23 +19,11 @@
   z-index: 402;
   height: 48px;
   width: 48px;
-
-  &:focus {
-    @extend .mdc-button--raised;
-  }
 }
 
 .menuButtonIcon {
   font-size: 44px;
   color: $orange;
-}
-
-:global .mdc-drawer--dismissible {
-  z-index: 404;
-}
-
-:global .mdc-drawer {
-  background-color: $dark_gray !important;
 }
 
 .menuItem {
@@ -64,4 +37,9 @@
 
 .menuItemIcon {
   margin-right: 10px;
+}
+
+.Drawer {
+  background-color: $dark_gray;
+  z-index: 402;
 }

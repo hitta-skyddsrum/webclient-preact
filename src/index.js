@@ -1,3 +1,4 @@
+import 'preact/debug';
 import { h, render } from 'preact';
 import polyfill from 'dynamic-polyfill';
 
@@ -11,7 +12,6 @@ function init() {
 
 // in development, set up HMR:
 if (module.hot) {
-  // require('preact/devtools');   // turn this on if you want to enable React DevTools!
   module.hot.accept('./containers/app', () => requestAnimationFrame(init));
 }
 
