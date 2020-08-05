@@ -83,35 +83,6 @@ module.exports = {
   module: {
     rules: [
       {
-        test: /\.js$/,
-        enforce: 'pre',
-        use: ['source-map-loader'],
-        exclude: [
-          path.join(process.cwd(), 'node_modules'),
-        ]
-      },
-      {
-        // Solve IE JS error due to default parameters in fns
-        test: /\.js$/,
-        include: [path.resolve('node_modules', '@material')],
-        use: {
-          loader: 'babel-loader',
-          options: {
-            plugins: ['@babel/plugin-transform-parameters'],
-          },
-        }
-      },
-      {
-        test: /\.js$/,
-        include: [path.resolve('node_modules', '@material-ui', 'icons')],
-        use: {
-          loader: 'babel-loader',
-          options: {
-            plugins: ['preact-fragment']
-          }
-        }
-      },
-      {
         test: /\.jsx?$/,
         exclude: /node_modules/,
         use: 'babel-loader'
