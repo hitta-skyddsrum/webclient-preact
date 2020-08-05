@@ -1,5 +1,5 @@
 import { h, Component } from 'preact';
-import List from 'preact-material-components/List';
+import { List, ListItem, ListItemPrimaryText } from '@rmwc/list';
 import Helmet from 'preact-helmet';
 import BottomSheet from '../bottom-sheet';
 
@@ -22,26 +22,26 @@ export default class ShelterDetail extends Component {
             title={`Skyddsrum ${this.props.shelter.shelterId}`}
           />
           <List className="mdc-list--non-interactive">
-            <List.Item disabled className={style.item}>
+            <ListItem disabled className={style.item}>
               <h1 class={style.title}>Skyddsrum {this.props.shelter.shelterId}</h1>
-            </List.Item>
-            <List.Item disabled className={style.item}>
-              <List.PrimaryText>
+            </ListItem>
+            <ListItem disabled className={style.item}>
+              <ListItemPrimaryText>
                 Fastighetsbeteckning: {this.props.shelter.estateId}
-              </List.PrimaryText>
-            </List.Item>
-            <List.Item disabled className={style.item}>
-              <List.PrimaryText>
+              </ListItemPrimaryText>
+            </ListItem>
+            <ListItem disabled className={style.item}>
+              <ListItemPrimaryText>
                 Adress: {address}
-              </List.PrimaryText>
-            </List.Item>
-            <List.Item disabled className={style.item}>
-              <List.PrimaryText>
+              </ListItemPrimaryText>
+            </ListItem>
+            <ListItem disabled className={style.item}>
+              <ListItemPrimaryText>
                 Antal platser: {this.props.shelter.slots}
-              </List.PrimaryText>
-            </List.Item>
-            <List.Item disabled className={style.item.concat(' ', style.itemCoordinates)}>
-              <List.PrimaryText>
+              </ListItemPrimaryText>
+            </ListItem>
+            <ListItem disabled className={style.item.concat(' ', style.itemCoordinates)}>
+              <ListItemPrimaryText>
                 <span>Koordinater:&nbsp;
                   <a
                     href={`https://www.google.com/maps/place/${this.props.shelter.position.lat},${this.props.shelter.position.long}`}
@@ -49,8 +49,8 @@ export default class ShelterDetail extends Component {
                     {this.props.shelter.position.lat}, {this.props.shelter.position.long}
                   </a>
                 </span>
-              </List.PrimaryText>
-            </List.Item>
+              </ListItemPrimaryText>
+            </ListItem>
           </List>
         </div>
       )}

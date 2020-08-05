@@ -4,7 +4,7 @@ import { shallow } from 'enzyme';
 import sinon from 'sinon';
 import Helmet from 'preact-helmet';
 
-import List from 'preact-material-components/List';
+import { List } from '@rmwc/list';
 import BottomSheet from '../bottom-sheet';
 import ShelterDetail from './';
 

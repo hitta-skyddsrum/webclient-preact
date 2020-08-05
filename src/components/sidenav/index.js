@@ -1,71 +1,59 @@
 import { h, Component } from 'preact';
-import { MDCDrawer } from '@material/drawer';
 import HelpIcon from '@material-ui/icons/Help';
 import InfoIcon from '@material-ui/icons/Info';
 import MenuIcon from '@material-ui/icons/Menu';
 import NearMeIcon from '@material-ui/icons/NearMe';
-import Button from 'preact-material-components/Button';
-import Drawer from 'preact-material-components/Drawer';
-import List from 'preact-material-components/List';
+import { Button } from '@rmwc/button';
+import { Drawer, DrawerContent } from '@rmwc/drawer';
+import { List, ListItem } from '@rmwc/list';
+import history from '../../history';
 
-import 'preact-material-components/Button/style.css';
-import 'preact-material-components/Drawer/style.css';
-import 'preact-material-components/List/style.css';
+import '@rmwc/button/styles';
+import '@rmwc/drawer/styles';
+import '@rmwc/list/styles';
 import style from './style.scss';
+
+const menuItems = [
+  {
+    title: 'Hitta skyddsrum',
+    url: '/',
+    icon: <NearMeIcon className={style.menuItemIcon} />,
+  },
+  {
+    title: 'Vad är ett skyddsrum?',
+    url: '/vad-ar-ett-skyddsrum',
+    icon: <HelpIcon className={style.menuItemIcon} />,
+  },
+  {
+    title: 'Om Hitta skyddsrum',
+    url: '/om-tjansten',
+    icon: <InfoIcon className={style.menuItemIcon} />,
+  },
+];
 
 export default class Sidenav extends Component {
   state = {
     isOpen: false,
   };
 
-  constructor() {
-    super();
-
-    this.handleToggle = this.handleToggle.bind(this);
-  }
-
-  componentDidMount() {
-    this.MDComponent = MDCDrawer.attachTo(this.control);
-  }
-
-  handleToggle() {
-    this.MDComponent.open = !this.MDComponent.open;
+  handleToggle = (open) => {
     this.setState(state => ({
-      isOpen: !state.isOpen,
+      isOpen: open === undefined ? !state.isOpen : open,
     }));
   }
 
-  render() {
-    const iconClasses = style.menuItemIcon;
-    const menuItems = [
-      {
-        title: 'Hitta skyddsrum',
-        url: '/',
-        icon: <NearMeIcon className={iconClasses} />,
-      },
-      {
-        title: 'Vad är ett skyddsrum?',
-        url: '/vad-ar-ett-skyddsrum',
-        icon: <HelpIcon className={iconClasses} />,
-      },
-      {
-        title: 'Om Hitta skyddsrum',
-        url: '/om-tjansten',
-        icon: <InfoIcon className={iconClasses} />,
-      },
-    ];
+  handleClickItem = ({ detail: { index } }) => {
+    history.push(menuItems[index].url);
+  };
 
+  render() {
     return (
       <div className={this.state.isOpen && style.containerOpen || ''}>
-        <aside
-          className="mdc-typography mdc-drawer mdc-drawer--dismissible"
-          ref={ref => { this.control = ref; }}
-          dir="rtl"
-        >
-          <Drawer.DrawerContent class={style.DrawerContent} dir="ltr">
-            <List>
+        <Drawer className={style.Drawer} dir="rtl" dissmissable modal open={this.state.isOpen} onClose={() => this.handleToggle(false)}>
+          <DrawerContent class={style.DrawerContent} dir="ltr">
+            <List onAction={this.handleClickItem}>
               {menuItems.map(item => (
-                <List.LinkItem
+                <ListItem
                   aria-label={item.title}
                   className={style.menuItem}
                   ripple
@@ -73,17 +61,17 @@ export default class Sidenav extends Component {
                 >
                   {item.icon}
                   {item.title}
-                </List.LinkItem>
+                </ListItem>
               ))}
             </List>
-          </Drawer.DrawerContent>
-        </aside>
+          </DrawerContent>
+        </Drawer>
         <Button
           aria-label="Meny"
-          onClick={this.handleToggle}
+          onClick={() => this.handleToggle()}
           className={style.menuButton}
           tabIndex={0}
-          primary
+          raised
         >
           <MenuIcon className={style.menuButtonIcon} />
         </Button>

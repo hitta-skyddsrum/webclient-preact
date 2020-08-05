@@ -2,9 +2,9 @@ import { h } from 'preact';
 import { expect } from 'chai';
 import sinon from 'sinon';
 import { shallow } from 'enzyme';
+import { Drawer } from '@rmwc/drawer';
 import MenuIcon from '@material-ui/icons/Menu';
-import { MDCDrawer } from '@material/drawer';
-import Button from 'preact-material-components/Button';
+import { Button } from '@rmwc/button';
 
 import Sidenav from './';
 
@@ -22,14 +22,10 @@ describe('component/Sidenav', () => {
   });
 
   it('should display the menu on click hamburger menu button', () => {
-    const drawerMock = {
-      open: false,
-    };
-    sandbox.stub(MDCDrawer, 'attachTo').returns(drawerMock);
-    const context = shallow(<Sidenav location={{}} />);
+    const wrapper = shallow(<Sidenav location={{}} />);
 
-    context.find(Button).at(0).props().onClick();
+    wrapper.find(Button).at(0).props().onClick();
 
-    expect(drawerMock.open).to.equal(true);
+    expect(wrapper.find(Drawer).props().open).to.equal(true);
   });
 });
