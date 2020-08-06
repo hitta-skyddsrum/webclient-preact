@@ -104,7 +104,7 @@
     "eslint-plugin-jest": "23.20.0",
     "eslint-plugin-jsx-a11y": "6.3.1",
     "eslint-plugin-react": "7.20.5",
-    "fetch-mock": "9.10.3",
+    "fetch-mock": "9.10.6",
     "file-loader": "6.0.0",
     "geckodriver": "1.20.0",
     "git-revision-webpack-plugin": "3.0.6",
