@@ -10,6 +10,8 @@ const GitRevisionPlugin = require('git-revision-webpack-plugin');
 const PacktrackerPlugin = require('@packtracker/webpack-plugin');
 const SentryCliPlugin = require('@sentry/webpack-plugin');
 const TerserPlugin = require('terser-webpack-plugin');
+const purgecss = require('@fullhuman/postcss-purgecss');
+
 const ENV = process.env.NODE_ENV || 'development';
 
 require('dotenv').config();
@@ -112,6 +114,7 @@ module.exports = {
               plugins: () => {
                 autoprefixer();
                 cssnano();
+                purgecss();
               }
             }
           },
