@@ -125,7 +125,6 @@
     "mkdirp": "1.0.4",
     "ncp": "2.0.0",
     "nightwatch": "github:kontrollanten/nightwatch-visual-regression#b9ccaa6436691b1de30b37f633ea78b846ec241c",
-    "nightwatch-accessibility": "1.8.0",
     "nightwatch-html-reporter": "2.0.6",
     "node-resemble-js": "0.2.0",
     "node-sass": "4.14.1",
