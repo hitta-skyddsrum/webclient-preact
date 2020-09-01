@@ -121,7 +121,7 @@
     "jest-cli": "26.4.2",
     "json-loader": "0.5.7",
     "lighthouse-ci": "github:kontrollanten/lighthouse-ci#master",
-    "mini-css-extract-plugin": "0.10.0",
+    "mini-css-extract-plugin": "0.11.0",
     "mkdirp": "1.0.4",
     "ncp": "2.0.0",
     "nightwatch": "github:kontrollanten/nightwatch-visual-regression#b9ccaa6436691b1de30b37f633ea78b846ec241c",
