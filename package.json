@@ -166,7 +166,7 @@
     "history": "4.10.1",
     "leaflet": "1.6.0",
     "leaflet.markercluster": "1.4.1",
-    "preact": "10.4.7",
+    "preact": "10.4.8",
     "preact-async-route": "2.2.1",
     "preact-context": "1.1.4",
     "preact-helmet": "4.0.0-alpha-3",
