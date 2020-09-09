@@ -249,17 +249,18 @@ describe('ServiceWorker/fetch', () => {
       });
   });
 
-  it('should return the error upon failure', async () => {
+  it('should return the error upon failure', () => {
     const networkError = new Error();
     const request = new Request('/dressed-for-depress');
     global.fetch = sinon.stub();
     fetch.returns(Promise.reject(networkError));
 
-    try {
-      await self.trigger('fetch', request);
-    } catch (error) {
-      // eslint-disable-next-line jest/no-try-expect
-      expect(error).to.equal(networkError);
-    }
+    return self.trigger('fetch', request)
+      .then(() => {
+        expect(false).to.equal(true);
+      })
+      .catch(err => {
+        expect(err).to.equal(networkError);
+      });
   });
 });
