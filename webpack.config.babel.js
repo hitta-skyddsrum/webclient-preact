@@ -203,13 +203,15 @@ module.exports = {
       // https://github.com/jantimon/html-webpack-plugin/issues/870#issuecomment-370004105
       chunksSortMode: 'none',
     }),
-    new CopyWebpackPlugin([
-      { from: './manifest.json', to: './' },
-      { from: './_redirects', to: './' },
-      { from: './favicon.ico', to: './' },
-      { from: './sitemap*.xml', to: './' },
-      { from: '.well-known', to: '.well-known' },
-    ]),
+    new CopyWebpackPlugin({
+      patterns: [
+        { from: './manifest.json', to: './' },
+        { from: './_redirects', to: './' },
+        { from: './favicon.ico', to: './' },
+        { from: './sitemap*.xml', to: './' },
+        { from: '.well-known', to: '.well-known' },
+      ],
+    }),
   ]).concat(process.env.ENV !== 'production' ? [] : [
     new SentryCliPlugin({
       include: './build',
