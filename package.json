@@ -159,7 +159,7 @@
     "@rmwc/dialog": "6.1.3",
     "@rmwc/drawer": "6.0.14",
     "@rmwc/fab": "6.1.3",
-    "@rmwc/list": "6.1.3",
+    "@rmwc/list": "6.1.4",
     "algolia-places-react": "1.6.0",
     "classnames": "2.2.6",
     "dynamic-polyfill": "1.1.0",
