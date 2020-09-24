@@ -158,7 +158,7 @@
     "@rmwc/button": "6.1.3",
     "@rmwc/dialog": "6.1.4",
     "@rmwc/drawer": "6.1.4",
-    "@rmwc/fab": "6.1.3",
+    "@rmwc/fab": "6.1.4",
     "@rmwc/list": "6.1.4",
     "algolia-places-react": "1.6.0",
     "classnames": "2.2.6",
