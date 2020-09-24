@@ -1995,16 +1995,16 @@
     "@rmwc/base" "^6.1.4"
     "@rmwc/types" "^6.0.5"
 
-"@rmwc/fab@6.1.3":
-  version "6.1.3"
-  resolved "https://registry.yarnpkg.com/@rmwc/fab/-/fab-6.1.3.tgz#95f2c95f944666d6b675cf572e835a242bbf9758"
-  integrity sha512-s2rWfAiA9vAScIkH/lTcg9vIBMLR4Q80rJwDyWu234yj1v06DtsR1SRkuoJYArG1DtIWVE9pVl2U4e9o7jAOJg==
+"@rmwc/fab@6.1.4":
+  version "6.1.4"
+  resolved "https://registry.yarnpkg.com/@rmwc/fab/-/fab-6.1.4.tgz#10f163d13c6a491cf40ffc865d1a1104dfc1865c"
+  integrity sha512-AD0nnoS38rKe/dvNzDmwFfJCK0/ssPfuSt0jin5ZSF0ixsMeQeSeLYmh6xAQVDklf76wlLvtxrujBSNggMq0zQ==
   dependencies:
     "@material/fab" "^5.1.0"
-    "@rmwc/base" "^6.0.14"
-    "@rmwc/icon" "^6.1.3"
-    "@rmwc/provider" "^6.1.3"
-    "@rmwc/ripple" "^6.1.3"
+    "@rmwc/base" "^6.1.4"
+    "@rmwc/icon" "^6.1.4"
+    "@rmwc/provider" "^6.1.4"
+    "@rmwc/ripple" "^6.1.4"
     "@rmwc/types" "^6.0.5"
 
 "@rmwc/floating-label@^6.1.2":
