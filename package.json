@@ -83,7 +83,7 @@
     "@babel/runtime": "7.11.2",
     "@fullhuman/postcss-purgecss": "3.0.0",
     "@packtracker/webpack-plugin": "2.3.0",
-    "@sentry/webpack-plugin": "1.12.1",
+    "@sentry/webpack-plugin": "1.13.0",
     "autoprefixer": "9.8.6",
     "babel-core": "7.0.0-bridge.0",
     "babel-eslint": "10.1.0",
