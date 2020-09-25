@@ -155,7 +155,7 @@
     "@material-ui/core": "4.11.0",
     "@material-ui/icons": "4.9.1",
     "@material/animation": "0.41.0",
-    "@rmwc/button": "6.1.3",
+    "@rmwc/button": "6.1.4",
     "@rmwc/dialog": "6.1.4",
     "@rmwc/drawer": "6.1.4",
     "@rmwc/fab": "6.1.4",
