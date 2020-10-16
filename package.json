@@ -132,7 +132,7 @@
     "postcss-loader": "3.0.0",
     "preact-jsx-chai": "3.0.0",
     "preact-test-utils": "0.1.4",
-    "raw-loader": "4.0.1",
+    "raw-loader": "4.0.2",
     "redux-mock-store": "1.5.4",
     "replace-bundle-webpack-plugin": "1.0.0",
     "sass": "1.27.0",
