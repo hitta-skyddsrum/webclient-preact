@@ -170,7 +170,7 @@
     "preact-async-route": "2.2.1",
     "preact-context": "1.1.4",
     "preact-helmet": "4.0.0-alpha-3",
-    "preact-render-to-string": "5.1.10",
+    "preact-render-to-string": "5.1.12",
     "preact-router": "3.2.1",
     "preact-router-redux": "4.1.0",
     "raven-for-redux": "1.4.0",
