@@ -94,7 +94,7 @@
     "chai": "4.2.0",
     "chromedriver": "86.0.0",
     "codecov": "3.8.0",
-    "commitizen": "4.2.1",
+    "commitizen": "4.2.3",
     "copy-webpack-plugin": "6.2.1",
     "core-js": "3.6.5",
     "cross-env": "7.0.2",
