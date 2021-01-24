@@ -129,7 +129,7 @@
     "node-resemble-js": "0.2.0",
     "node-sass": "4.14.1",
     "offline-plugin": "5.0.7",
-    "postcss-loader": "3.0.0",
+    "postcss-loader": "4.2.0",
     "preact-jsx-chai": "3.0.0",
     "preact-test-utils": "0.1.4",
     "raw-loader": "4.0.1",
