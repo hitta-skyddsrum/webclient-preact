@@ -15,6 +15,8 @@ export default () => {
 
       <p><em>Senaste data-import: 3 juni 2018</em></p>
 
+      <p>Kodbasen finns tillgänglig som öppen källkod på GitHub; <a href="https://github.com/hitta-skyddsrum/">https://github.com/hitta-skyddsrum/</a></p>
+
       <p>Om du har synpunkter, frågor eller funderingar, kontakta oss på <a href="mailto:admin@hittaskyddsrum.se">admin@hittaskyddsrum.se</a>.</p>
     </ContentWrapper>
   );

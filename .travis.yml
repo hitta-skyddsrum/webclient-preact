@@ -36,9 +36,6 @@ jobs:
     - stage: lighthouse
       if: type = api
       script: yarn lh -- --perf=96 --bp=96 --no-comment $SITE_URL
-    - stage: e2e
-      if: type = api
-      script: yarn install-selenium && xvfb-run --server-args="-screen 0 1200x800x24" yarn e2e || (errorshots push s3 && false)
 
 notifications:
   webhooks:
