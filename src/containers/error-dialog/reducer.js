@@ -14,8 +14,8 @@ import {
 import { CLEAR_ERROR } from './types';
 
 const initialState = {
-  desc: null,
-  title: null,
+  desc: 'Senaste aktuell data är från 3/6 2018. Besök det skattefinansierade alternativet på MSB.se/skyddsrum för aktuell data.',
+  title: 'HittaSkyddsrum.se underhålls inte längre',
 };
 
 export default (state = initialState, action) => {
